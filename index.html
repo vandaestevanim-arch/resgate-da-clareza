@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anamnese — Protocolo Mente Blindada</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* PALETA PRINCIPAL */
+  --verde: #1F3D3A;
+  --verde-light: #2A5250;
+  --verde-ultra: #EBF0EF;
+  --bege: #F5F1E8;
+  --bege-dark: #EDE8DC;
+  --preto: #1A1A1A;
+  --cinza: #6B6F72;
+  --cinza-light: #E8E9EA;
+  --dourado: #C2A86B;
+  --dourado-light: #F4EDD8;
+  --dourado-dark: #A08947;
+  /* ESTADOS */
+  --vermelho: #7A2020;
+  --vermelho-light: #F7EEEE;
+  --amarelo: #7A5C00;
+  --amarelo-light: #FBF3DC;
+  --verde-ok: #1F3D3A;
+  --verde-ok-light: #EBF0EF;
+  /* SISTEMA */
+  --bg: var(--bege);
+  --bg2: var(--bege-dark);
+  --border: #D8D3C8;
+  --text: var(--preto);
+  --text-sec: var(--cinza);
+  --text-ter: #9A9EA1;
+  --radius: 12px;
+  --radius-sm: 8px;
+  /* FONTES */
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text); }
+
+.header { background: var(--verde); border-bottom: none; padding: 1.5rem 0; text-align: center; position: sticky; top: 0; z-index: 100; }
+.header-inner { max-width: 700px; margin: 0 auto; padding: 0 1.5rem; }
+.header-tag { font-size: 10px; font-weight: 600; color: var(--dourado); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 4px; font-family: var(--font-body); }
+.header-title { font-size: 20px; font-weight: 600; color: white; font-family: var(--font-heading); letter-spacing: 0.01em; }
+
+.progress-bar { height: 2px; background: rgba(255,255,255,0.15); }
+.progress-fill { height: 100%; background: var(--dourado); transition: width 0.4s; width: 0%; }
+
+.score-bar { background: var(--verde); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.6rem 0; overflow-x: auto; }
+.score-bar-inner { max-width: 700px; margin: 0 auto; padding: 0 1.5rem; display: flex; gap: 6px; }
+.sd { flex-shrink: 0; display: flex; align-items: center; gap: 5px; padding: 4px 10px; background: rgba(255,255,255,0.08); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
+.sd-label { font-size: 10px; color: rgba(255,255,255,0.55); font-weight: 500; letter-spacing: 0.04em; }
+.sd-val { font-size: 11px; font-weight: 700; color: var(--dourado); }
+
+.main { max-width: 700px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+
+.intro-box { background: var(--verde); border-radius: var(--radius); padding: 1.5rem 1.75rem; margin-bottom: 1rem; }
+.intro-box h3 { font-size: 16px; font-weight: 600; color: var(--dourado); font-family: var(--font-heading); margin-bottom: 8px; }
+.intro-box p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.75; }
+
+.disclaimer { background: var(--dourado-light); border-radius: var(--radius); padding: 1.1rem 1.5rem; margin-bottom: 2rem; border-left: 3px solid var(--dourado); }
+.disclaimer p { font-size: 13px; color: #6B5320; line-height: 1.65; }
+.disclaimer strong { font-weight: 600; color: #5A4418; }
+
+.section { margin-bottom: 2.5rem; }
+.sec-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 1.25rem; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.sec-num { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; font-family: var(--font-body); }
+.n1{background:var(--verde);color:var(--dourado);}
+.n2{background:var(--verde-ultra);color:var(--verde);}
+.n3{background:var(--verde-ultra);color:var(--verde);}
+.n4{background:var(--vermelho-light);color:var(--vermelho);}
+.n5{background:var(--dourado-light);color:var(--dourado-dark);}
+.n6{background:var(--verde-ultra);color:var(--verde);}
+.n7{background:var(--dourado-light);color:var(--dourado-dark);}
+.n8{background:var(--cinza-light);color:var(--cinza);}
+.n9{background:var(--verde);color:var(--dourado);}
+.sec-info h3 { font-size: 16px; font-weight: 600; color: var(--preto); font-family: var(--font-heading); }
+.sec-info p { font-size: 12px; color: var(--text-ter); margin-top: 3px; font-family: var(--font-body); }
+
+.q { margin-bottom: 1.25rem; }
+.q-label { font-size: 14px; font-weight: 500; color: var(--preto); line-height: 1.55; margin-bottom: 10px; font-family: var(--font-body); }
+.req { color: var(--dourado-dark); }
+
+textarea, input[type="text"] {
+  width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  font-size: 14px; color: var(--preto); background: white; resize: vertical; min-height: 80px;
+  font-family: var(--font-body); line-height: 1.6; transition: border-color 0.2s;
+}
+textarea:focus, input:focus { outline: none; border-color: var(--verde); box-shadow: 0 0 0 3px rgba(31,61,58,0.08); }
+input[type="text"] { min-height: auto; }
+
+/* OPÇÕES */
+.opts { display: flex; flex-direction: column; gap: 8px; }
+.opt {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 16px; background: white;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  cursor: pointer; transition: all 0.15s; user-select: none;
+}
+.opt:hover { border-color: var(--verde); background: var(--verde-ultra); }
+.opt.sel { background: var(--verde-ultra); border-color: var(--verde); }
+.opt-indicator {
+  width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border);
+  flex-shrink: 0; margin-top: 1px; transition: all 0.15s;
+  display: flex; align-items: center; justify-content: center;
+}
+.opt.sel .opt-indicator { background: var(--verde); border-color: var(--verde); }
+.opt.sel .opt-indicator::after { content: ""; width: 6px; height: 6px; border-radius: 50%; background: white; display: block; }
+.opt-check {
+  width: 18px; height: 18px; border-radius: 4px; border: 2px solid var(--border);
+  flex-shrink: 0; margin-top: 1px; transition: all 0.15s;
+  display: flex; align-items: center; justify-content: center;
+}
+.opt.sel .opt-check { background: var(--dourado); border-color: var(--dourado); }
+.opt.sel .opt-check::after { content: "✓"; font-size: 11px; color: white; font-weight: 700; }
+.opt-text { font-size: 13px; color: var(--preto); line-height: 1.5; pointer-events: none; font-family: var(--font-body); }
+
+/* ESCALA */
+.scale-wrap { display: flex; gap: 6px; flex-wrap: wrap; }
+.scale-btn {
+  width: 44px; height: 44px; border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border); background: white;
+  font-size: 14px; font-weight: 600; color: var(--cinza);
+  cursor: pointer; transition: all 0.15s; font-family: var(--font-body);
+}
+.scale-btn:hover { border-color: var(--verde); color: var(--verde); }
+.scale-btn.sel { background: var(--verde); border-color: var(--verde); color: white; }
+.scale-labels { display: flex; justify-content: space-between; margin-top: 5px; }
+.scale-label { font-size: 11px; color: var(--text-ter); font-family: var(--font-body); }
+
+.divider { height: 1px; background: var(--border); margin: 2rem 0; }
+
+/* BOTÕES */
+.submit-wrap { text-align: center; margin-top: 2rem; }
+.btn-primary { background: var(--verde); color: white; border: none; padding: 15px 40px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; letter-spacing: 0.03em; font-family: var(--font-body); }
+.btn-primary:hover { background: var(--verde-light); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(31,61,58,0.25); }
+.btn-secondary { background: white; color: var(--verde); border: 1.5px solid var(--verde); padding: 13px 30px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: var(--font-body); }
+.btn-secondary:hover { background: var(--verde-ultra); }
+.submit-note { font-size: 12px; color: var(--text-ter); margin-top: 8px; }
+
+/* RESULTADO — PARTE 1 */
+.result-wrap { display: none; }
+.result-wrap.visible { display: block; }
+
+.result-hero { background: var(--verde); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.25rem; }
+.rh-top { padding: 1.75rem; }
+.rh-tag { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.45); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; font-family: var(--font-body); }
+.rh-score { font-size: 52px; font-weight: 700; color: white; line-height: 1; font-family: var(--font-heading); }
+.rh-max { font-size: 16px; color: rgba(255,255,255,0.45); font-weight: 400; }
+.rh-badge { display: inline-block; padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-top: 12px; font-family: var(--font-body); letter-spacing: 0.03em; }
+.badge-red { background: var(--vermelho-light); color: var(--vermelho); }
+.badge-amber { background: var(--dourado-light); color: var(--dourado-dark); }
+.badge-green { background: var(--verde-ultra); color: var(--verde); }
+.rh-bottom { padding: 1.25rem 1.75rem; border-top: 1px solid rgba(255,255,255,0.1); }
+.rh-desc { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.75; font-family: var(--font-body); }
+
+.domain-cards { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; }
+.dc { background: white; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; }
+.dc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.dc-name { font-size: 13px; font-weight: 600; color: var(--preto); font-family: var(--font-body); }
+.dc-badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.04em; font-family: var(--font-body); }
+.dc-bar-bg { height: 6px; background: var(--bg2); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
+.dc-bar-fill { height: 100%; border-radius: 3px; }
+.dc-interp { font-size: 12px; color: var(--cinza); line-height: 1.6; font-family: var(--font-body); }
+
+.radar-wrap { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem; text-align: center; }
+.radar-label { font-size: 11px; font-weight: 600; color: var(--text-ter); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; font-family: var(--font-body); }
+
+/* AVISO DEVOLUTIVA */
+.devolutiva-aviso { background: var(--verde); border-radius: var(--radius); padding: 1.75rem; margin: 1.5rem 0; }
+.da-tag { font-size: 10px; font-weight: 600; color: var(--dourado); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; font-family: var(--font-body); }
+.da-title { font-size: 18px; font-weight: 600; color: white; margin-bottom: 10px; font-family: var(--font-heading); }
+.da-text { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.75; font-family: var(--font-body); }
+.da-steps { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+.da-step { display: flex; align-items: flex-start; gap: 12px; }
+.da-step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--dourado); color: white; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: var(--font-body); }
+.da-step-text { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.55; padding-top: 4px; font-family: var(--font-body); }
+
+/* RELATÓRIO COMPLETO */
+.relatorio { display: none; }
+.relatorio.visible { display: block; }
+.rel-divider { height: 1px; background: linear-gradient(90deg, var(--dourado), transparent); margin: 2.5rem 0; }
+.rel-cover { background: var(--verde); border-radius: var(--radius); padding: 2.5rem 1.75rem; text-align: center; margin-bottom: 1.5rem; }
+.rel-cover-tag { font-size: 10px; color: var(--dourado); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 10px; font-weight: 600; font-family: var(--font-body); }
+.rel-cover-title { font-size: 26px; font-weight: 600; color: white; margin-bottom: 6px; font-family: var(--font-heading); }
+.rel-cover-sub { font-size: 13px; color: rgba(255,255,255,0.45); font-family: var(--font-body); }
+.rel-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1.5rem; }
+.rel-meta-item { background: white; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; }
+.rmi-label { font-size: 10px; color: var(--text-ter); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; font-family: var(--font-body); font-weight: 600; }
+.rmi-val { font-size: 13px; font-weight: 600; color: var(--preto); font-family: var(--font-body); }
+.rel-sec-title { font-size: 10px; font-weight: 700; color: var(--dourado-dark); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--dourado-light); font-family: var(--font-body); }
+.passos { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem; }
+.passo { background: white; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1.1rem; display: flex; gap: 14px; }
+.passo-num { width: 30px; height: 30px; border-radius: 50%; background: var(--verde); color: var(--dourado); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: var(--font-body); }
+.passo-titulo { font-size: 13px; font-weight: 600; color: var(--preto); margin-bottom: 4px; font-family: var(--font-body); }
+.passo-desc { font-size: 13px; color: var(--cinza); line-height: 1.6; font-family: var(--font-body); }
+.passo-dom { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 10px; margin-top: 6px; background: var(--verde-ultra); color: var(--verde); letter-spacing: 0.04em; font-family: var(--font-body); }
+
+/* DEVOLUTIVA FORM */
+.dev-form { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; margin-bottom: 1.5rem; }
+.dev-form-header { margin-bottom: 1.25rem; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.dev-form-tag { font-size: 10px; font-weight: 700; color: var(--dourado-dark); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; font-family: var(--font-body); }
+.dev-form-title { font-size: 18px; font-weight: 600; color: var(--preto); font-family: var(--font-heading); }
+.dev-form-sub { font-size: 12px; color: var(--text-ter); margin-top: 4px; font-family: var(--font-body); }
+.dev-field { margin-bottom: 1.1rem; }
+.dev-field label { display: block; font-size: 13px; font-weight: 600; color: var(--preto); margin-bottom: 7px; font-family: var(--font-body); }
+.dev-field textarea { min-height: 90px; font-size: 13px; }
+.dev-field input[type="text"] { font-size: 13px; }
+.dev-hint { font-size: 11px; color: var(--text-ter); margin-top: 5px; font-style: italic; line-height: 1.5; font-family: var(--font-body); }
+.dev-generate-btn { text-align: center; margin-top: 1.25rem; }
+
+/* DEVOLUTIVA FINAL */
+.dev-final { display: none; }
+.dev-final.visible { display: block; }
+.dev-final-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem; }
+.dfc-header { background: var(--dourado-light); padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border); }
+.dfc-tag { font-size: 10px; font-weight: 700; color: var(--dourado-dark); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; font-family: var(--font-body); }
+.dfc-title { font-size: 16px; font-weight: 600; color: var(--preto); font-family: var(--font-heading); }
+.dfc-body { padding: 1.25rem 1.5rem; font-size: 14px; color: var(--preto); line-height: 1.85; white-space: pre-wrap; font-family: var(--font-body); }
+.dfc-section { padding: 1.1rem 1.5rem; border-top: 1px solid var(--border); }
+.dfc-section-label { font-size: 10px; font-weight: 700; color: var(--dourado-dark); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; font-family: var(--font-body); }
+.dfc-section-text { font-size: 14px; color: var(--cinza); line-height: 1.8; white-space: pre-wrap; font-family: var(--font-body); }
+.assinatura { text-align: center; padding: 1.75rem; border-top: 1px solid var(--border); }
+.assinatura-linha { width: 48px; height: 1px; background: var(--dourado); margin: 0 auto 14px; }
+.assinatura-nome { font-size: 16px; font-weight: 600; color: var(--preto); font-family: var(--font-heading); }
+.assinatura-cargo { font-size: 12px; color: var(--cinza); margin-top: 4px; font-family: var(--font-body); }
+
+.disclaimer-result { background: var(--dourado-light); border-radius: var(--radius-sm); padding: 1rem 1.25rem; font-size: 12px; color: #6B5320; line-height: 1.7; margin-bottom: 1.5rem; font-family: var(--font-body); border-left: 2px solid var(--dourado); }
+
+@media print {
+  .header, .progress-bar, .score-bar, form, .submit-wrap, .devolutiva-aviso, .dev-form, .dev-generate-btn, .btn-secondary, .footer-note { display: none !important; }
+  .result-wrap, .relatorio, .dev-final { display: block !important; }
+  body { background: white; }
+  .main { padding: 0; }
+  .result-hero, .rel-cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+/* LEAD CAPTURE */
+.lead-screen { }
+.lead-screen.hidden { display: none; }
+.lead-input { width: 100%; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 15px; color: var(--preto); background: white; font-family: var(--font-body); transition: border-color 0.2s; margin-bottom: 12px; }
+.lead-input:focus { outline: none; border-color: var(--verde); box-shadow: 0 0 0 3px rgba(31,61,58,0.08); }
+.lead-input::placeholder { color: var(--text-ter); }
+.ai-btn { background: var(--dourado); color: white; border: none; padding: 13px 24px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: var(--font-body); letter-spacing: 0.03em; display: flex; align-items: center; gap: 8px; }
+.ai-btn:hover { background: var(--dourado-dark); transform: translateY(-1px); }
+.ai-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.ai-loading { display: none; align-items: center; gap: 10px; padding: 14px 16px; background: var(--verde-ultra); border-radius: var(--radius-sm); margin-bottom: 12px; }
+.ai-loading.visible { display: flex; }
+.ai-spinner { width: 18px; height: 18px; border: 2px solid var(--verde-ultra); border-top-color: var(--verde); border-radius: 50%; animation: spin 0.8s linear infinite; flex-shrink: 0; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.ai-loading-text { font-size: 13px; color: var(--verde); font-family: var(--font-body); }
+.ai-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; color: var(--dourado-dark); background: var(--dourado-light); padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; font-family: var(--font-body); letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-tag">Protocolo Mente Blindada</div>
+    <div class="header-title">Anamnese Integrativa</div>
+  </div>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="pFill"></div></div>
+<div class="score-bar">
+  <div class="score-bar-inner">
+    <div class="sd"><span class="sd-label">Geral</span><span class="sd-val" id="ds-g">—</span></div>
+    <div class="sd"><span class="sd-label">Sono</span><span class="sd-val" id="ds-s">—</span></div>
+    <div class="sd"><span class="sd-label">Energia</span><span class="sd-val" id="ds-e">—</span></div>
+    <div class="sd"><span class="sd-label">Estresse</span><span class="sd-val" id="ds-st">—</span></div>
+    <div class="sd"><span class="sd-label">Hábitos</span><span class="sd-val" id="ds-h">—</span></div>
+    <div class="sd"><span class="sd-label">Emocional</span><span class="sd-val" id="ds-em">—</span></div>
+    <div class="sd"><span class="sd-label">Intestino</span><span class="sd-val" id="ds-in">—</span></div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- TELA DE CAPTURA DE LEAD -->
+<div class="lead-screen" id="leadScreen">
+  <div style="background:var(--verde);border-radius:var(--radius);padding:2.5rem 1.75rem;margin-bottom:1.5rem;text-align:center;">
+    <div style="font-size:10px;font-weight:600;color:var(--dourado);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:10px;font-family:var(--font-body);">Protocolo Mente Blindada</div>
+    <div style="font-size:26px;font-weight:600;color:white;font-family:var(--font-heading);margin-bottom:8px;line-height:1.3;">Diagnóstico Integrativo<br>de Saúde Cerebral</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.55);font-family:var(--font-body);line-height:1.65;">Mapeamento personalizado do seu índice de esgotamento.<br>15 a 20 minutos. Resultado imediato.</div>
+  </div>
+
+  <div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1rem;">
+    <div style="font-size:10px;font-weight:700;color:var(--dourado-dark);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;font-family:var(--font-body);">Seus dados</div>
+    <div style="font-size:18px;font-weight:600;color:var(--preto);font-family:var(--font-heading);margin-bottom:4px;">Antes de começar</div>
+    <div style="font-size:13px;color:var(--cinza);margin-bottom:20px;font-family:var(--font-body);line-height:1.6;">Preencha para que o seu diagnóstico seja identificado e personalizado.</div>
+
+    <input type="text" class="lead-input" id="lead_nome" placeholder="Seu nome completo" autocomplete="name">
+    <input type="email" class="lead-input" id="lead_email" placeholder="Seu melhor e-mail" autocomplete="email">
+    <input type="tel" class="lead-input" id="lead_whatsapp" placeholder="WhatsApp com DDD" autocomplete="tel" style="margin-bottom:20px;">
+
+    <div style="font-size:12px;color:var(--text-ter);margin-bottom:20px;font-family:var(--font-body);line-height:1.6;">
+      Suas informações são confidenciais e utilizadas exclusivamente para personalizar e identificar seu diagnóstico.
+    </div>
+
+    <div id="leadErro" style="display:none;font-size:12px;color:var(--vermelho);margin-bottom:12px;font-family:var(--font-body);padding:10px 14px;background:var(--vermelho-light);border-radius:var(--radius-sm);">Preencha nome, e-mail e WhatsApp para continuar.</div>
+
+    <button type="button" class="btn-primary" onclick="iniciarFormulario()" style="width:100%;padding:16px;">Iniciar meu Diagnóstico</button>
+  </div>
+
+  <div style="background:var(--bege-dark);border-radius:var(--radius-sm);padding:1rem 1.25rem;">
+    <div style="font-size:13px;color:var(--cinza);font-family:var(--font-body);line-height:1.7;">
+      <strong style="color:var(--preto);">O que você vai receber:</strong><br>
+      Índice de esgotamento por domínio · Radar cerebral personalizado · Avaliação de 7 áreas críticas · Devolutiva exclusiva após a sessão
+    </div>
+  </div>
+</div>
+
+<!-- FORMULÁRIO PRINCIPAL — oculto até lead ser preenchido -->
+<div id="formWrap" style="display:none;">
+
+<div class="intro-box">
+  <h3>Antes de começar</h3>
+  <p>Este formulário é o primeiro passo do seu Diagnóstico Mente Blindada. Não há resposta certa ou errada. Quanto mais honesta você for, mais preciso será o diagnóstico.<br>Reserve 15 a 20 minutos. Responda no silêncio, longe de interrupção.</p>
+</div>
+
+<div class="disclaimer">
+  <p><strong>Aviso importante:</strong> Este formulário é uma ferramenta de apoio clínico integrativo — não é uma avaliação cognitiva, psicológica ou diagnóstico médico. Não substitui o acompanhamento de profissionais de saúde e <strong>não deve ser usado para interromper ou alterar qualquer tratamento em andamento.</strong></p>
+</div>
+
+<form id="form">
+
+<!-- BLOCO 1: PERFIL -->
+<div class="section">
+  <div class="sec-header">
+    <div class="sec-num n1">1</div>
+    <div class="sec-info"><h3>Perfil e Contexto de Vida</h3><p>Quem você é e o que carrega no dia a dia</p></div>
+  </div>
+  <div class="q">
+    <div class="q-label">Qual é sua ocupação principal? Se tiver mais de uma, descreva todas.<span class="req">*</span></div>
+    <textarea name="ocupacao" placeholder="Ex: empreendedora no setor de saúde e atendimentos avulsos..."></textarea>
+  </div>
+  <div class="q">
+    <div class="q-label">Você tem filhos? Se sim, quantos, quais idades e qual o nível de demanda deles na sua rotina?</div>
+    <textarea name="filhos" placeholder="Ex: um filho de 10 anos com TDAH..."></textarea>
+  </div>
+  <div class="q">
+    <div class="q-label">Além do trabalho e família, que outras responsabilidades você carrega?</div>
+    <div class="opts" id="responsabilidades">
+      <div class="opt" data-group="responsabilidades" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Gestão da casa</span></div>
+      <div class="opt" data-group="responsabilidades" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Cuidado de familiar (pais, parentes)</span></div>
+      <div class="opt" data-group="responsabilidades" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Gestão financeira da família</span></div>
+      <div class="opt" data-group="responsabilidades" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Compromissos sociais e comunitários</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Em uma frase, como você descreveria sua rotina atual?<span class="req">*</span></div>
+    <textarea name="rotina" style="min-height:60px" placeholder="Seja honesta..."></textarea>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- BLOCO 2: SONO -->
+<div class="section">
+  <div class="sec-header">
+    <div class="sec-num n2">2</div>
+    <div class="sec-info"><h3>Sono e Recuperação</h3><p>Primeiro marcador do esgotamento</p></div>
+  </div>
+  <div class="q">
+    <div class="q-label">Quantas horas você dorme por noite em média?<span class="req">*</span></div>
+    <div class="opts" id="b2_horas">
+      <div class="opt" data-group="b2_horas" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Menos de 5 horas</span></div>
+      <div class="opt" data-group="b2_horas" data-score="2" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">5 a 6 horas</span></div>
+      <div class="opt" data-group="b2_horas" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">7 a 8 horas</span></div>
+      <div class="opt" data-group="b2_horas" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Mais de 8 horas</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Como você avalia a qualidade do seu sono?<span class="req">*</span></div>
+    <div class="scale-wrap" id="scale_sono"></div>
+    <div class="scale-labels"><span class="scale-label">Péssimo</span><span class="scale-label">Excelente</span></div>
+  </div>
+  <div class="q">
+    <div class="q-label">Você acorda durante a noite?<span class="req">*</span></div>
+    <div class="opts" id="b2_acorda">
+      <div class="opt" data-group="b2_acorda" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Sim, com frequência e tenho dificuldade de voltar a dormir</span></div>
+      <div class="opt" data-group="b2_acorda" data-score="2" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Sim, mas consigo voltar a dormir</span></div>
+      <div class="opt" data-group="b2_acorda" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Raramente</span></div>
+      <div class="opt" data-group="b2_acorda" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Não acordo durante a noite</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Como você se sente ao acordar na maioria dos dias?<span class="req">*</span></div>
+    <div class="opts" id="b2_acordar">
+      <div class="opt" data-group="b2_acordar" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Esgotada — como se não tivesse dormido</span></div>
+      <div class="opt" data-group="b2_acordar" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Ansiosa já de manhã</span></div>
+      <div class="opt" data-group="b2_acordar" data-score="2" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Cansada mas funcional</span></div>
+      <div class="opt" data-group="b2_acordar" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Varia muito</span></div>
+      <div class="opt" data-group="b2_acordar" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Descansada e com energia</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Você usa algo para dormir ou aguentar o dia?</div>
+    <div class="opts" id="b2_uso">
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Medicamento para dormir</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Álcool para relaxar à noite</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Café em excesso pela manhã</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Energético ou termogênico</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Nenhum dos acima</span></div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- BLOCO 3: ENERGIA E MENTE -->
+<div class="section">
+  <div class="sec-header">
+    <div class="sec-num n3">3</div>
+    <div class="sec-info"><h3>Energia e Funcionamento Mental</h3><p>Capacidade cognitiva e nível de depleção</p></div>
+  </div>
+  <div class="q">
+    <div class="q-label">Como está seu nível de energia ao longo do dia?<span class="req">*</span></div>
+    <div class="opts" id="b3_energia">
+      <div class="opt" data-group="b3_energia" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Baixa o tempo todo — acordo sem energia e não melhora</span></div>
+      <div class="opt" data-group="b3_energia" data-score="2" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Começa razoável mas cai muito à tarde</span></div>
+      <div class="opt" data-group="b3_energia" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Irregular — bons e maus dias sem padrão</span></div>
+      <div class="opt" data-group="b3_energia" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Consistente ao longo do dia</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Com que frequência você sente dificuldade de concentração?<span class="req">*</span></div>
+    <div class="opts" id="b3_foco">
+      <div class="opt" data-group="b3_foco" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Quase sempre — é meu estado padrão agora</span></div>
+      <div class="opt" data-group="b3_foco" data-score="2" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Com frequência — afeta meu trabalho</span></div>
+      <div class="opt" data-group="b3_foco" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Às vezes — em dias mais carregados</span></div>
+      <div class="opt" data-group="b3_foco" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Raramente</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Você tem esquecido coisas que antes não esquecia?<span class="req">*</span></div>
+    <div class="opts" id="b3_memoria">
+      <div class="opt" data-group="b3_memoria" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Sim, com frequência — isso me preocupa</span></div>
+      <div class="opt" data-group="b3_memoria" data-score="2" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Sim, mais do que antes</span></div>
+      <div class="opt" data-group="b3_memoria" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Raramente</span></div>
+      <div class="opt" data-group="b3_memoria" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Não percebo diferença</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Tomar decisões simples tem sido mais difícil?<span class="req">*</span></div>
+    <div class="opts" id="b3_decisao">
+      <div class="opt" data-group="b3_decisao" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Sim, decisões simples me travam ou cansam</span></div>
+      <div class="opt" data-group="b3_decisao" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Às vezes, em dias ruins</span></div>
+      <div class="opt" data-group="b3_decisao" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Não percebo diferença</span></div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- BLOCO 4: ESTRESSE -->
+<div class="section">
+  <div class="sec-header">
+    <div class="sec-num n4">4</div>
+    <div class="sec-info"><h3>Estresse e Sistema Nervoso</h3><p>Nível de ativação crônica do sistema de alerta</p></div>
+  </div>
+  <div class="q">
+    <div class="q-label">Nível médio de estresse nos últimos 3 meses:<span class="req">*</span></div>
+    <div class="scale-wrap" id="scale_estresse"></div>
+    <div class="scale-labels"><span class="scale-label">Sem estresse</span><span class="scale-label">Máximo</span></div>
+  </div>
+  <div class="q">
+    <div class="q-label">Você tem episódios de ansiedade ou irritação intensa?<span class="req">*</span></div>
+    <div class="opts" id="b4_ansiedade">
+      <div class="opt" data-group="b4_ansiedade" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Sim, com frequência — afeta meu dia e relacionamentos</span></div>
+      <div class="opt" data-group="b4_ansiedade" data-score="2" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Às vezes, em semanas mais pesadas</span></div>
+      <div class="opt" data-group="b4_ansiedade" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Raramente</span></div>
+      <div class="opt" data-group="b4_ansiedade" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Não percebo isso em mim</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Como você reage quando algo inesperado acontece?<span class="req">*</span></div>
+    <div class="opts" id="b4_reacao">
+      <div class="opt" data-group="b4_reacao" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Entro em colapso interno ou paraliso</span></div>
+      <div class="opt" data-group="b4_reacao" data-score="2" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Fico sobrecarregada e demoro a me reorganizar</span></div>
+      <div class="opt" data-group="b4_reacao" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Me afeto, mas resolvo</span></div>
+      <div class="opt" data-group="b4_reacao" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Absorvo bem e adapto rápido</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Você tem momentos reais de descanso mental durante a semana?<span class="req">*</span></div>
+    <div class="opts" id="b4_descanso">
+      <div class="opt" data-group="b4_descanso" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Não — não consigo me imaginar fazendo isso</span></div>
+      <div class="opt" data-group="b4_descanso" data-score="2" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Raramente e quando acontece me sinto culpada</span></div>
+      <div class="opt" data-group="b4_descanso" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Às vezes, mas difícil desligar de verdade</span></div>
+      <div class="opt" data-group="b4_descanso" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Sim, tenho esse espaço regularmente</span></div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- BLOCO 5: HÁBITOS -->
+<div class="section">
+  <div class="sec-header">
+    <div class="sec-num n5">5</div>
+    <div class="sec-info"><h3>Alimentação e Hábitos</h3><p>Inflamação silenciosa e carências nutricionais</p></div>
+  </div>
+  <div class="q">
+    <div class="q-label">Como você descreveria sua alimentação hoje?<span class="req">*</span></div>
+    <div class="opts" id="b5_alim">
+      <div class="opt" data-group="b5_alim" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Desregulada — pulo refeições, como no piloto automático</span></div>
+      <div class="opt" data-group="b5_alim" data-score="2" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Irregular — tem dias bons e ruins</span></div>
+      <div class="opt" data-group="b5_alim" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Razoável — poderia melhorar</span></div>
+      <div class="opt" data-group="b5_alim" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Equilibrada e consciente</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Quanto de água você bebe por dia?<span class="req">*</span></div>
+    <div class="opts" id="b5_agua">
+      <div class="opt" data-group="b5_agua" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Menos de 1 litro</span></div>
+      <div class="opt" data-group="b5_agua" data-score="2" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">1 a 1,5 litro</span></div>
+      <div class="opt" data-group="b5_agua" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">1,5 a 2 litros</span></div>
+      <div class="opt" data-group="b5_agua" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Mais de 2 litros</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Você pratica atividade física?<span class="req">*</span></div>
+    <div class="opts" id="b5_ativ">
+      <div class="opt" data-group="b5_ativ" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Não pratico nenhuma atividade</span></div>
+      <div class="opt" data-group="b5_ativ" data-score="2" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Raramente — quando sobra tempo</span></div>
+      <div class="opt" data-group="b5_ativ" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">1 a 2 vezes por semana</span></div>
+      <div class="opt" data-group="b5_ativ" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">3 ou mais vezes por semana</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Você usa suplementos? Se sim, quais e quem indicou?</div>
+    <textarea name="suplemento" style="min-height:60px" placeholder="Ex: vitamina D por conta própria..."></textarea>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- BLOCO 6: INTESTINO -->
+<div class="section">
+  <div class="sec-header">
+    <div class="sec-num n6">6</div>
+    <div class="sec-info"><h3>Saúde Intestinal</h3><p>O eixo intestino-cérebro e sua influência no humor e cognição</p></div>
+  </div>
+  <div class="q">
+    <div class="q-label">Como está o funcionamento do seu intestino?<span class="req">*</span></div>
+    <div class="opts" id="b6_intestino">
+      <div class="opt" data-group="b6_intestino" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Muito irregular — alternância entre prisão de ventre e diarreia</span></div>
+      <div class="opt" data-group="b6_intestino" data-score="2" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Lento — evacuação com dificuldade ou infrequente</span></div>
+      <div class="opt" data-group="b6_intestino" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Razoável — funciona mas com desconfortos ocasionais</span></div>
+      <div class="opt" data-group="b6_intestino" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Regular e sem desconfortos</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Você sente com frequência?</div>
+    <div class="opts" id="b6_sint_int">
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Inchaço abdominal após refeições</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Gases excessivos</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Refluxo ou azia</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Sensibilidade ou intolerância alimentar</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Nenhum dos acima</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Você percebe relação entre o que come e seu humor ou disposição mental?<span class="req">*</span></div>
+    <div class="opts" id="b6_gut_brain">
+      <div class="opt" data-group="b6_gut_brain" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Sim, claramente — certos alimentos me deixam mais ansiosa ou com névoa mental</span></div>
+      <div class="opt" data-group="b6_gut_brain" data-score="2" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Às vezes, mas não consigo identificar o padrão</span></div>
+      <div class="opt" data-group="b6_gut_brain" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Nunca havia pensado nisso</span></div>
+      <div class="opt" data-group="b6_gut_brain" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Não percebo relação</span></div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- BLOCO 7: EMOCIONAL E TRANSGERACIONAL -->
+<div class="section">
+  <div class="sec-header">
+    <div class="sec-num n7">7</div>
+    <div class="sec-info"><h3>Campo Emocional e Transgeracional</h3><p>Padrões emocionais, traumas e heranças familiares que drenam energia mental</p></div>
+  </div>
+  <div class="q">
+    <div class="q-label">Como você avalia sua carga emocional atual?<span class="req">*</span></div>
+    <div class="opts" id="b7_carga">
+      <div class="opt" data-group="b7_carga" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Muito pesada — carrego emoções que não consigo processar</span></div>
+      <div class="opt" data-group="b7_carga" data-score="2" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Moderada — tem coisas acumuladas que ainda não resolvi</span></div>
+      <div class="opt" data-group="b7_carga" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Leve — consigo processar razoavelmente bem</span></div>
+      <div class="opt" data-group="b7_carga" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Equilibrada</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Você percebe emoções que se repetem e parecem difíceis de soltar?</div>
+    <div class="opts" id="b7_emocoes">
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Culpa constante — mesmo sem motivo claro</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Medo que não tem origem definida</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Tristeza ou vazio que aparece sem razão</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Raiva ou ressentimento que não passa</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Sensação de não pertencimento ou solidão</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Não identifico padrão emocional específico</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Você percebe padrões que se repetem na sua família — comportamentos, adoecimentos ou histórias que parecem se transmitir de geração em geração?<span class="req">*</span></div>
+    <div class="opts" id="b7_transger">
+      <div class="opt" data-group="b7_transger" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Sim, claramente — e percebo esses padrões em mim</span></div>
+      <div class="opt" data-group="b7_transger" data-score="2" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Tenho essa suspeita mas nunca aprofundei</span></div>
+      <div class="opt" data-group="b7_transger" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Nunca havia pensado nisso</span></div>
+      <div class="opt" data-group="b7_transger" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Não percebo esse padrão</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Houve eventos de vida significativos (perdas, traumas, mudanças abruptas) que você sente que ainda carrega?</div>
+    <textarea name="traumas" placeholder="Descreva brevemente se quiser — essa informação ajuda a personalizar o protocolo..."></textarea>
+  </div>
+  <div class="q">
+    <div class="q-label">Você tem ou já teve dificuldade em estabelecer limites com pessoas próximas?<span class="req">*</span></div>
+    <div class="opts" id="b7_limites">
+      <div class="opt" data-group="b7_limites" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Sim, dificuldade significativa — diz sim quando quer dizer não</span></div>
+      <div class="opt" data-group="b7_limites" data-score="2" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Às vezes — depende da situação e da pessoa</span></div>
+      <div class="opt" data-group="b7_limites" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Raramente</span></div>
+      <div class="opt" data-group="b7_limites" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Consigo estabelecer limites com facilidade</span></div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- BLOCO 8: HISTÓRICO -->
+<div class="section">
+  <div class="sec-header">
+    <div class="sec-num n8">8</div>
+    <div class="sec-info"><h3>Histórico e Sinais do Corpo</h3><p>Padrões que você normalizou mas que são sinais reais</p></div>
+  </div>
+  <div class="q">
+    <div class="q-label">Você já teve diagnóstico de burnout, depressão, ansiedade ou transtorno relacionado a estresse?<span class="req">*</span></div>
+    <div class="opts" id="b8_diag">
+      <div class="opt" data-group="b8_diag" data-score="3" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Sim, tive diagnóstico e ainda sinto os efeitos</span></div>
+      <div class="opt" data-group="b8_diag" data-score="2" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Sim, me recuperei — mas reconheço padrões voltando</span></div>
+      <div class="opt" data-group="b8_diag" data-score="1" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Nunca fui diagnosticada mas suspeito que sim</span></div>
+      <div class="opt" data-group="b8_diag" data-score="0" onclick="selectOpt(this)"><div class="opt-indicator"></div><span class="opt-text">Não</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Nos últimos 12 meses, quais sintomas físicos você percebe com frequência?</div>
+    <div class="opts" id="b8_sint">
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Dor de cabeça frequente</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Queda de cabelo além do normal</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Baixa imunidade — adoece com frequência</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Ganho de peso sem mudança de hábito</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Palpitações ou coração acelerado</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Tensão muscular constante (pescoço, ombros, mandíbula)</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Nenhum dos acima</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Você usa ou já usou medicamento psiquiátrico? Como foi/está sendo?</div>
+    <textarea name="medicamento" style="min-height:60px" placeholder="Ex: antidepressivo por 2 anos, não sentia melhora real..."></textarea>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- BLOCO 9: INTENÇÃO -->
+<div class="section">
+  <div class="sec-header">
+    <div class="sec-num n9">9</div>
+    <div class="sec-info"><h3>Expectativa e Intenção</h3><p>O que te trouxe aqui e o que você quer mudar</p></div>
+  </div>
+  <div class="q">
+    <div class="q-label">O que te trouxe até esse diagnóstico agora?<span class="req">*</span></div>
+    <textarea name="motivo" placeholder="O que aconteceu — ou o que você percebeu — que fez você buscar isso? Essa é a pergunta mais importante do formulário."></textarea>
+  </div>
+  <div class="q">
+    <div class="q-label">O que você já tentou antes para resolver esse cansaço ou esses sintomas?</div>
+    <textarea name="tentativas" placeholder="O que funcionou, mesmo que parcialmente? O que não funcionou?"></textarea>
+  </div>
+  <div class="q">
+    <div class="q-label">Qual seria o resultado ideal para você após esse processo?<span class="req">*</span></div>
+    <textarea name="resultado" placeholder="O que mudaria na sua vida se você resolvesse isso de vez?"></textarea>
+  </div>
+  <div class="q">
+    <div class="q-label">Tem algo que você quer que eu saiba antes da nossa sessão?</div>
+    <textarea name="extra" placeholder="Espaço livre para o que precisar..."></textarea>
+  </div>
+</div>
+
+<div class="submit-wrap">
+  <button type="button" class="btn-primary" onclick="calcular()">Ver meu Mapa de Esgotamento</button>
+  <div class="submit-note">Seu resultado é gerado automaticamente. A devolutiva personalizada chega após a sessão.</div>
+</div>
+</form>
+
+</div><!-- /formWrap -->
+
+<!-- RESULTADO PARTE 1 -->
+<div class="result-wrap" id="resultWrap">
+  <div class="divider"></div>
+  <div style="font-size:11px;font-weight:600;color:var(--dourado-dark);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem;">Parte 1 — Mapa de Esgotamento</div>
+
+  <div class="result-hero">
+    <div class="rh-top">
+      <div class="rh-tag">Índice de Esgotamento — quanto maior, mais atenção necessária</div>
+      <div><span class="rh-score" id="scoreNum">—</span><span class="rh-max"> / 100</span></div>
+      <span class="rh-badge" id="scoreBadge">—</span>
+    </div>
+    <div class="rh-bottom"><div class="rh-desc" id="scoreDesc">—</div></div>
+  </div>
+
+  <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px;">Radar de Esgotamento por Domínio</div>
+  <div class="radar-wrap">
+    <canvas id="radar" width="320" height="270"></canvas>
+  </div>
+
+  <div class="domain-cards" id="domainCards"></div>
+
+  <div class="disclaimer-result">
+    <strong>Lembre-se:</strong> Este índice é uma ferramenta de apoio integrativo — não é diagnóstico médico ou avaliação cognitiva formal. Não substitui acompanhamento profissional e não deve motivar a interrupção de nenhum tratamento em curso.
+  </div>
+
+  <div class="devolutiva-aviso">
+    <div class="da-tag">O que vem a seguir</div>
+    <div class="da-title">A devolutiva personalizada chega depois da sua sessão.</div>
+    <div class="da-text">O mapa acima mostra seu quadro atual. A interpretação profunda — o que está por trás de cada número, o que faz sentido para a sua história específica e qual caminho seguir — é o que vamos construir juntas na sessão.</div>
+    <div class="da-steps">
+      <div class="da-step"><div class="da-step-num">1</div><div class="da-step-text">Você preenche este formulário</div></div>
+      <div class="da-step"><div class="da-step-num">2</div><div class="da-step-text">Fazemos a sessão de diagnóstico — com este mapa como ponto de partida</div></div>
+      <div class="da-step"><div class="da-step-num">3</div><div class="da-step-text">Você recebe o Relatório Completo com devolutiva personalizada e protocolo individual</div></div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:1.5rem;">
+    <button type="button" class="btn-secondary" onclick="window.print()">Imprimir / Salvar Mapa</button>
+  </div>
+</div>
+
+<!-- ACESSO TERAPEUTA — discreto, sem destaque -->
+<div id="terapeutaAcesso" style="text-align:center; margin-top:3rem; display:none;">
+  <div style="width:32px;height:1px;background:var(--border);margin:0 auto 16px;"></div>
+  <button type="button" onclick="abrirAreaTerapeuta()" style="background:none;border:none;font-size:11px;color:var(--text-ter);cursor:pointer;font-family:var(--font-body);letter-spacing:0.04em;padding:8px 16px;border-radius:20px;transition:all 0.2s;" onmouseover="this.style.background='var(--bg2)'" onmouseout="this.style.background='none'">
+    Área da Terapeuta
+  </button>
+</div>
+
+<!-- MODAL SENHA -->
+<div id="senhaModal" style="display:none;position:fixed;inset:0;background:rgba(26,26,26,0.6);z-index:999;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+  <div style="background:white;border-radius:var(--radius);padding:2rem;max-width:360px;width:90%;margin:0 auto;box-shadow:0 24px 64px rgba(0,0,0,0.2);">
+    <div style="font-size:10px;font-weight:700;color:var(--dourado-dark);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;font-family:var(--font-body);">Acesso restrito</div>
+    <div style="font-size:18px;font-weight:600;color:var(--preto);font-family:var(--font-heading);margin-bottom:6px;">Área da Terapeuta</div>
+    <div style="font-size:13px;color:var(--cinza);margin-bottom:20px;font-family:var(--font-body);line-height:1.6;">Digite a senha para acessar o formulário de devolutiva.</div>
+    <input type="password" id="senhaInput" placeholder="Senha" style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:var(--font-body);margin-bottom:8px;color:var(--preto);" onkeydown="if(event.key==='Enter')verificarSenha()">
+    <div id="senhaErro" style="font-size:12px;color:var(--vermelho);margin-bottom:12px;display:none;font-family:var(--font-body);">Senha incorreta. Tente novamente.</div>
+    <div style="display:flex;gap:8px;">
+      <button type="button" onclick="fecharModal()" style="flex:1;padding:12px;border:1.5px solid var(--border);background:white;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-body);color:var(--cinza);">Cancelar</button>
+      <button type="button" onclick="verificarSenha()" style="flex:2;padding:12px;background:var(--verde);border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-body);color:white;">Entrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- RELATÓRIO COMPLETO (TERAPEUTA) — oculto por padrão -->
+<div class="relatorio" id="relatorio" style="display:none;">
+  <div class="rel-divider"></div>
+  <div style="font-size:11px;font-weight:600;color:var(--dourado-dark);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem;font-family:var(--font-body);">Área da Terapeuta — Devolutiva Personalizada</div>
+
+  <div class="rel-cover">
+    <div class="rel-cover-tag">Protocolo Mente Blindada</div>
+    <div class="rel-cover-title">Relatório de Diagnóstico Integrativo</div>
+    <div class="rel-cover-sub">Documento personalizado · Uso exclusivo da paciente</div>
+  </div>
+
+  <div class="rel-meta" id="relMeta"></div>
+
+  <div style="margin-bottom:1.5rem;">
+    <div class="rel-sec-title">Mapa Cerebral — Resultado por Domínio</div>
+    <div class="radar-wrap"><canvas id="radar2" width="320" height="270"></canvas></div>
+    <div id="relDomains"></div>
+  </div>
+
+  <!-- FORMULÁRIO DA TERAPEUTA -->
+  <div class="dev-form">
+    <div class="dev-form-header">
+      <div class="dev-form-tag">Campo exclusivo — Terapeuta</div>
+      <div class="dev-form-title">Preencha após a sessão</div>
+      <div class="dev-form-sub">Esses campos são visíveis apenas para você. O relatório final gerado será o documento entregue à paciente.</div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
+        <div style="font-size:12px;color:var(--cinza);margin-bottom:10px;font-family:var(--font-body);line-height:1.6;">A IA lê todas as respostas da paciente e gera um rascunho completo para você revisar e ajustar.</div>
+        <div class="ai-loading" id="aiLoading">
+          <div class="ai-spinner"></div>
+          <span class="ai-loading-text">Analisando respostas e gerando rascunho clínico...</span>
+        </div>
+        <button type="button" class="ai-btn" id="btnIA" onclick="gerarRascunhoIA()">
+          <span>✦</span> Gerar rascunho com IA
+        </button>
+        <div style="font-size:11px;color:var(--text-ter);margin-top:8px;font-family:var(--font-body);">O rascunho preenche os campos abaixo automaticamente. Revise e ajuste antes de gerar o relatório.</div>
+      </div>
+    </div>
+
+    <div class="dev-field">
+      <label>Interpretação geral do quadro</label>
+      <textarea id="dev_interpretacao" placeholder="Como você lê o conjunto dos dados? O que se destaca na história dessa paciente além dos números?"></textarea>
+      <div class="dev-hint">Esta seção substitui o texto automático — aqui fica a sua leitura clínica.</div>
+    </div>
+
+    <div class="dev-field">
+      <label>Padrão emocional e transgeracional identificado</label>
+      <textarea id="dev_transger" placeholder="O que você percebeu no campo emocional e nas heranças familiares? Há padrões que precisam ser nomeados?"></textarea>
+    </div>
+
+    <div class="dev-field">
+      <label>Eixo intestino-cérebro — observações clínicas</label>
+      <textarea id="dev_intestino" placeholder="Com base nas respostas sobre intestino e alimentação, o que você observa? Há inflamação silenciosa, disbiose, sensibilidades que precisam de atenção?"></textarea>
+    </div>
+
+    <div class="dev-field">
+      <label>Protocolo recomendado — primeiros passos</label>
+      <textarea id="dev_protocolo" placeholder="Quais são os primeiros passos práticos personalizados para essa paciente? Na ordem que faz sentido para o quadro dela."></textarea>
+    </div>
+
+    <div class="dev-field">
+      <label>Mensagem personalizada para a paciente</label>
+      <textarea id="dev_mensagem" placeholder="Uma mensagem direta, humana e personalizada. O que você quer que ela leve desse diagnóstico?"></textarea>
+      <div class="dev-hint">Essa é a parte que mais impacta. Escreva como se estivesse falando com ela — não como um laudo.</div>
+    </div>
+
+    <div class="dev-field">
+      <label>Data da sessão</label>
+      <input type="text" id="dev_data" placeholder="Ex: 30 de abril de 2026">
+    </div>
+
+    <div class="dev-generate-btn">
+      <button type="button" class="btn-primary" onclick="gerarDevolutiva()">Gerar Relatório Final</button>
+    </div>
+  </div>
+
+  <!-- DEVOLUTIVA FINAL GERADA -->
+  <div class="dev-final" id="devFinal">
+    <div class="rel-sec-title">Relatório Final — Para a Paciente</div>
+
+    <div class="dev-final-card">
+      <div class="dfc-header">
+        <div class="dfc-tag">Mensagem da sua terapeuta</div>
+        <div class="dfc-title">Palavras para você</div>
+      </div>
+      <div class="dfc-body" id="df_mensagem"></div>
+    </div>
+
+    <div class="dev-final-card">
+      <div class="dfc-header" style="background:var(--verde-ultra);">
+        <div class="dfc-tag" style="color:var(--verde);">Leitura do seu quadro</div>
+        <div class="dfc-title" style="color:var(--verde);">Interpretação clínica integrada</div>
+      </div>
+      <div class="dfc-section">
+        <div class="dfc-section-label">Quadro geral</div>
+        <div class="dfc-section-text" id="df_interpretacao"></div>
+      </div>
+      <div class="dfc-section" id="df_transger_wrap">
+        <div class="dfc-section-label">Campo emocional e transgeracional</div>
+        <div class="dfc-section-text" id="df_transger"></div>
+      </div>
+      <div class="dfc-section" id="df_intestino_wrap">
+        <div class="dfc-section-label">Eixo intestino-cérebro</div>
+        <div class="dfc-section-text" id="df_intestino"></div>
+      </div>
+    </div>
+
+    <div class="dev-final-card">
+      <div class="dfc-header" style="background:var(--verde-ultra);">
+        <div class="dfc-tag" style="color:var(--verde);">Seu caminho</div>
+        <div class="dfc-title" style="color:var(--verde);">Protocolo personalizado — primeiros passos</div>
+      </div>
+      <div class="dfc-body" id="df_protocolo"></div>
+    </div>
+
+    <div class="assinatura">
+      <div class="assinatura-linha"></div>
+      <div class="assinatura-nome">Naturopatia e Terapia Integrativa</div>
+      <div class="assinatura-cargo">Protocolo Mente Blindada · Saúde Cerebral e Longevidade</div>
+      <div class="assinatura-cargo" id="df_data_emissao" style="margin-top:4px;"></div>
+    </div>
+
+    <div class="disclaimer-result" style="margin-top:1rem;">
+      Este relatório é um documento clínico integrativo personalizado. Não é diagnóstico médico formal e não substitui acompanhamento profissional de saúde. Não interrompa tratamentos em curso sem orientação médica.
+    </div>
+
+    <div style="text-align:center;margin-top:1.5rem;">
+      <button type="button" class="btn-secondary" onclick="window.print()">Imprimir / Salvar Relatório Completo</button>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;font-size:12px;color:var(--cinza);margin-top:3rem;line-height:1.6;font-family:var(--font-body);padding-bottom:2rem;">
+  <div style="width:32px;height:1px;background:var(--dourado);margin:0 auto 12px;"></div>
+  Protocolo Mente Blindada · Naturopatia e Terapia Integrativa<br>
+  Documento confidencial · Uso clínico exclusivo
+</div>
+
+</div><!-- /main -->
+
+<script>
+const sc = {};
+
+// LEAD DATA
+let leadData = { nome: '', email: '', whatsapp: '' };
+
+function iniciarFormulario() {
+  const nome = document.getElementById('lead_nome').value.trim();
+  const email = document.getElementById('lead_email').value.trim();
+  const whatsapp = document.getElementById('lead_whatsapp').value.trim();
+  if (!nome || !email || !whatsapp) {
+    document.getElementById('leadErro').style.display = 'block';
+    return;
+  }
+  leadData = { nome, email, whatsapp };
+  document.getElementById('leadScreen').style.display = 'none';
+  document.getElementById('formWrap').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function coletarRespostasTexto() {
+  const form = document.getElementById('form');
+  let partes = [`PACIENTE: ${leadData.nome}`];
+  form.querySelectorAll('.opt.sel .opt-text').forEach(op => partes.push('— ' + op.textContent.trim()));
+  form.querySelectorAll('textarea').forEach(t => { if (t.value.trim()) partes.push(t.value.trim()); });
+  return partes.join('\n');
+}
+
+async function gerarRascunhoIA() {
+  const btn = document.getElementById('btnIA');
+  const loading = document.getElementById('aiLoading');
+  btn.disabled = true;
+  loading.classList.add('visible');
+
+  const respostas = coletarRespostasTexto();
+  const nome = leadData.nome || 'a paciente';
+
+  const prompt = `Você é uma naturopata e terapeuta integrativa especializada em saúde cerebral e longevidade.
+Analise as respostas da anamnese de ${nome} e gere uma devolutiva clínica integrativa em português brasileiro.
+
+RESPOSTAS:
+${respostas}
+
+Gere exatamente 4 seções separadas por "|||":
+
+SEÇÃO 1 — Interpretação geral (3-4 parágrafos): leitura clínica integrada, o que se destaca, como os domínios se interligam. Tom profissional mas humano.
+
+SEÇÃO 2 — Campo emocional e transgeracional (2-3 parágrafos): padrões emocionais, possíveis heranças familiares, emoções que drenam energia mental.
+
+SEÇÃO 3 — Eixo intestino-cérebro (2 parágrafos): relação entre saúde intestinal e cognição, humor e energia.
+
+SEÇÃO 4 — Protocolo — primeiros passos (lista numerada com 5-7 passos práticos personalizados, na ordem certa de intervenção).
+
+Responda APENAS com as 4 seções separadas por |||. Sem títulos, sem introdução.`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await response.json();
+    const texto = data.content?.[0]?.text || '';
+    const secoes = texto.split('|||').map(s => s.trim());
+    if (secoes.length >= 4) {
+      document.getElementById('dev_interpretacao').value = secoes[0];
+      document.getElementById('dev_transger').value = secoes[1];
+      document.getElementById('dev_intestino').value = secoes[2];
+      document.getElementById('dev_protocolo').value = secoes[3];
+    } else {
+      document.getElementById('dev_interpretacao').value = texto;
+    }
+    document.getElementById('dev_interpretacao').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (err) {
+    alert('Erro ao gerar rascunho. Verifique sua conexão e tente novamente.');
+  } finally {
+    btn.disabled = false;
+    loading.classList.remove('visible');
+  }
+}
+
+// ESCALA — gera botões dinamicamente
+function buildScale(id, max, scores) {
+  const wrap = document.getElementById(id);
+  if (!wrap) return;
+  for (let i = 1; i <= max; i++) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'scale-btn';
+    btn.textContent = i;
+    const scoreVal = scores[i-1];
+    btn.onclick = function() {
+      wrap.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('sel'));
+      this.classList.add('sel');
+      sc[id] = scoreVal;
+      update();
+    };
+    wrap.appendChild(btn);
+  }
+}
+
+buildScale('scale_sono', 5, [3,2,2,1,0]);
+buildScale('scale_estresse', 10, [0,0,1,1,2,2,3,3,3,3]);
+
+// SELECIONAR OPÇÃO ÚNICA
+function selectOpt(el) {
+  const group = el.dataset.group;
+  if (!group) return;
+  document.querySelectorAll(`[data-group="${group}"]`).forEach(o => o.classList.remove('sel'));
+  el.classList.add('sel');
+  sc[group] = parseFloat(el.dataset.score);
+  update();
+}
+
+// TOGGLE MÚLTIPLA ESCOLHA
+function toggleOpt(el) {
+  el.classList.toggle('sel');
+}
+
+// PROGRESSO
+function update() {
+  const req = ['b2_horas','b2_acorda','b2_acordar','b3_energia','b3_foco','b3_memoria','b3_decisao','scale_estresse','b4_ansiedade','b4_reacao','b4_descanso','b5_alim','b5_agua','b5_ativ','b6_intestino','b6_gut_brain','b7_carga','b7_transger','b7_limites','b8_diag','scale_sono'];
+  const filled = req.filter(k => sc[k] !== undefined).length;
+  document.getElementById('pFill').style.width = (filled/req.length*100)+'%';
+  updateBar();
+}
+
+function domScore(keys) {
+  const vals = keys.map(k => sc[k]).filter(v => v !== undefined);
+  if (!vals.length) return null;
+  return Math.round((vals.reduce((a,b)=>a+b,0) / (keys.length*3))*100);
+}
+
+function updateBar() {
+  const map = {
+    'ds-s': ['b2_horas','scale_sono','b2_acorda','b2_acordar'],
+    'ds-e': ['b3_energia','b3_foco','b3_memoria','b3_decisao'],
+    'ds-st': ['scale_estresse','b4_ansiedade','b4_reacao','b4_descanso'],
+    'ds-h': ['b5_alim','b5_agua','b5_ativ'],
+    'ds-em': ['b7_carga','b7_transger','b7_limites'],
+    'ds-in': ['b6_intestino','b6_gut_brain']
+  };
+  let tot=0, cnt=0;
+  for (const [id, keys] of Object.entries(map)) {
+    const s = domScore(keys);
+    document.getElementById(id).textContent = s!==null ? s+'%' : '—';
+    if (s!==null) { tot+=s; cnt++; }
+  }
+  document.getElementById('ds-g').textContent = cnt>0 ? Math.round(tot/cnt)+'%' : '—';
+}
+
+function calcular() {
+  const sono = domScore(['b2_horas','scale_sono','b2_acorda','b2_acordar']) ?? 50;
+  const energia = domScore(['b3_energia','b3_foco','b3_memoria','b3_decisao']) ?? 50;
+  const estresse = domScore(['scale_estresse','b4_ansiedade','b4_reacao','b4_descanso']) ?? 50;
+  const habitos = domScore(['b5_alim','b5_agua','b5_ativ']) ?? 50;
+  const emocional = domScore(['b7_carga','b7_transger','b7_limites']) ?? 50;
+  const intestino = domScore(['b6_intestino','b6_gut_brain']) ?? 50;
+  const historico = domScore(['b8_diag']) ?? 50;
+
+  const geral = Math.round(sono*0.20 + energia*0.20 + estresse*0.20 + habitos*0.10 + emocional*0.15 + intestino*0.10 + historico*0.05);
+
+  document.getElementById('scoreNum').textContent = geral;
+
+  let badge, badgeClass, desc;
+  if (geral >= 60) {
+    badge = '🔴 Esgotamento Elevado'; badgeClass = 'badge-red';
+    desc = 'Múltiplos domínios comprometidos simultaneamente. O corpo está mandando sinais claros há algum tempo. Com protocolo adequado e na ordem certa, a recuperação é real e mensurável.';
+  } else if (geral >= 35) {
+    badge = '🟡 Esgotamento Moderado'; badgeClass = 'badge-amber';
+    desc = 'Domínios específicos já comprometidos enquanto outros ainda se mantêm. Esse é o momento ideal para intervir — antes de avançar para um quadro mais complexo.';
+  } else {
+    badge = '🟢 Esgotamento Baixo'; badgeClass = 'badge-green';
+    desc = 'Equilíbrio razoável na maioria dos domínios. O protocolo vai trabalhar em modo de otimização e blindagem preventiva.';
+  }
+
+  document.getElementById('scoreBadge').textContent = badge;
+  document.getElementById('scoreBadge').className = 'rh-badge ' + badgeClass;
+  document.getElementById('scoreDesc').textContent = desc;
+
+  const domains = [
+    { name: 'Sono e Recuperação', score: sono, keys:[] },
+    { name: 'Energia e Mente', score: energia },
+    { name: 'Estresse e Sistema Nervoso', score: estresse },
+    { name: 'Alimentação e Hábitos', score: habitos },
+    { name: 'Campo Emocional e Transgeracional', score: emocional },
+    { name: 'Saúde Intestinal', score: intestino },
+    { name: 'Histórico e Sinais', score: historico }
+  ];
+
+  const interps = {
+    'Sono e Recuperação': { a:'Sono profundamente comprometido. O corpo não está se recuperando entre os ciclos de esforço.', m:'Sono irregular com impacto direto na recuperação. Intervenção necessária.', b:'Sono razoavelmente preservado. Otimizar e manter.' },
+    'Energia e Mente': { a:'Depleção cognitiva significativa — névoa mental, falhas de memória e foco comprometido.', m:'Energia e foco oscilantes com impacto na produtividade. Estabilização necessária.', b:'Clareza mental preservada. Manter os hábitos que sustentam isso.' },
+    'Estresse e Sistema Nervoso': { a:'Sistema nervoso em modo de alerta crônico. Intervenção prioritária.', m:'Estresse elevado com respostas reativas. Regulação estratégica necessária.', b:'Boa capacidade de regulação emocional. Aprofundar e preservar.' },
+    'Alimentação e Hábitos': { a:'Hábitos desregulados contribuindo para inflamação silenciosa e depleção nutricional.', m:'Hábitos inconsistentes. Ajustes simples trariam ganhos rápidos.', b:'Base de hábitos razoável. Refinamentos pontuais para otimizar.' },
+    'Campo Emocional e Transgeracional': { a:'Carga emocional significativa com padrões que se repetem e drenam energia mental.', m:'Padrões emocionais presentes que merecem atenção e elaboração.', b:'Campo emocional razoavelmente equilibrado. Aprofundar o autoconhecimento.' },
+    'Saúde Intestinal': { a:'Eixo intestino-cérebro comprometido — impacto direto no humor, energia e cognição.', m:'Sinais de desequilíbrio intestinal que interferem no funcionamento cerebral.', b:'Função intestinal razoável. Cuidar da microbiota como prevenção.' },
+    'Histórico e Sinais': { a:'Histórico relevante que precisa ser cuidadosamente considerado no protocolo.', m:'Sinais que merecem atenção individualizada.', b:'Histórico sem fatores críticos identificados. Foco em prevenção.' }
+  };
+
+  // Cards
+  let cardsHtml = '';
+  domains.forEach(d => {
+    const bc = d.score>=60?'badge-red':d.score>=35?'badge-amber':'badge-green';
+    const bl = d.score>=60?'Atenção Elevada':d.score>=35?'Atenção Moderada':'Equilibrado';
+    const bc2 = d.score>=60?'#E53E3E':d.score>=35?'#D97706':'#0F6E56';
+    const txt = d.score>=60?interps[d.name].a:d.score>=35?interps[d.name].m:interps[d.name].b;
+    cardsHtml += `<div class="dc"><div class="dc-top"><div class="dc-name">${d.name}</div><span class="dc-badge ${bc}">${bl} · ${d.score}%</span></div><div class="dc-bar-bg"><div class="dc-bar-fill" style="width:${d.score}%;background:${bc2}"></div></div><div class="dc-interp">${txt}</div></div>`;
+  });
+  document.getElementById('domainCards').innerHTML = cardsHtml;
+
+  drawRadar('radar', domains);
+
+  document.getElementById('resultWrap').classList.add('visible');
+  document.getElementById('terapeutaAcesso').style.display = 'block';
+  setTimeout(() => document.getElementById('resultWrap').scrollIntoView({behavior:'smooth',block:'start'}), 300);
+
+  // Prepara seção do relatório
+  const hoje = new Date();
+  const dataStr = hoje.toLocaleDateString('pt-BR', {day:'numeric',month:'long',year:'numeric'});
+  const reap = new Date(hoje); reap.setDate(hoje.getDate()+60);
+  const reapStr = reap.toLocaleDateString('pt-BR', {day:'numeric',month:'long',year:'numeric'});
+
+  document.getElementById('relMeta').innerHTML = `
+    <div class="rel-meta-item" style="grid-column:1/-1;border-left:3px solid var(--dourado);">
+      <div class="rmi-label">Paciente</div>
+      <div class="rmi-val">${leadData.nome || '—'}</div>
+      <div style="font-size:11px;color:var(--cinza);margin-top:3px;font-family:var(--font-body);">${leadData.email || ''} ${leadData.whatsapp ? '· ' + leadData.whatsapp : ''}</div>
+    </div>
+    <div class="rel-meta-item"><div class="rmi-label">Índice Geral</div><div class="rmi-val" style="color:${geral>=60?'var(--vermelho)':geral>=35?'var(--dourado-dark)':'var(--verde)'}">${geral}% — ${geral>=60?'Elevado':geral>=35?'Moderado':'Baixo'}</div></div>
+    <div class="rel-meta-item"><div class="rmi-label">Domínio Crítico</div><div class="rmi-val">${domains.sort((a,b)=>b.score-a.score)[0].name}</div></div>
+    <div class="rel-meta-item"><div class="rmi-label">Emissão</div><div class="rmi-val">${dataStr}</div></div>
+    <div class="rel-meta-item"><div class="rmi-label">Reaplicação</div><div class="rmi-val">${reapStr}</div></div>
+  `;
+
+  let relCardsHtml = '';
+  domains.forEach(d => {
+    const bc = d.score>=60?'badge-red':d.score>=35?'badge-amber':'badge-green';
+    const bl = d.score>=60?'Atenção Elevada':d.score>=35?'Atenção Moderada':'Equilibrado';
+    const bc2 = d.score>=60?'#E53E3E':d.score>=35?'#D97706':'#0F6E56';
+    const txt = d.score>=60?interps[d.name].a:d.score>=35?interps[d.name].m:interps[d.name].b;
+    relCardsHtml += `<div class="dc" style="margin-bottom:8px"><div class="dc-top"><div class="dc-name">${d.name}</div><span class="dc-badge ${bc}">${bl} · ${d.score}%</span></div><div class="dc-bar-bg"><div class="dc-bar-fill" style="width:${d.score}%;background:${bc2}"></div></div><div class="dc-interp">${txt}</div></div>`;
+  });
+  document.getElementById('relDomains').innerHTML = relCardsHtml;
+  drawRadar('radar2', domains);
+
+  document.getElementById('relatorio').classList.add('visible-ready');
+
+  // restore sort
+  domains.sort((a,b) => {
+    const order = ['Sono e Recuperação','Energia e Mente','Estresse e Sistema Nervoso','Alimentação e Hábitos','Campo Emocional e Transgeracional','Saúde Intestinal','Histórico e Sinais'];
+    return order.indexOf(a.name) - order.indexOf(b.name);
+  });
+
+  updateBar();
+}
+
+function drawRadar(canvasId, domains) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const labels = domains.map(d => d.name.split(' e ')[0].split(' e\n')[0]);
+  const vals = domains.map(d => d.score);
+  const n = vals.length;
+  const size = 95, cx = 160, cy = 138;
+  const angles = vals.map((_, i) => (Math.PI*2*i/n) - Math.PI/2);
+
+  ctx.clearRect(0, 0, 320, 270);
+
+  for (let r = 1; r <= 4; r++) {
+    ctx.beginPath();
+    angles.forEach((a,i) => { const x=cx+(size*r/4)*Math.cos(a), y=cy+(size*r/4)*Math.sin(a); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
+    ctx.closePath(); ctx.strokeStyle='#E4E2DC'; ctx.lineWidth=1; ctx.stroke();
+  }
+  angles.forEach(a => { ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+size*Math.cos(a),cy+size*Math.sin(a)); ctx.strokeStyle='#E4E2DC'; ctx.lineWidth=1; ctx.stroke(); });
+
+  ctx.beginPath();
+  vals.forEach((v,i) => { const r=(v/100)*size, x=cx+r*Math.cos(angles[i]), y=cy+r*Math.sin(angles[i]); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
+  ctx.closePath(); ctx.fillStyle='rgba(31,61,58,0.12)'; ctx.fill(); ctx.strokeStyle='#1F3D3A'; ctx.lineWidth=2; ctx.stroke();
+
+  vals.forEach((v,i) => {
+    const r=(v/100)*size, x=cx+r*Math.cos(angles[i]), y=cy+r*Math.sin(angles[i]);
+    ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2);
+    ctx.fillStyle=v>=60?'#7A2020':v>=35?'#A08947':'#1F3D3A'; ctx.fill();
+  });
+
+  ctx.font='10px -apple-system,sans-serif'; ctx.fillStyle='#888480'; ctx.textAlign='center';
+  labels.forEach((label,i) => {
+    const r=size+20, x=cx+r*Math.cos(angles[i]), y=cy+r*Math.sin(angles[i]);
+    ctx.fillText(label, x, y+4);
+  });
+}
+
+function gerarDevolutiva() {
+  const interp = document.getElementById('dev_interpretacao').value.trim();
+  const transger = document.getElementById('dev_transger').value.trim();
+  const intestino = document.getElementById('dev_intestino').value.trim();
+  const protocolo = document.getElementById('dev_protocolo').value.trim();
+  const mensagem = document.getElementById('dev_mensagem').value.trim();
+  const data = document.getElementById('dev_data').value.trim();
+
+  if (!interp || !protocolo || !mensagem) {
+    alert('Preencha ao menos: interpretação, protocolo e mensagem personalizada.');
+    return;
+  }
+
+  document.getElementById('df_mensagem').textContent = mensagem;
+  document.getElementById('df_interpretacao').textContent = interp;
+
+  if (transger) {
+    document.getElementById('df_transger').textContent = transger;
+    document.getElementById('df_transger_wrap').style.display = 'block';
+  } else {
+    document.getElementById('df_transger_wrap').style.display = 'none';
+  }
+
+  if (intestino) {
+    document.getElementById('df_intestino').textContent = intestino;
+    document.getElementById('df_intestino_wrap').style.display = 'block';
+  } else {
+    document.getElementById('df_intestino_wrap').style.display = 'none';
+  }
+
+  document.getElementById('df_protocolo').textContent = protocolo;
+
+  const hoje = new Date();
+  const emissao = hoje.toLocaleDateString('pt-BR', {day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('df_data_emissao').textContent = data ? `Sessão realizada em ${data} · Relatório emitido em ${emissao}` : `Emitido em ${emissao}`;
+
+  const devFinal = document.getElementById('devFinal');
+  devFinal.classList.add('visible');
+  setTimeout(() => devFinal.scrollIntoView({behavior:'smooth',block:'start'}), 300);
+}
+
+function abrirAreaTerapeuta() {
+  document.getElementById('senhaModal').style.display = 'flex';
+  setTimeout(() => document.getElementById('senhaInput').focus(), 100);
+}
+
+function fecharModal() {
+  document.getElementById('senhaModal').style.display = 'none';
+  document.getElementById('senhaInput').value = '';
+  document.getElementById('senhaErro').style.display = 'none';
+}
+
+function verificarSenha() {
+  // Defina sua senha aqui — troque "menteblindata2025" pela senha que preferir
+  const SENHA = 'menteblindata2025';
+  const input = document.getElementById('senhaInput').value;
+  if (input === SENHA) {
+    fecharModal();
+    const rel = document.getElementById('relatorio');
+    rel.style.display = 'block';
+    rel.classList.add('visible');
+    setTimeout(() => rel.scrollIntoView({behavior:'smooth', block:'start'}), 300);
+  } else {
+    document.getElementById('senhaErro').style.display = 'block';
+    document.getElementById('senhaInput').value = '';
+    document.getElementById('senhaInput').focus();
+  }
+}
+</script>
+</body>
+</html>
