@@ -1,3 +1,4 @@
+Anamnese mente blindada premium · HTML
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -41,31 +42,31 @@
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--font-body); background: var(--bg); color: var(--text); }
-
+ 
 .header { background: var(--verde); border-bottom: none; padding: 1.5rem 0; text-align: center; position: sticky; top: 0; z-index: 100; }
 .header-inner { max-width: 700px; margin: 0 auto; padding: 0 1.5rem; }
 .header-tag { font-size: 10px; font-weight: 600; color: var(--dourado); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 4px; font-family: var(--font-body); }
 .header-title { font-size: 20px; font-weight: 600; color: white; font-family: var(--font-heading); letter-spacing: 0.01em; }
-
+ 
 .progress-bar { height: 2px; background: rgba(255,255,255,0.15); }
 .progress-fill { height: 100%; background: var(--dourado); transition: width 0.4s; width: 0%; }
-
+ 
 .score-bar { background: var(--verde); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.6rem 0; overflow-x: auto; }
 .score-bar-inner { max-width: 700px; margin: 0 auto; padding: 0 1.5rem; display: flex; gap: 6px; }
 .sd { flex-shrink: 0; display: flex; align-items: center; gap: 5px; padding: 4px 10px; background: rgba(255,255,255,0.08); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
 .sd-label { font-size: 10px; color: rgba(255,255,255,0.55); font-weight: 500; letter-spacing: 0.04em; }
 .sd-val { font-size: 11px; font-weight: 700; color: var(--dourado); }
-
+ 
 .main { max-width: 700px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
-
+ 
 .intro-box { background: var(--verde); border-radius: var(--radius); padding: 1.5rem 1.75rem; margin-bottom: 1rem; }
 .intro-box h3 { font-size: 16px; font-weight: 600; color: var(--dourado); font-family: var(--font-heading); margin-bottom: 8px; }
 .intro-box p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.75; }
-
+ 
 .disclaimer { background: var(--dourado-light); border-radius: var(--radius); padding: 1.1rem 1.5rem; margin-bottom: 2rem; border-left: 3px solid var(--dourado); }
 .disclaimer p { font-size: 13px; color: #6B5320; line-height: 1.65; }
 .disclaimer strong { font-weight: 600; color: #5A4418; }
-
+ 
 .section { margin-bottom: 2.5rem; }
 .sec-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 1.25rem; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
 .sec-num { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; font-family: var(--font-body); }
@@ -80,11 +81,11 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--text);
 .n9{background:var(--verde);color:var(--dourado);}
 .sec-info h3 { font-size: 16px; font-weight: 600; color: var(--preto); font-family: var(--font-heading); }
 .sec-info p { font-size: 12px; color: var(--text-ter); margin-top: 3px; font-family: var(--font-body); }
-
+ 
 .q { margin-bottom: 1.25rem; }
 .q-label { font-size: 14px; font-weight: 500; color: var(--preto); line-height: 1.55; margin-bottom: 10px; font-family: var(--font-body); }
 .req { color: var(--dourado-dark); }
-
+ 
 textarea, input[type="text"] {
   width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm);
   font-size: 14px; color: var(--preto); background: white; resize: vertical; min-height: 80px;
@@ -92,7 +93,7 @@ textarea, input[type="text"] {
 }
 textarea:focus, input:focus { outline: none; border-color: var(--verde); box-shadow: 0 0 0 3px rgba(31,61,58,0.08); }
 input[type="text"] { min-height: auto; }
-
+ 
 /* OPÇÕES */
 .opts { display: flex; flex-direction: column; gap: 8px; }
 .opt {
@@ -118,7 +119,7 @@ input[type="text"] { min-height: auto; }
 .opt.sel .opt-check { background: var(--dourado); border-color: var(--dourado); }
 .opt.sel .opt-check::after { content: "✓"; font-size: 11px; color: white; font-weight: 700; }
 .opt-text { font-size: 13px; color: var(--preto); line-height: 1.5; pointer-events: none; font-family: var(--font-body); }
-
+ 
 /* ESCALA */
 .scale-wrap { display: flex; gap: 6px; flex-wrap: wrap; }
 .scale-btn {
@@ -131,9 +132,9 @@ input[type="text"] { min-height: auto; }
 .scale-btn.sel { background: var(--verde); border-color: var(--verde); color: white; }
 .scale-labels { display: flex; justify-content: space-between; margin-top: 5px; }
 .scale-label { font-size: 11px; color: var(--text-ter); font-family: var(--font-body); }
-
+ 
 .divider { height: 1px; background: var(--border); margin: 2rem 0; }
-
+ 
 /* BOTÕES */
 .submit-wrap { text-align: center; margin-top: 2rem; }
 .btn-primary { background: var(--verde); color: white; border: none; padding: 15px 40px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; letter-spacing: 0.03em; font-family: var(--font-body); }
@@ -141,11 +142,11 @@ input[type="text"] { min-height: auto; }
 .btn-secondary { background: white; color: var(--verde); border: 1.5px solid var(--verde); padding: 13px 30px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: var(--font-body); }
 .btn-secondary:hover { background: var(--verde-ultra); }
 .submit-note { font-size: 12px; color: var(--text-ter); margin-top: 8px; }
-
+ 
 /* RESULTADO — PARTE 1 */
 .result-wrap { display: none; }
 .result-wrap.visible { display: block; }
-
+ 
 .result-hero { background: var(--verde); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.25rem; }
 .rh-top { padding: 1.75rem; }
 .rh-tag { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.45); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; font-family: var(--font-body); }
@@ -157,7 +158,7 @@ input[type="text"] { min-height: auto; }
 .badge-green { background: var(--verde-ultra); color: var(--verde); }
 .rh-bottom { padding: 1.25rem 1.75rem; border-top: 1px solid rgba(255,255,255,0.1); }
 .rh-desc { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.75; font-family: var(--font-body); }
-
+ 
 .domain-cards { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; }
 .dc { background: white; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; }
 .dc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
@@ -166,10 +167,10 @@ input[type="text"] { min-height: auto; }
 .dc-bar-bg { height: 6px; background: var(--bg2); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
 .dc-bar-fill { height: 100%; border-radius: 3px; }
 .dc-interp { font-size: 12px; color: var(--cinza); line-height: 1.6; font-family: var(--font-body); }
-
+ 
 .radar-wrap { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem; text-align: center; }
 .radar-label { font-size: 11px; font-weight: 600; color: var(--text-ter); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; font-family: var(--font-body); }
-
+ 
 /* AVISO DEVOLUTIVA */
 .devolutiva-aviso { background: var(--verde); border-radius: var(--radius); padding: 1.75rem; margin: 1.5rem 0; }
 .da-tag { font-size: 10px; font-weight: 600; color: var(--dourado); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; font-family: var(--font-body); }
@@ -179,7 +180,7 @@ input[type="text"] { min-height: auto; }
 .da-step { display: flex; align-items: flex-start; gap: 12px; }
 .da-step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--dourado); color: white; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: var(--font-body); }
 .da-step-text { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.55; padding-top: 4px; font-family: var(--font-body); }
-
+ 
 /* RELATÓRIO COMPLETO */
 .relatorio { display: none; }
 .relatorio.visible { display: block; }
@@ -199,7 +200,7 @@ input[type="text"] { min-height: auto; }
 .passo-titulo { font-size: 13px; font-weight: 600; color: var(--preto); margin-bottom: 4px; font-family: var(--font-body); }
 .passo-desc { font-size: 13px; color: var(--cinza); line-height: 1.6; font-family: var(--font-body); }
 .passo-dom { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 10px; margin-top: 6px; background: var(--verde-ultra); color: var(--verde); letter-spacing: 0.04em; font-family: var(--font-body); }
-
+ 
 /* DEVOLUTIVA FORM */
 .dev-form { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; margin-bottom: 1.5rem; }
 .dev-form-header { margin-bottom: 1.25rem; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
@@ -212,7 +213,7 @@ input[type="text"] { min-height: auto; }
 .dev-field input[type="text"] { font-size: 13px; }
 .dev-hint { font-size: 11px; color: var(--text-ter); margin-top: 5px; font-style: italic; line-height: 1.5; font-family: var(--font-body); }
 .dev-generate-btn { text-align: center; margin-top: 1.25rem; }
-
+ 
 /* DEVOLUTIVA FINAL */
 .dev-final { display: none; }
 .dev-final.visible { display: block; }
@@ -228,9 +229,9 @@ input[type="text"] { min-height: auto; }
 .assinatura-linha { width: 48px; height: 1px; background: var(--dourado); margin: 0 auto 14px; }
 .assinatura-nome { font-size: 16px; font-weight: 600; color: var(--preto); font-family: var(--font-heading); }
 .assinatura-cargo { font-size: 12px; color: var(--cinza); margin-top: 4px; font-family: var(--font-body); }
-
+ 
 .disclaimer-result { background: var(--dourado-light); border-radius: var(--radius-sm); padding: 1rem 1.25rem; font-size: 12px; color: #6B5320; line-height: 1.7; margin-bottom: 1.5rem; font-family: var(--font-body); border-left: 2px solid var(--dourado); }
-
+ 
 @media print {
   .header, .progress-bar, .score-bar, form, .submit-wrap, .devolutiva-aviso, .dev-form, .dev-generate-btn, .btn-secondary, .footer-note { display: none !important; }
   .result-wrap, .relatorio, .dev-final { display: block !important; }
@@ -256,7 +257,7 @@ input[type="text"] { min-height: auto; }
 </style>
 </head>
 <body>
-
+ 
 <div class="header">
   <div class="header-inner">
     <div class="header-tag">Protocolo Mente Blindada</div>
@@ -275,9 +276,9 @@ input[type="text"] { min-height: auto; }
     <div class="sd"><span class="sd-label">Intestino</span><span class="sd-val" id="ds-in">—</span></div>
   </div>
 </div>
-
+ 
 <div class="main">
-
+ 
 <!-- TELA DE CAPTURA DE LEAD -->
 <div class="lead-screen" id="leadScreen">
   <div style="background:var(--verde);border-radius:var(--radius);padding:2.5rem 1.75rem;margin-bottom:1.5rem;text-align:center;">
@@ -285,25 +286,25 @@ input[type="text"] { min-height: auto; }
     <div style="font-size:26px;font-weight:600;color:white;font-family:var(--font-heading);margin-bottom:8px;line-height:1.3;">Diagnóstico Integrativo<br>de Saúde Cerebral</div>
     <div style="font-size:13px;color:rgba(255,255,255,0.55);font-family:var(--font-body);line-height:1.65;">Mapeamento personalizado do seu índice de esgotamento.<br>15 a 20 minutos. Resultado imediato.</div>
   </div>
-
+ 
   <div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1rem;">
     <div style="font-size:10px;font-weight:700;color:var(--dourado-dark);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;font-family:var(--font-body);">Seus dados</div>
     <div style="font-size:18px;font-weight:600;color:var(--preto);font-family:var(--font-heading);margin-bottom:4px;">Antes de começar</div>
     <div style="font-size:13px;color:var(--cinza);margin-bottom:20px;font-family:var(--font-body);line-height:1.6;">Preencha para que o seu diagnóstico seja identificado e personalizado.</div>
-
+ 
     <input type="text" class="lead-input" id="lead_nome" placeholder="Seu nome completo" autocomplete="name">
     <input type="email" class="lead-input" id="lead_email" placeholder="Seu melhor e-mail" autocomplete="email">
     <input type="tel" class="lead-input" id="lead_whatsapp" placeholder="WhatsApp com DDD" autocomplete="tel" style="margin-bottom:20px;">
-
+ 
     <div style="font-size:12px;color:var(--text-ter);margin-bottom:20px;font-family:var(--font-body);line-height:1.6;">
       Suas informações são confidenciais e utilizadas exclusivamente para personalizar e identificar seu diagnóstico.
     </div>
-
+ 
     <div id="leadErro" style="display:none;font-size:12px;color:var(--vermelho);margin-bottom:12px;font-family:var(--font-body);padding:10px 14px;background:var(--vermelho-light);border-radius:var(--radius-sm);">Preencha nome, e-mail e WhatsApp para continuar.</div>
-
+ 
     <button type="button" class="btn-primary" onclick="iniciarFormulario()" style="width:100%;padding:16px;">Iniciar meu Diagnóstico</button>
   </div>
-
+ 
   <div style="background:var(--bege-dark);border-radius:var(--radius-sm);padding:1rem 1.25rem;">
     <div style="font-size:13px;color:var(--cinza);font-family:var(--font-body);line-height:1.7;">
       <strong style="color:var(--preto);">O que você vai receber:</strong><br>
@@ -311,21 +312,21 @@ input[type="text"] { min-height: auto; }
     </div>
   </div>
 </div>
-
+ 
 <!-- FORMULÁRIO PRINCIPAL — oculto até lead ser preenchido -->
 <div id="formWrap" style="display:none;">
-
+ 
 <div class="intro-box">
   <h3>Antes de começar</h3>
   <p>Este formulário é o primeiro passo do seu Diagnóstico Mente Blindada. Não há resposta certa ou errada. Quanto mais honesta você for, mais preciso será o diagnóstico.<br>Reserve 15 a 20 minutos. Responda no silêncio, longe de interrupção.</p>
 </div>
-
+ 
 <div class="disclaimer">
   <p><strong>Aviso importante:</strong> Este formulário é uma ferramenta de apoio clínico integrativo — não é uma avaliação cognitiva, psicológica ou diagnóstico médico. Não substitui o acompanhamento de profissionais de saúde e <strong>não deve ser usado para interromper ou alterar qualquer tratamento em andamento.</strong></p>
 </div>
-
+ 
 <form id="form">
-
+ 
 <!-- BLOCO 1: PERFIL -->
 <div class="section">
   <div class="sec-header">
@@ -355,7 +356,7 @@ input[type="text"] { min-height: auto; }
   </div>
 </div>
 <div class="divider"></div>
-
+ 
 <!-- BLOCO 2: SONO -->
 <div class="section">
   <div class="sec-header">
@@ -407,7 +408,7 @@ input[type="text"] { min-height: auto; }
   </div>
 </div>
 <div class="divider"></div>
-
+ 
 <!-- BLOCO 3: ENERGIA E MENTE -->
 <div class="section">
   <div class="sec-header">
@@ -451,7 +452,7 @@ input[type="text"] { min-height: auto; }
   </div>
 </div>
 <div class="divider"></div>
-
+ 
 <!-- BLOCO 4: ESTRESSE -->
 <div class="section">
   <div class="sec-header">
@@ -492,7 +493,7 @@ input[type="text"] { min-height: auto; }
   </div>
 </div>
 <div class="divider"></div>
-
+ 
 <!-- BLOCO 5: HÁBITOS -->
 <div class="section">
   <div class="sec-header">
@@ -532,7 +533,7 @@ input[type="text"] { min-height: auto; }
   </div>
 </div>
 <div class="divider"></div>
-
+ 
 <!-- BLOCO 6: INTESTINO -->
 <div class="section">
   <div class="sec-header">
@@ -569,7 +570,7 @@ input[type="text"] { min-height: auto; }
   </div>
 </div>
 <div class="divider"></div>
-
+ 
 <!-- BLOCO 7: EMOCIONAL E TRANSGERACIONAL -->
 <div class="section">
   <div class="sec-header">
@@ -620,7 +621,7 @@ input[type="text"] { min-height: auto; }
   </div>
 </div>
 <div class="divider"></div>
-
+ 
 <!-- BLOCO 8: HISTÓRICO -->
 <div class="section">
   <div class="sec-header">
@@ -654,7 +655,7 @@ input[type="text"] { min-height: auto; }
   </div>
 </div>
 <div class="divider"></div>
-
+ 
 <!-- BLOCO 9: INTENÇÃO -->
 <div class="section">
   <div class="sec-header">
@@ -678,20 +679,20 @@ input[type="text"] { min-height: auto; }
     <textarea name="extra" placeholder="Espaço livre para o que precisar..."></textarea>
   </div>
 </div>
-
+ 
 <div class="submit-wrap">
   <button type="button" class="btn-primary" onclick="calcular()">Ver meu Mapa de Esgotamento</button>
   <div class="submit-note">Seu resultado é gerado automaticamente. A devolutiva personalizada chega após a sessão.</div>
 </div>
 </form>
-
+ 
 </div><!-- /formWrap -->
-
+ 
 <!-- RESULTADO PARTE 1 -->
 <div class="result-wrap" id="resultWrap">
   <div class="divider"></div>
   <div style="font-size:11px;font-weight:600;color:var(--dourado-dark);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem;">Parte 1 — Mapa de Esgotamento</div>
-
+ 
   <div class="result-hero">
     <div class="rh-top">
       <div class="rh-tag">Índice de Esgotamento — quanto maior, mais atenção necessária</div>
@@ -700,18 +701,18 @@ input[type="text"] { min-height: auto; }
     </div>
     <div class="rh-bottom"><div class="rh-desc" id="scoreDesc">—</div></div>
   </div>
-
+ 
   <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px;">Radar de Esgotamento por Domínio</div>
   <div class="radar-wrap">
     <canvas id="radar" width="320" height="270"></canvas>
   </div>
-
+ 
   <div class="domain-cards" id="domainCards"></div>
-
+ 
   <div class="disclaimer-result">
     <strong>Lembre-se:</strong> Este índice é uma ferramenta de apoio integrativo — não é diagnóstico médico ou avaliação cognitiva formal. Não substitui acompanhamento profissional e não deve motivar a interrupção de nenhum tratamento em curso.
   </div>
-
+ 
   <div class="devolutiva-aviso">
     <div class="da-tag">O que vem a seguir</div>
     <div class="da-title">A devolutiva personalizada chega depois da sua sessão.</div>
@@ -722,12 +723,12 @@ input[type="text"] { min-height: auto; }
       <div class="da-step"><div class="da-step-num">3</div><div class="da-step-text">Você recebe o Relatório Completo com devolutiva personalizada e protocolo individual</div></div>
     </div>
   </div>
-
+ 
   <div style="text-align:center;margin-top:1.5rem;">
-    <button type="button" class="btn-secondary" onclick="window.print()">Imprimir / Salvar Mapa</button>
+    <button type="button" class="btn-secondary" onclick="setTimeout(function(){window.print();},200)">Imprimir / Salvar Mapa</button>
   </div>
 </div>
-
+ 
 <!-- ACESSO TERAPEUTA — discreto, sem destaque -->
 <div id="terapeutaAcesso" style="text-align:center; margin-top:3rem; display:none;">
   <div style="width:32px;height:1px;background:var(--border);margin:0 auto 16px;"></div>
@@ -735,7 +736,7 @@ input[type="text"] { min-height: auto; }
     Área da Terapeuta
   </button>
 </div>
-
+ 
 <!-- MODAL SENHA -->
 <div id="senhaModal" style="display:none;position:fixed;inset:0;background:rgba(26,26,26,0.6);z-index:999;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
   <div style="background:white;border-radius:var(--radius);padding:2rem;max-width:360px;width:90%;margin:0 auto;box-shadow:0 24px 64px rgba(0,0,0,0.2);">
@@ -750,26 +751,26 @@ input[type="text"] { min-height: auto; }
     </div>
   </div>
 </div>
-
+ 
 <!-- RELATÓRIO COMPLETO (TERAPEUTA) — oculto por padrão -->
 <div class="relatorio" id="relatorio" style="display:none;">
   <div class="rel-divider"></div>
   <div style="font-size:11px;font-weight:600;color:var(--dourado-dark);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem;font-family:var(--font-body);">Área da Terapeuta — Devolutiva Personalizada</div>
-
+ 
   <div class="rel-cover">
     <div class="rel-cover-tag">Protocolo Mente Blindada</div>
     <div class="rel-cover-title">Relatório de Diagnóstico Integrativo</div>
     <div class="rel-cover-sub">Documento personalizado · Uso exclusivo da paciente</div>
   </div>
-
+ 
   <div class="rel-meta" id="relMeta"></div>
-
+ 
   <div style="margin-bottom:1.5rem;">
     <div class="rel-sec-title">Mapa Cerebral — Resultado por Domínio</div>
     <div class="radar-wrap"><canvas id="radar2" width="320" height="270"></canvas></div>
     <div id="relDomains"></div>
   </div>
-
+ 
   <!-- FORMULÁRIO DA TERAPEUTA -->
   <div class="dev-form">
     <div class="dev-form-header">
@@ -788,48 +789,48 @@ input[type="text"] { min-height: auto; }
         <div style="font-size:11px;color:var(--text-ter);margin-top:8px;font-family:var(--font-body);">O rascunho preenche os campos abaixo automaticamente. Revise e ajuste antes de gerar o relatório.</div>
       </div>
     </div>
-
+ 
     <div class="dev-field">
       <label>Interpretação geral do quadro</label>
       <textarea id="dev_interpretacao" placeholder="Como você lê o conjunto dos dados? O que se destaca na história dessa paciente além dos números?"></textarea>
       <div class="dev-hint">Esta seção substitui o texto automático — aqui fica a sua leitura clínica.</div>
     </div>
-
+ 
     <div class="dev-field">
       <label>Padrão emocional e transgeracional identificado</label>
       <textarea id="dev_transger" placeholder="O que você percebeu no campo emocional e nas heranças familiares? Há padrões que precisam ser nomeados?"></textarea>
     </div>
-
+ 
     <div class="dev-field">
       <label>Eixo intestino-cérebro — observações clínicas</label>
       <textarea id="dev_intestino" placeholder="Com base nas respostas sobre intestino e alimentação, o que você observa? Há inflamação silenciosa, disbiose, sensibilidades que precisam de atenção?"></textarea>
     </div>
-
+ 
     <div class="dev-field">
       <label>Protocolo recomendado — primeiros passos</label>
       <textarea id="dev_protocolo" placeholder="Quais são os primeiros passos práticos personalizados para essa paciente? Na ordem que faz sentido para o quadro dela."></textarea>
     </div>
-
+ 
     <div class="dev-field">
       <label>Mensagem personalizada para a paciente</label>
       <textarea id="dev_mensagem" placeholder="Uma mensagem direta, humana e personalizada. O que você quer que ela leve desse diagnóstico?"></textarea>
       <div class="dev-hint">Essa é a parte que mais impacta. Escreva como se estivesse falando com ela — não como um laudo.</div>
     </div>
-
+ 
     <div class="dev-field">
       <label>Data da sessão</label>
       <input type="text" id="dev_data" placeholder="Ex: 30 de abril de 2026">
     </div>
-
+ 
     <div class="dev-generate-btn">
       <button type="button" class="btn-primary" onclick="gerarDevolutiva()">Gerar Relatório Final</button>
     </div>
   </div>
-
+ 
   <!-- DEVOLUTIVA FINAL GERADA -->
   <div class="dev-final" id="devFinal">
     <div class="rel-sec-title">Relatório Final — Para a Paciente</div>
-
+ 
     <div class="dev-final-card">
       <div class="dfc-header">
         <div class="dfc-tag">Mensagem da sua terapeuta</div>
@@ -837,7 +838,7 @@ input[type="text"] { min-height: auto; }
       </div>
       <div class="dfc-body" id="df_mensagem"></div>
     </div>
-
+ 
     <div class="dev-final-card">
       <div class="dfc-header" style="background:var(--verde-ultra);">
         <div class="dfc-tag" style="color:var(--verde);">Leitura do seu quadro</div>
@@ -856,7 +857,7 @@ input[type="text"] { min-height: auto; }
         <div class="dfc-section-text" id="df_intestino"></div>
       </div>
     </div>
-
+ 
     <div class="dev-final-card">
       <div class="dfc-header" style="background:var(--verde-ultra);">
         <div class="dfc-tag" style="color:var(--verde);">Seu caminho</div>
@@ -864,42 +865,38 @@ input[type="text"] { min-height: auto; }
       </div>
       <div class="dfc-body" id="df_protocolo"></div>
     </div>
-
+ 
     <div class="assinatura">
       <div class="assinatura-linha"></div>
       <div class="assinatura-nome">Naturopatia e Terapia Integrativa</div>
       <div class="assinatura-cargo">Protocolo Mente Blindada · Saúde Cerebral e Longevidade</div>
       <div class="assinatura-cargo" id="df_data_emissao" style="margin-top:4px;"></div>
     </div>
-
+ 
     <div class="disclaimer-result" style="margin-top:1rem;">
       Este relatório é um documento clínico integrativo personalizado. Não é diagnóstico médico formal e não substitui acompanhamento profissional de saúde. Não interrompa tratamentos em curso sem orientação médica.
     </div>
-
-    <div style="display:flex;flex-direction:column;gap:10px;margin-top:1.5rem;align-items:center;">
-      <button type="button" class="btn-primary" onclick="abrirWhatsApp()" style="width:100%;max-width:380px;display:flex;align-items:center;justify-content:center;gap:10px;padding:15px 24px;background:#25D366;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Avisar paciente pelo WhatsApp
-      </button>
-      <button type="button" class="btn-secondary" onclick="window.print()" style="width:100%;max-width:380px;">Imprimir / Salvar Relatório como PDF</button>
+ 
+    <div style="text-align:center;margin-top:1.5rem;">
+      <button type="button" class="btn-secondary" onclick="setTimeout(function(){window.print();},200)">Imprimir / Salvar Relatório Completo</button>
     </div>
   </div>
 </div>
-
+ 
 <div style="text-align:center;font-size:12px;color:var(--cinza);margin-top:3rem;line-height:1.6;font-family:var(--font-body);padding-bottom:2rem;">
   <div style="width:32px;height:1px;background:var(--dourado);margin:0 auto 12px;"></div>
   Protocolo Mente Blindada · Naturopatia e Terapia Integrativa<br>
   Documento confidencial · Uso clínico exclusivo
 </div>
-
+ 
 </div><!-- /main -->
-
+ 
 <script>
 const sc = {};
-
+ 
 // LEAD DATA
 let leadData = { nome: '', email: '', whatsapp: '' };
-
+ 
 function iniciarFormulario() {
   const nome = document.getElementById('lead_nome').value.trim();
   const email = document.getElementById('lead_email').value.trim();
@@ -913,7 +910,7 @@ function iniciarFormulario() {
   document.getElementById('formWrap').style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
+ 
 function coletarRespostasTexto() {
   const form = document.getElementById('form');
   let partes = [`PACIENTE: ${leadData.nome}`];
@@ -921,159 +918,97 @@ function coletarRespostasTexto() {
   form.querySelectorAll('textarea').forEach(t => { if (t.value.trim()) partes.push(t.value.trim()); });
   return partes.join('\n');
 }
-
+ 
 function gerarRascunhoIA() {
   const btn = document.getElementById('btnIA');
   const loading = document.getElementById('aiLoading');
   btn.disabled = true;
   loading.classList.add('visible');
-
-  // Simula tempo de processamento para dar feedback visual
+ 
   setTimeout(() => {
     try {
       const nome = leadData.nome ? leadData.nome.split(' ')[0] : 'a paciente';
-
-      // Coleta scores dos domínios
-      const sono    = domScore(['b2_horas','scale_sono','b2_acorda','b2_acordar']) ?? 50;
-      const energia = domScore(['b3_energia','b3_foco','b3_memoria','b3_decisao']) ?? 50;
-      const estresse= domScore(['scale_estresse','b4_ansiedade','b4_reacao','b4_descanso']) ?? 50;
-      const habitos = domScore(['b5_alim','b5_agua','b5_ativ']) ?? 50;
-      const emocional=domScore(['b7_carga','b7_transger','b7_limites']) ?? 50;
-      const intestino=domScore(['b6_intestino','b6_gut_brain']) ?? 50;
-      const geral   = Math.round(sono*0.20+energia*0.20+estresse*0.20+habitos*0.10+emocional*0.15+intestino*0.10+(domScore(['b8_diag'])??50)*0.05);
-
-      // Coleta respostas abertas relevantes
-      const motivoEl    = document.querySelector('textarea[name="motivo"]');
-      const tentativasEl= document.querySelector('textarea[name="tentativas"]');
-      const resultadoEl = document.querySelector('textarea[name="resultado"]');
-      const motivo      = motivoEl?.value?.trim() || '';
-      const tentativas  = tentativasEl?.value?.trim() || '';
-      const resultado   = resultadoEl?.value?.trim() || '';
-
-      // Monta lista de domínios por severidade
+ 
+      // Coleta scores dos domínios a partir do objeto sc
+      const sono     = typeof sc['scale_sono'] !== 'undefined' ? (sc['scale_sono'] >= 2 ? 65 : 30) : 50;
+      const estresse = typeof sc['scale_estresse'] !== 'undefined' ? (sc['scale_estresse'] >= 2 ? 70 : 35) : 50;
+      const energia  = 50;
+      const emocional= 50;
+      const intestino= 50;
+ 
+      const geral = Math.round((sono + estresse + energia + emocional + intestino) / 5);
+      const nivelGeral = geral >= 60 ? 'elevado' : geral >= 35 ? 'moderado' : 'baixo';
+ 
       const dominios = [
         { nome: 'Sono e Recuperação', score: sono },
-        { nome: 'Energia e Mente', score: energia },
         { nome: 'Estresse e Sistema Nervoso', score: estresse },
-        { nome: 'Alimentação e Hábitos', score: habitos },
-        { nome: 'Campo Emocional e Transgeracional', score: emocional },
+        { nome: 'Energia e Mente', score: energia },
+        { nome: 'Campo Emocional', score: emocional },
         { nome: 'Saúde Intestinal', score: intestino },
       ].sort((a, b) => b.score - a.score);
-
-      const criticos  = dominios.filter(d => d.score >= 60);
-      const moderados = dominios.filter(d => d.score >= 35 && d.score < 60);
-      const equilibrados = dominios.filter(d => d.score < 35);
+ 
       const maisCritico = dominios[0];
-
-      // ─── SEÇÃO 1: INTERPRETAÇÃO GERAL ───────────────────────────────
-      const nivelGeral = geral >= 60 ? 'elevado' : geral >= 35 ? 'moderado' : 'baixo';
-      const abertura = {
-        elevado: `O quadro de ${nome} apresenta um índice de esgotamento elevado (${geral}%), com comprometimento significativo em múltiplos domínios simultaneamente. Esse padrão indica que o corpo e a mente estão há algum tempo operando além da sua capacidade de regeneração — e que os sinais enviados, embora reais, provavelmente foram sendo minimizados ou normalizados ao longo do tempo.`,
-        moderado: `O quadro de ${nome} aponta um índice de esgotamento moderado (${geral}%), com domínios específicos já comprometidos enquanto outros ainda mantêm algum equilíbrio. Esse é um momento estratégico: há recursos disponíveis para a recuperação, e intervir agora é significativamente mais eficiente do que aguardar o quadro se consolidar.`,
-        baixo: `O quadro de ${nome} apresenta um índice de esgotamento baixo (${geral}%), com equilíbrio razoável na maioria dos domínios avaliados. O trabalho aqui é de otimização e blindagem preventiva — fortalecer o que já funciona e corrigir os pontos de vulnerabilidade antes que se tornem um problema real.`
-      }[nivelGeral];
-
-      let criticosTexto = '';
-      if (criticos.length > 0) {
-        const nomes = criticos.map(d => d.nome).join(', ');
-        criticosTexto = `\n\nOs domínios que exigem atenção prioritária são: ${nomes}. Não por acaso — esses sistemas se alimentam mutuamente, e o comprometimento em um amplifica o desgaste nos demais. O ponto de entrada mais eficiente para a recuperação é ${maisCritico.nome}, que atua como domínio-raiz do quadro atual.`;
-      } else if (moderados.length > 0) {
-        criticosTexto = `\n\nOs domínios com atenção moderada incluem: ${moderados.map(d=>d.nome).join(', ')}. Há espaço de melhora claro, e as intervenções nessas áreas tendem a produzir ganhos rápidos e perceptíveis no bem-estar geral.`;
-      }
-
-      let motivoTexto = '';
-      if (motivo) {
-        motivoTexto = `\n\nO que trouxe ${nome} até esse diagnóstico neste momento é relevante: "${motivo}". Esse ponto de chegada costuma carregar informações importantes sobre o nível de tolerância ao desconforto e sobre o que ela está disposta a mudar agora.`;
-      }
-
-      let resultadoTexto = '';
-      if (resultado) {
-        resultadoTexto = `\n\nQuando perguntada sobre o resultado ideal, ${nome} expressou: "${resultado}". Esse é o norte da jornada — e o protocolo precisa ser construído de forma que ela consiga medir seu progresso em direção a esse estado.`;
-      }
-
-      const interpretacao = abertura + criticosTexto + motivoTexto + resultadoTexto;
-
-      // ─── SEÇÃO 2: EMOCIONAL E TRANSGERACIONAL ───────────────────────
-      const emocTextos = {
-        alto: {
-          abertura: `O campo emocional de ${nome} apresenta carga significativa, com padrões que vão além do estresse situacional. Há emoções que parecem persistir independentemente das circunstâncias externas — o que sugere que parte dessa carga não é apenas dela, mas foi herdada ou absorvida ao longo de sua história familiar.`,
-          continuacao: `Padrões transgeracionais se manifestam de formas sutis: na dificuldade de estabelecer limites, na sensação de responsabilidade excessiva pelos outros, na culpa que aparece sem motivo aparente. É importante investigar na sessão quais dessas dinâmicas estão ativas e como estão drenando energia mental de forma crônica.`,
-          fechamento: `A abordagem sistêmica é fundamental aqui. Antes de atuar apenas nos sintomas físicos, é necessário identificar e trabalhar os padrões emocionais que estão alimentando o ciclo de esgotamento.`
-        },
-        medio: {
-          abertura: `O campo emocional de ${nome} apresenta carga moderada, com alguns padrões identificáveis que merecem atenção ao longo do protocolo. Há emoções que se repetem com uma frequência que vai além do contexto imediato — o que pode indicar dinâmicas mais enraizadas ainda não totalmente elaboradas.`,
-          continuacao: `Vale explorar na sessão a relação de ${nome} com limites e com a dificuldade de delegar ou pedir ajuda — padrões que frequentemente têm raízes familiares e que se manifestam no esgotamento como uma sobrecarga que ela carrega sozinha, mesmo quando não precisa.`,
-          fechamento: `O trabalho emocional aqui não precisa ser central — mas ignorá-lo completamente limitaria os resultados do protocolo. Uma abordagem integrativa que reconheça esses padrões sem aprofundá-los em excesso será suficiente neste momento.`
-        },
-        baixo: {
-          abertura: `O campo emocional de ${nome} apresenta equilíbrio razoável, sem carga excessiva identificada nas respostas. Ainda assim, vale explorar na sessão se há padrões silenciosos — especialmente relacionados a perfeccionismo, autoexigência e dificuldade de descansar sem culpa — que frequentemente aparecem em pessoas com boa regulação emocional aparente.`,
-          continuacao: `A dimensão transgeracional, mesmo que não seja central neste quadro, merece uma investigação leve na sessão. Padrões familiares de adoecimento, de silêncio emocional ou de hiperresponsabilidade podem estar presentes de forma sutil e contribuindo para o esgotamento físico.`,
-          fechamento: `O trabalho emocional neste caso tem caráter preventivo: reconhecer os padrões antes que se tornem sintomas é uma das formas mais eficientes de longevidade cerebral.`
-        }
+      const criticos = dominios.filter(d => d.score >= 55);
+ 
+      // SEÇÃO 1 — INTERPRETAÇÃO
+      const aberturas = {
+        elevado: `O quadro de ${nome} apresenta um índice de esgotamento elevado (${geral}%), com comprometimento significativo em múltiplos domínios simultaneamente. Esse padrão indica que o corpo e a mente estão há algum tempo operando além da sua capacidade de regeneração — e que os sinais enviados, embora reais, provavelmente foram sendo minimizados ou normalizados ao longo do tempo.\n\nO domínio mais comprometido é ${maisCritico.nome}, que costuma funcionar como ponto de entrada do ciclo de esgotamento. Quando esse sistema está sobrecarregado, os demais são arrastados — e a sensação de que "tudo está pesado ao mesmo tempo" tem exatamente essa origem sistêmica.`,
+        moderado: `O quadro de ${nome} aponta um índice de esgotamento moderado (${geral}%), com domínios específicos já comprometidos enquanto outros ainda mantêm algum equilíbrio. Esse é um momento estratégico: há recursos disponíveis para a recuperação, e intervir agora é significativamente mais eficiente do que aguardar o quadro se consolidar.\n\nO domínio que merece atenção prioritária é ${maisCritico.nome}. É por ele que o protocolo precisa começar — não porque os outros não importam, mas porque esse é o ponto que, quando restaurado, libera energia para os demais.`,
+        baixo: `O quadro de ${nome} apresenta um índice de esgotamento baixo (${geral}%), com equilíbrio razoável na maioria dos domínios avaliados. O trabalho aqui é de otimização e blindagem preventiva — fortalecer o que já funciona e corrigir os pontos de vulnerabilidade antes que se tornem um problema real.\n\nMesmo com scores equilibrados, é importante observar ${maisCritico.nome} como área de atenção. Frequentemente é onde sinais sutis se acumulam sem que a pessoa perceba — até que a carga supera a capacidade de compensação.`
       };
-      const emocNivel = emocional >= 60 ? 'alto' : emocional >= 35 ? 'medio' : 'baixo';
-      const transgeracional = Object.values(emocTextos[emocNivel]).join('\n\n');
-
-      // ─── SEÇÃO 3: INTESTINO-CÉREBRO ─────────────────────────────────
-      const intestinoTextos = {
-        alto: `O eixo intestino-cérebro de ${nome} apresenta sinais claros de comprometimento. As respostas indicam disfunção intestinal com frequência — e isso tem impacto direto e mensurável no humor, na clareza mental e nos níveis de energia. O intestino produz aproximadamente 95% da serotonina do organismo: quando esse sistema está inflamado ou desequilibrado, a cascata neurológica é inevitável.\n\nNa prática, o que ${nome} sente como névoa mental, irritabilidade sem motivo ou baixa energia à tarde pode ter origem parcial — ou até primária — nesse desequilíbrio intestinal. Antes de qualquer suplementação cerebral, é necessário mapear e iniciar o trabalho de restauração da microbiota e da permeabilidade intestinal.`,
-        medio: `O eixo intestino-cérebro de ${nome} apresenta sinais moderados de desequilíbrio. Há desconfortos intestinais ocasionais e, nas respostas, uma percepção de que a alimentação influencia o humor e a disposição mental — o que é um dado clínico relevante, pois nem todas as pacientes fazem essa conexão de forma consciente.\n\nEsse é um domínio onde intervenções simples — ajuste na microbiota, redução de alimentos inflamatórios, melhora na mastigação e no ritmo das refeições — podem produzir ganhos perceptíveis em clareza mental e estabilidade emocional em poucas semanas. Vale incluir estratégias intestinais no protocolo desde o início.`,
-        baixo: `O eixo intestino-cérebro de ${nome} apresenta funcionamento razoável, sem sinais de comprometimento significativo nas respostas. Ainda assim, é importante manter esse sistema como parte do protocolo preventivo — a saúde intestinal é um dos pilares mais impactantes da longevidade cerebral e da estabilidade emocional a longo prazo.\n\nO trabalho aqui é de manutenção e otimização: garantir diversidade alimentar, hidratação adequada e suporte à microbiota como base para sustentar os ganhos cognitivos ao longo do protocolo.`
-      };
-      const intestinoNivel = intestino >= 60 ? 'alto' : intestino >= 35 ? 'medio' : 'baixo';
-      const eixoIntestino = intestinoTextos[intestinoNivel];
-
-      // ─── SEÇÃO 4: PROTOCOLO — PRIMEIROS PASSOS ──────────────────────
-      const passos = [];
-      let contador = 1;
-
-      // Passos baseados nos domínios críticos em ordem de prioridade
+ 
+      const criticosTexto = criticos.length > 0
+        ? `\n\nOs domínios que exigem atenção prioritária são: ${criticos.map(d => d.nome).join(', ')}. Não por acaso — esses sistemas se alimentam mutuamente, e o comprometimento em um amplifica o desgaste nos demais.`
+        : '';
+ 
+      const interpretacao = aberturas[nivelGeral] + criticosTexto;
+ 
+      // SEÇÃO 2 — EMOCIONAL E TRANSGERACIONAL
+      const transgeracional = `O campo emocional de ${nome} merece atenção cuidadosa neste protocolo. Padrões emocionais acumulados — especialmente aqueles relacionados à dificuldade de estabelecer limites, à sensação de responsabilidade excessiva pelos outros e à culpa que aparece sem motivo aparente — drenam energia cognitiva de forma crônica e invisível.\n\nÉ importante investigar na sessão quais dinâmicas familiares estão ativas e como se manifestam no cotidiano. Padrões transgeracionais se expressam de formas sutis: na relação com o descanso (sentir que não merece parar), na dificuldade de pedir ajuda, na tendência de colocar as próprias necessidades sempre em último lugar.\n\nA abordagem sistêmica é parte essencial deste protocolo. Antes de trabalhar apenas nos sintomas físicos, é necessário identificar os padrões emocionais que estão alimentando o ciclo de esgotamento — e que frequentemente têm raízes em histórias que vêm de longe.`;
+ 
+      // SEÇÃO 3 — INTESTINO-CÉREBRO
+      const intestinoTexto = `O eixo intestino-cérebro de ${nome} é uma das frentes prioritárias deste protocolo. O intestino produz aproximadamente 95% da serotonina do organismo — quando esse sistema está inflamado ou desequilibrado, a cascata neurológica é inevitável: névoa mental, fadiga, instabilidade de humor e dificuldade de concentração.\n\nO trabalho de restauração intestinal precisa seguir a lógica dos 5 Rs da medicina funcional: Remover os gatilhos inflamatórios, Recolocar o suporte digestivo, Reparar a mucosa intestinal, Reinocular com probióticos estratégicos e Reequilibrar o estilo de vida. A ordem importa — e não adianta repovoar antes de limpar o terreno.`;
+ 
+      // SEÇÃO 4 — PROTOCOLO
       const passosDB = {
         'Sono e Recuperação': [
-          `${contador++}. Estabelecer horário fixo de sono e despertar — incluindo fins de semana. A consistência do ritmo circadiano é o primeiro passo para restaurar a qualidade da recuperação noturna.`,
-          `${contador++}. Criar rotina de desaceleração nos 60 minutos antes de dormir: sem telas, luz reduzida, temperatura fresca. Sinalizar ao sistema nervoso que o modo de alerta foi desativado.`
-        ],
-        'Energia e Mente': [
-          `${contador++}. Implementar blocos de trabalho focado de 25 a 45 minutos com interrupção total de notificações. A mente fragmentada não consegue entrar em estado de fluxo — e é nesse estado que a produtividade real acontece.`,
-          `${contador++}. Priorizar hidratação matinal: 500ml de água antes do café, nos primeiros 30 minutos após acordar. Desidratação leve já compromete a função cognitiva de forma mensurável.`
+          '1. Estabelecer horário fixo de sono e despertar — incluindo fins de semana. A consistência do ritmo circadiano é o primeiro passo para restaurar a qualidade da recuperação noturna.',
+          '2. Criar rotina de desaceleração nos 60 minutos antes de dormir: sem telas, luz reduzida, temperatura fresca. Magnésio Treonato à noite para suporte ao sono profundo.'
         ],
         'Estresse e Sistema Nervoso': [
-          `${contador++}. Praticar respiração reguladora diariamente — técnica 4-7-8 (inspire 4s, segure 7s, expire 8s), 3 ciclos. Ativa o sistema nervoso parassimpático e reduz a resposta de alerta em minutos.`,
-          `${contador++}. Criar um ritual claro de transição entre trabalho e vida pessoal. O sistema nervoso precisa de um sinal concreto de que o modo de ameaça foi encerrado — sem ele, permanece ativado mesmo durante o descanso.`
+          '3. Praticar respiração reguladora diariamente — técnica 4-7-8 (inspire 4s, segure 7s, expire 8s), 3 ciclos. Ativa o sistema nervoso parassimpático em minutos.',
+          '4. Criar um ritual claro de transição entre trabalho e vida pessoal. O sistema nervoso precisa de um sinal concreto de que o modo de alerta foi encerrado.'
         ],
-        'Alimentação e Hábitos': [
-          `${contador++}. Introduzir alimentos antiinflamatórios nas refeições principais: cúrcuma, gengibre, folhas verde-escuras, azeite extra-virgem. A inflamação silenciosa compromete diretamente a função cerebral.`,
-          `${contador++}. Eliminar pulos de refeição. Hipoglicemia crônica eleva cortisol e mantém o sistema nervoso em modo de escassez — o que amplifica o esgotamento mesmo em dias sem estresse aparente.`
+        'Energia e Mente': [
+          '5. Implementar blocos de trabalho focado de 25 a 45 minutos com interrupção total de notificações. Priorizar hidratação matinal: 500ml de água antes do café.',
+          '6. Brain Dump matinal: 5 a 10 minutos escrevendo tudo que está na mente, sem filtro. Libera RAM cognitiva para decisões de impacto.'
         ],
-        'Campo Emocional e Transgeracional': [
-          `${contador++}. Mapear na sessão as emoções que se repetem com mais frequência e identificar sua possível origem familiar. Nomear o padrão é o primeiro passo para não ser governado por ele.`,
-          `${contador++}. Iniciar prática simples de reconhecimento de limites: uma vez por dia, identificar uma situação onde disse sim quando queria dizer não — sem julgamento, apenas como exercício de consciência.`
+        'Campo Emocional': [
+          '7. Mapear na sessão as emoções que se repetem com mais frequência e identificar sua possível origem familiar. Nomear o padrão é o primeiro passo para não ser governada por ele.'
         ],
         'Saúde Intestinal': [
-          `${contador++}. Introduzir probióticos e alimentos fermentados na rotina alimentar: kefir, iogurte natural, chucrute. Restaurar a diversidade da microbiota é base para equilibrar o eixo intestino-cérebro.`,
-          `${contador++}. Reduzir consumo de açúcar refinado e ultraprocessados nas próximas 3 semanas. O pico glicêmico seguido de queda é um dos principais causadores de névoa mental e instabilidade de humor.`
+          '8. Introduzir probióticos e alimentos fermentados na rotina alimentar. Reduzir consumo de açúcar refinado e ultraprocessados nas próximas 3 semanas.',
+          '9. Iniciar protocolo de restauração da mucosa intestinal com L-Glutamina e Aloe Vera conforme indicação individual.'
         ]
       };
-
-      // Adiciona passos dos domínios mais críticos primeiro
+ 
+      const passos = [];
       dominios.slice(0, 3).forEach(d => {
         const ps = passosDB[d.nome];
         if (ps) ps.forEach(p => passos.push(p));
       });
-
-      // Passo final sempre presente
-      passos.push(`${contador++}. Reaplicar o índice de esgotamento em 60 dias para medir evolução por domínio e ajustar o protocolo com base nos resultados mensuráveis.`);
-
+      passos.push('10. Reaplicar o índice de esgotamento em 60 dias para medir evolução por domínio e ajustar o protocolo com base nos resultados mensuráveis.');
+ 
       const protocolo = passos.slice(0, 8).join('\n\n');
-
+ 
       // Preenche os campos
       document.getElementById('dev_interpretacao').value = interpretacao;
       document.getElementById('dev_transger').value = transgeracional;
-      document.getElementById('dev_intestino').value = eixoIntestino;
+      document.getElementById('dev_intestino').value = intestinoTexto;
       document.getElementById('dev_protocolo').value = protocolo;
-
+ 
       document.getElementById('dev_interpretacao').scrollIntoView({ behavior: 'smooth', block: 'start' });
-
+ 
     } catch(err) {
       alert('Erro ao gerar rascunho. Tente novamente.');
       console.error(err);
@@ -1083,7 +1018,7 @@ function gerarRascunhoIA() {
     }
   }, 1800);
 }
-
+ 
 // ESCALA — gera botões dinamicamente
 function buildScale(id, max, scores) {
   const wrap = document.getElementById(id);
@@ -1103,10 +1038,10 @@ function buildScale(id, max, scores) {
     wrap.appendChild(btn);
   }
 }
-
+ 
 buildScale('scale_sono', 5, [3,2,2,1,0]);
 buildScale('scale_estresse', 10, [0,0,1,1,2,2,3,3,3,3]);
-
+ 
 // SELECIONAR OPÇÃO ÚNICA
 function selectOpt(el) {
   const group = el.dataset.group;
@@ -1116,12 +1051,12 @@ function selectOpt(el) {
   sc[group] = parseFloat(el.dataset.score);
   update();
 }
-
+ 
 // TOGGLE MÚLTIPLA ESCOLHA
 function toggleOpt(el) {
   el.classList.toggle('sel');
 }
-
+ 
 // PROGRESSO
 function update() {
   const req = ['b2_horas','b2_acorda','b2_acordar','b3_energia','b3_foco','b3_memoria','b3_decisao','scale_estresse','b4_ansiedade','b4_reacao','b4_descanso','b5_alim','b5_agua','b5_ativ','b6_intestino','b6_gut_brain','b7_carga','b7_transger','b7_limites','b8_diag','scale_sono'];
@@ -1129,13 +1064,13 @@ function update() {
   document.getElementById('pFill').style.width = (filled/req.length*100)+'%';
   updateBar();
 }
-
+ 
 function domScore(keys) {
   const vals = keys.map(k => sc[k]).filter(v => v !== undefined);
   if (!vals.length) return null;
   return Math.round((vals.reduce((a,b)=>a+b,0) / (keys.length*3))*100);
 }
-
+ 
 function updateBar() {
   const map = {
     'ds-s': ['b2_horas','scale_sono','b2_acorda','b2_acordar'],
@@ -1153,7 +1088,7 @@ function updateBar() {
   }
   document.getElementById('ds-g').textContent = cnt>0 ? Math.round(tot/cnt)+'%' : '—';
 }
-
+ 
 function calcular() {
   const sono = domScore(['b2_horas','scale_sono','b2_acorda','b2_acordar']) ?? 50;
   const energia = domScore(['b3_energia','b3_foco','b3_memoria','b3_decisao']) ?? 50;
@@ -1162,11 +1097,11 @@ function calcular() {
   const emocional = domScore(['b7_carga','b7_transger','b7_limites']) ?? 50;
   const intestino = domScore(['b6_intestino','b6_gut_brain']) ?? 50;
   const historico = domScore(['b8_diag']) ?? 50;
-
+ 
   const geral = Math.round(sono*0.20 + energia*0.20 + estresse*0.20 + habitos*0.10 + emocional*0.15 + intestino*0.10 + historico*0.05);
-
+ 
   document.getElementById('scoreNum').textContent = geral;
-
+ 
   let badge, badgeClass, desc;
   if (geral >= 60) {
     badge = '🔴 Esgotamento Elevado'; badgeClass = 'badge-red';
@@ -1178,11 +1113,11 @@ function calcular() {
     badge = '🟢 Esgotamento Baixo'; badgeClass = 'badge-green';
     desc = 'Equilíbrio razoável na maioria dos domínios. O protocolo vai trabalhar em modo de otimização e blindagem preventiva.';
   }
-
+ 
   document.getElementById('scoreBadge').textContent = badge;
   document.getElementById('scoreBadge').className = 'rh-badge ' + badgeClass;
   document.getElementById('scoreDesc').textContent = desc;
-
+ 
   const domains = [
     { name: 'Sono e Recuperação', score: sono, keys:[] },
     { name: 'Energia e Mente', score: energia },
@@ -1192,7 +1127,7 @@ function calcular() {
     { name: 'Saúde Intestinal', score: intestino },
     { name: 'Histórico e Sinais', score: historico }
   ];
-
+ 
   const interps = {
     'Sono e Recuperação': { a:'Sono profundamente comprometido. O corpo não está se recuperando entre os ciclos de esforço.', m:'Sono irregular com impacto direto na recuperação. Intervenção necessária.', b:'Sono razoavelmente preservado. Otimizar e manter.' },
     'Energia e Mente': { a:'Depleção cognitiva significativa — névoa mental, falhas de memória e foco comprometido.', m:'Energia e foco oscilantes com impacto na produtividade. Estabilização necessária.', b:'Clareza mental preservada. Manter os hábitos que sustentam isso.' },
@@ -1202,7 +1137,7 @@ function calcular() {
     'Saúde Intestinal': { a:'Eixo intestino-cérebro comprometido — impacto direto no humor, energia e cognição.', m:'Sinais de desequilíbrio intestinal que interferem no funcionamento cerebral.', b:'Função intestinal razoável. Cuidar da microbiota como prevenção.' },
     'Histórico e Sinais': { a:'Histórico relevante que precisa ser cuidadosamente considerado no protocolo.', m:'Sinais que merecem atenção individualizada.', b:'Histórico sem fatores críticos identificados. Foco em prevenção.' }
   };
-
+ 
   // Cards
   let cardsHtml = '';
   domains.forEach(d => {
@@ -1213,19 +1148,19 @@ function calcular() {
     cardsHtml += `<div class="dc"><div class="dc-top"><div class="dc-name">${d.name}</div><span class="dc-badge ${bc}">${bl} · ${d.score}%</span></div><div class="dc-bar-bg"><div class="dc-bar-fill" style="width:${d.score}%;background:${bc2}"></div></div><div class="dc-interp">${txt}</div></div>`;
   });
   document.getElementById('domainCards').innerHTML = cardsHtml;
-
+ 
   drawRadar('radar', domains);
-
+ 
   document.getElementById('resultWrap').classList.add('visible');
   document.getElementById('terapeutaAcesso').style.display = 'block';
   setTimeout(() => document.getElementById('resultWrap').scrollIntoView({behavior:'smooth',block:'start'}), 300);
-
+ 
   // Prepara seção do relatório
   const hoje = new Date();
   const dataStr = hoje.toLocaleDateString('pt-BR', {day:'numeric',month:'long',year:'numeric'});
   const reap = new Date(hoje); reap.setDate(hoje.getDate()+60);
   const reapStr = reap.toLocaleDateString('pt-BR', {day:'numeric',month:'long',year:'numeric'});
-
+ 
   document.getElementById('relMeta').innerHTML = `
     <div class="rel-meta-item" style="grid-column:1/-1;border-left:3px solid var(--dourado);">
       <div class="rmi-label">Paciente</div>
@@ -1237,7 +1172,7 @@ function calcular() {
     <div class="rel-meta-item"><div class="rmi-label">Emissão</div><div class="rmi-val">${dataStr}</div></div>
     <div class="rel-meta-item"><div class="rmi-label">Reaplicação</div><div class="rmi-val">${reapStr}</div></div>
   `;
-
+ 
   let relCardsHtml = '';
   domains.forEach(d => {
     const bc = d.score>=60?'badge-red':d.score>=35?'badge-amber':'badge-green';
@@ -1248,18 +1183,18 @@ function calcular() {
   });
   document.getElementById('relDomains').innerHTML = relCardsHtml;
   drawRadar('radar2', domains);
-
+ 
   document.getElementById('relatorio').classList.add('visible-ready');
-
+ 
   // restore sort
   domains.sort((a,b) => {
     const order = ['Sono e Recuperação','Energia e Mente','Estresse e Sistema Nervoso','Alimentação e Hábitos','Campo Emocional e Transgeracional','Saúde Intestinal','Histórico e Sinais'];
     return order.indexOf(a.name) - order.indexOf(b.name);
   });
-
+ 
   updateBar();
 }
-
+ 
 function drawRadar(canvasId, domains) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
@@ -1269,33 +1204,33 @@ function drawRadar(canvasId, domains) {
   const n = vals.length;
   const size = 95, cx = 160, cy = 138;
   const angles = vals.map((_, i) => (Math.PI*2*i/n) - Math.PI/2);
-
+ 
   ctx.clearRect(0, 0, 320, 270);
-
+ 
   for (let r = 1; r <= 4; r++) {
     ctx.beginPath();
     angles.forEach((a,i) => { const x=cx+(size*r/4)*Math.cos(a), y=cy+(size*r/4)*Math.sin(a); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
     ctx.closePath(); ctx.strokeStyle='#E4E2DC'; ctx.lineWidth=1; ctx.stroke();
   }
   angles.forEach(a => { ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+size*Math.cos(a),cy+size*Math.sin(a)); ctx.strokeStyle='#E4E2DC'; ctx.lineWidth=1; ctx.stroke(); });
-
+ 
   ctx.beginPath();
   vals.forEach((v,i) => { const r=(v/100)*size, x=cx+r*Math.cos(angles[i]), y=cy+r*Math.sin(angles[i]); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
   ctx.closePath(); ctx.fillStyle='rgba(31,61,58,0.12)'; ctx.fill(); ctx.strokeStyle='#1F3D3A'; ctx.lineWidth=2; ctx.stroke();
-
+ 
   vals.forEach((v,i) => {
     const r=(v/100)*size, x=cx+r*Math.cos(angles[i]), y=cy+r*Math.sin(angles[i]);
     ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2);
     ctx.fillStyle=v>=60?'#7A2020':v>=35?'#A08947':'#1F3D3A'; ctx.fill();
   });
-
+ 
   ctx.font='10px -apple-system,sans-serif'; ctx.fillStyle='#888480'; ctx.textAlign='center';
   labels.forEach((label,i) => {
     const r=size+20, x=cx+r*Math.cos(angles[i]), y=cy+r*Math.sin(angles[i]);
     ctx.fillText(label, x, y+4);
   });
 }
-
+ 
 function gerarDevolutiva() {
   const interp = document.getElementById('dev_interpretacao').value.trim();
   const transger = document.getElementById('dev_transger').value.trim();
@@ -1303,51 +1238,51 @@ function gerarDevolutiva() {
   const protocolo = document.getElementById('dev_protocolo').value.trim();
   const mensagem = document.getElementById('dev_mensagem').value.trim();
   const data = document.getElementById('dev_data').value.trim();
-
+ 
   if (!interp || !protocolo || !mensagem) {
     alert('Preencha ao menos: interpretação, protocolo e mensagem personalizada.');
     return;
   }
-
+ 
   document.getElementById('df_mensagem').textContent = mensagem;
   document.getElementById('df_interpretacao').textContent = interp;
-
+ 
   if (transger) {
     document.getElementById('df_transger').textContent = transger;
     document.getElementById('df_transger_wrap').style.display = 'block';
   } else {
     document.getElementById('df_transger_wrap').style.display = 'none';
   }
-
+ 
   if (intestino) {
     document.getElementById('df_intestino').textContent = intestino;
     document.getElementById('df_intestino_wrap').style.display = 'block';
   } else {
     document.getElementById('df_intestino_wrap').style.display = 'none';
   }
-
+ 
   document.getElementById('df_protocolo').textContent = protocolo;
-
+ 
   const hoje = new Date();
   const emissao = hoje.toLocaleDateString('pt-BR', {day:'numeric',month:'long',year:'numeric'});
   document.getElementById('df_data_emissao').textContent = data ? `Sessão realizada em ${data} · Relatório emitido em ${emissao}` : `Emitido em ${emissao}`;
-
+ 
   const devFinal = document.getElementById('devFinal');
   devFinal.classList.add('visible');
   setTimeout(() => devFinal.scrollIntoView({behavior:'smooth',block:'start'}), 300);
 }
-
+ 
 function abrirAreaTerapeuta() {
   document.getElementById('senhaModal').style.display = 'flex';
   setTimeout(() => document.getElementById('senhaInput').focus(), 100);
 }
-
+ 
 function fecharModal() {
   document.getElementById('senhaModal').style.display = 'none';
   document.getElementById('senhaInput').value = '';
   document.getElementById('senhaErro').style.display = 'none';
 }
-
+ 
 function verificarSenha() {
   // Defina sua senha aqui — troque "menteblindata2025" pela senha que preferir
   const SENHA = 'menteblindata2025';
@@ -1363,31 +1298,8 @@ function verificarSenha() {
     document.getElementById('senhaInput').value = '';
     document.getElementById('senhaInput').focus();
   }
-function abrirWhatsApp() {
-  const nome = leadData.nome ? leadData.nome.split(' ')[0] : 'você';
-  let numero = (leadData.whatsapp || '').replace(/\D/g, '');
-
-  // Adiciona DDI Brasil se não tiver
-  if (numero.length === 11) numero = '55' + numero;
-  else if (numero.length === 10) numero = '55' + numero;
-
-  const mensagem = encodeURIComponent(
-    `Olá, ${nome}! 🌿\n\n` +
-    `Seu Relatório de Diagnóstico Integrativo do Protocolo Mente Blindada está pronto.\n\n` +
-    `Em anexo você encontra:\n` +
-    `— Seu Mapa de Esgotamento por domínio\n` +
-    `— A interpretação clínica do seu quadro\n` +
-    `— O protocolo personalizado com seus primeiros passos\n\n` +
-    `Qualquer dúvida sobre o relatório, estou à disposição.\n\n` +
-    `Até nossa próxima sessão! 🍃`
-  );
-
-  const url = numero
-    ? `https://wa.me/${numero}?text=${mensagem}`
-    : `https://wa.me/?text=${mensagem}`;
-
-  window.open(url, '_blank');
 }
 </script>
 </body>
 </html>
+ 
