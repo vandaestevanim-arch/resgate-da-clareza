@@ -1478,3 +1478,442 @@ function imprimirSecao(secao) {
 </script>
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel da Terapeuta · CCD™ · Wanda Stevanim</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --musgo: #243028;
+  --bronze: #7F6A46;
+  --bronze-light: #EDE5D5;
+  --bronze-escuro: #5C4C30;
+  --marfim: #F5F0E8;
+  --marfim-escuro: #EDE8DC;
+  --carbono: #1E2420;
+  --sage: #7B8579;
+  --cinza: #6B6F72;
+  --cinza-light: #E8E9EA;
+  --vermelho: #7A2020;
+  --vermelho-light: #F7EEEE;
+  --amarelo-light: #FBF3DC;
+  --verde-ok: #0F6E56;
+  --verde-ok-light: #E1F5EE;
+  --border: #D8D3C8;
+  --texto-claro: #F5F0E8;
+  --texto-claro-sec: #C8C4BC;
+  --texto-acento-escuro: #C4A96A;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-body); background: var(--marfim); color: var(--carbono); min-height: 100vh; }
+
+/* LOGIN */
+.login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+.login-card { background: white; border: 0.5px solid var(--border); border-radius: var(--radius); padding: 2.5rem 2rem; width: 100%; max-width: 380px; text-align: center; }
+.login-logo { font-family: var(--font-heading); font-size: 22px; font-weight: 600; color: var(--musgo); margin-bottom: 4px; }
+.login-sub { font-size: 12px; color: var(--cinza); margin-bottom: 2rem; letter-spacing: 0.05em; }
+.login-label { font-size: 12px; font-weight: 500; color: var(--carbono); text-align: left; display: block; margin-bottom: 6px; }
+.login-input { width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-family: var(--font-body); color: var(--carbono); background: white; margin-bottom: 12px; }
+.login-input:focus { outline: none; border-color: var(--musgo); }
+.login-btn { width: 100%; padding: 13px; background: var(--musgo); color: var(--texto-claro); font-size: 14px; font-weight: 500; font-family: var(--font-body); border: none; border-radius: var(--radius-sm); cursor: pointer; }
+.login-btn:hover { background: #1a2420; }
+.login-erro { font-size: 13px; color: var(--vermelho); margin-top: 10px; display: none; }
+
+/* PAINEL */
+.painel { display: none; }
+.header { background: var(--musgo); padding: 1.25rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.header-logo { font-family: var(--font-heading); font-size: 17px; font-weight: 600; color: var(--texto-claro); }
+.header-sub { font-size: 11px; color: var(--texto-acento-escuro); margin-top: 2px; }
+.header-btn { font-size: 12px; color: var(--texto-claro-sec); background: none; border: 0.5px solid rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; cursor: pointer; font-family: var(--font-body); }
+.header-btn:hover { background: rgba(255,255,255,0.08); }
+
+.main { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+.sec-title { font-family: var(--font-heading); font-size: 22px; font-weight: 600; color: var(--musgo); margin-bottom: 4px; }
+.sec-sub { font-size: 13px; color: var(--cinza); margin-bottom: 1.5rem; }
+
+/* FILTROS */
+.filtros { display: flex; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.filtro-btn { font-size: 12px; padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border); background: white; color: var(--cinza); cursor: pointer; font-family: var(--font-body); }
+.filtro-btn.ativo { background: var(--musgo); color: var(--texto-claro); border-color: var(--musgo); }
+
+/* LISTA */
+.lista { display: flex; flex-direction: column; gap: 10px; }
+.card-participante { background: white; border: 0.5px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.25rem; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; cursor: pointer; transition: border-color 0.15s; }
+.card-participante:hover { border-color: var(--musgo); }
+.cp-nome { font-size: 15px; font-weight: 500; color: var(--carbono); margin-bottom: 3px; font-family: var(--font-heading); }
+.cp-info { font-size: 12px; color: var(--cinza); }
+.cp-right { display: flex; align-items: center; gap: 10px; }
+.cp-score { font-size: 18px; font-weight: 600; color: var(--carbono); }
+.badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+.badge-red { background: var(--vermelho-light); color: var(--vermelho); }
+.badge-amber { background: var(--amarelo-light); color: #7A5C00; }
+.badge-green { background: var(--verde-ok-light); color: var(--verde-ok); }
+.badge-purple { background: #EEEDFE; color: #3C3489; }
+.badge-cinza { background: var(--cinza-light); color: var(--cinza); }
+
+.empty { text-align: center; padding: 3rem 1rem; color: var(--cinza); font-size: 14px; }
+.loading { text-align: center; padding: 3rem 1rem; color: var(--cinza); font-size: 14px; }
+
+/* MODAL DEVOLUTIVA */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; overflow-y: auto; padding: 2rem 1rem; }
+.overlay.vis { display: flex; align-items: flex-start; justify-content: center; }
+.modal { background: white; border-radius: var(--radius); width: 100%; max-width: 720px; overflow: hidden; }
+.modal-header { background: var(--musgo); padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+.modal-titulo { font-family: var(--font-heading); font-size: 18px; color: var(--texto-claro); font-weight: 600; }
+.modal-close { background: none; border: none; color: var(--texto-claro-sec); font-size: 20px; cursor: pointer; line-height: 1; padding: 4px 8px; }
+.modal-body { padding: 1.5rem; }
+
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1.25rem; }
+.info-item { background: var(--marfim-escuro); border-radius: var(--radius-sm); padding: 10px 12px; }
+.info-label { font-size: 10px; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 3px; }
+.info-val { font-size: 14px; font-weight: 500; color: var(--carbono); }
+
+.scores-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.score-item { background: var(--marfim); border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 8px 12px; text-align: center; flex: 1; min-width: 80px; }
+.score-item-label { font-size: 10px; color: var(--cinza); margin-bottom: 3px; }
+.score-item-val { font-size: 16px; font-weight: 600; color: var(--carbono); }
+
+.respostas-btn { font-size: 12px; color: var(--bronze); background: none; border: none; cursor: pointer; font-family: var(--font-body); padding: 0; margin-bottom: 1rem; text-decoration: underline; }
+.respostas-wrap { background: var(--marfim); border-radius: var(--radius-sm); padding: 1rem; margin-bottom: 1.25rem; display: none; max-height: 300px; overflow-y: auto; }
+.resp-item { font-size: 12px; color: var(--carbono); padding: 6px 0; border-bottom: 0.5px solid var(--border); line-height: 1.5; }
+.resp-item:last-child { border-bottom: none; }
+.resp-chave { font-weight: 500; color: var(--cinza); font-size: 11px; }
+
+.form-label { font-size: 11px; font-weight: 500; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; display: block; }
+.form-textarea { width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; color: var(--carbono); background: white; resize: vertical; min-height: 100px; font-family: var(--font-body); line-height: 1.6; margin-bottom: 1rem; }
+.form-textarea:focus { outline: none; border-color: var(--musgo); }
+
+.modal-footer { padding: 1rem 1.5rem; border-top: 0.5px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; }
+.btn-primary { padding: 11px 22px; background: var(--musgo); color: var(--texto-claro); border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; font-family: var(--font-body); cursor: pointer; }
+.btn-primary:hover { background: #1a2420; }
+.btn-secondary { padding: 11px 22px; background: white; color: var(--carbono); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; font-family: var(--font-body); cursor: pointer; }
+.btn-secondary:hover { border-color: var(--musgo); }
+.btn-bronze { padding: 11px 22px; background: var(--bronze-light); color: var(--bronze-escuro); border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; font-family: var(--font-body); cursor: pointer; }
+.msg-ok { font-size: 13px; color: var(--verde-ok); margin-top: 8px; display: none; }
+.msg-erro { font-size: 13px; color: var(--vermelho); margin-top: 8px; display: none; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-card">
+    <div class="login-logo">Wanda Stevanim</div>
+    <div class="login-sub">PAINEL DA TERAPEUTA · CCD™</div>
+    <label class="login-label">Senha de acesso</label>
+    <input type="password" class="login-input" id="loginSenha" placeholder="••••••••" onkeydown="if(event.key==='Enter')entrar()">
+    <button class="login-btn" onclick="entrar()">Acessar painel</button>
+    <div class="login-erro" id="loginErro">Senha incorreta. Tente novamente.</div>
+  </div>
+</div>
+
+<!-- PAINEL -->
+<div class="painel" id="painelWrap">
+  <div class="header">
+    <div>
+      <div class="header-logo">Mapeamento de Interferências Cognitivas · CCD™</div>
+      <div class="header-sub">Painel da Terapeuta</div>
+    </div>
+    <button class="header-btn" onclick="sair()">Sair</button>
+  </div>
+
+  <div class="main">
+    <div class="sec-title">Participantes</div>
+    <div class="sec-sub" id="totalLabel">Carregando...</div>
+
+    <div class="filtros">
+      <button class="filtro-btn ativo" onclick="filtrar('todos', this)">Todas</button>
+      <button class="filtro-btn" onclick="filtrar('aguardando_devolutiva', this)">Aguardando devolutiva</button>
+      <button class="filtro-btn" onclick="filtrar('devolutiva_enviada', this)">Devolutiva enviada</button>
+    </div>
+
+    <div class="lista" id="lista">
+      <div class="loading">Carregando participantes...</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-titulo" id="modalTitulo">Devolutiva</div>
+      <button class="modal-close" onclick="fecharModal()">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="info-grid" id="modalInfo"></div>
+
+      <div class="scores-row" id="modalScores"></div>
+
+      <button class="respostas-btn" onclick="toggleRespostas()">Ver respostas completas do formulário</button>
+      <div class="respostas-wrap" id="respostasWrap"></div>
+
+      <label class="form-label">Leitura do quadro · Como sua disponibilidade cognitiva se apresenta</label>
+      <textarea class="form-textarea" id="dev_interpretacao" rows="5" placeholder="Sua leitura clínica integrada do quadro..."></textarea>
+
+      <label class="form-label">Carga emocional e padrões cognitivos</label>
+      <textarea class="form-textarea" id="dev_emocional" rows="4" placeholder="Observações sobre o campo emocional e padrões identificados..."></textarea>
+
+      <label class="form-label">Recuperação do eixo intestino-cérebro: observações</label>
+      <textarea class="form-textarea" id="dev_intestino" rows="4" placeholder="Observações clínicas sobre o eixo intestino-cérebro..."></textarea>
+
+      <label class="form-label">Protocolo recomendado: primeiros passos</label>
+      <textarea class="form-textarea" id="dev_protocolo" rows="5" placeholder="Passos iniciais do protocolo personalizado..."></textarea>
+
+      <label class="form-label">Mensagem pessoal para a participante</label>
+      <textarea class="form-textarea" id="dev_mensagem" rows="4" placeholder="Escreva como se estivesse falando com ela. Com precisão, sem linguagem de laudo."></textarea>
+
+    </div>
+    <div class="modal-footer">
+      <div style="flex:1">
+        <div class="msg-ok" id="msgOk">Devolutiva salva com sucesso.</div>
+        <div class="msg-erro" id="msgErro">Erro ao salvar. Tente novamente.</div>
+      </div>
+      <button class="btn-secondary" onclick="fecharModal()">Cancelar</button>
+      <button class="btn-primary" onclick="salvarDevolutiva()">Salvar devolutiva</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// CONFIGURAÇÃO SUPABASE — cole seus dados aqui
+// ============================================================
+const SUPABASE_URL = 'https://vnuuhdmbdqgypttywwmj.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZudXVoZG1iZHFneXB0dHl3d21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5MjY2NzAsImV4cCI6MjA5NzUwMjY3MH0.mOBdcIpoHNACQh-Ir3c09OEaSUaCuz1RYBC_0huDA0g';
+const SENHA_TERAPEUTA = 'menteblindata2025';
+
+// ============================================================
+let filtroAtivo = 'todos';
+let participantes = [];
+let participanteAtual = null;
+
+// LOGIN
+function entrar() {
+  const senha = document.getElementById('loginSenha').value;
+  if (senha === SENHA_TERAPEUTA) {
+    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('painelWrap').style.display = 'block';
+    carregarParticipantes();
+  } else {
+    document.getElementById('loginErro').style.display = 'block';
+  }
+}
+
+function sair() {
+  document.getElementById('loginWrap').style.display = 'flex';
+  document.getElementById('painelWrap').style.display = 'none';
+  document.getElementById('loginSenha').value = '';
+}
+
+// SUPABASE
+async function supabaseFetch(endpoint, options = {}) {
+  const resp = await fetch(`${SUPABASE_URL}/rest/v1/${endpoint}`, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+      ...(options.headers || {})
+    }
+  });
+  if (!resp.ok) throw new Error(await resp.text());
+  return resp.json();
+}
+
+async function carregarParticipantes() {
+  try {
+    document.getElementById('lista').innerHTML = '<div class="loading">Carregando...</div>';
+    const dados = await supabaseFetch('anamneses?select=*&order=data_preenchimento.desc', {
+      headers: { 'Prefer': 'return=representation' }
+    });
+    participantes = dados;
+    renderLista();
+  } catch(e) {
+    document.getElementById('lista').innerHTML = '<div class="empty">Erro ao carregar. Verifique a configuração do Supabase.</div>';
+    console.error(e);
+  }
+}
+
+function filtrar(status, btn) {
+  filtroAtivo = status;
+  document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('ativo'));
+  btn.classList.add('ativo');
+  renderLista();
+}
+
+function renderLista() {
+  const lista = document.getElementById('lista');
+  const filtrados = filtroAtivo === 'todos'
+    ? participantes
+    : participantes.filter(p => p.status === filtroAtivo);
+
+  document.getElementById('totalLabel').textContent =
+    `${filtrados.length} participante${filtrados.length !== 1 ? 's' : ''} · ${filtroAtivo === 'todos' ? 'todas' : filtroAtivo === 'aguardando_devolutiva' ? 'aguardando devolutiva' : 'devolutiva enviada'}`;
+
+  if (!filtrados.length) {
+    lista.innerHTML = '<div class="empty">Nenhuma participante encontrada.</div>';
+    return;
+  }
+
+  lista.innerHTML = filtrados.map(p => {
+    const score = p.score_geral ?? 0;
+    const badgeClass = score >= 60 ? 'badge-red' : score >= 35 ? 'badge-amber' : 'badge-green';
+    const badgeLabel = score >= 60 ? 'Elevado' : score >= 35 ? 'Moderado' : 'Baixo';
+    const statusBadge = p.status === 'devolutiva_enviada'
+      ? '<span class="badge badge-purple">Devolutiva enviada</span>'
+      : '<span class="badge badge-cinza">Aguardando</span>';
+    const data = p.data_preenchimento
+      ? new Date(p.data_preenchimento).toLocaleDateString('pt-BR', {day:'2-digit',month:'short',year:'numeric'})
+      : '';
+    return `<div class="card-participante" onclick="abrirModal(${p.id})">
+      <div>
+        <div class="cp-nome">${p.nome || 'Sem nome'}</div>
+        <div class="cp-info">${p.email || ''} ${p.whatsapp ? '· ' + p.whatsapp : ''} · ${data}</div>
+      </div>
+      <div class="cp-right">
+        ${statusBadge}
+        <span class="cp-score">${score}%</span>
+        <span class="badge ${badgeClass}">${badgeLabel}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function abrirModal(id) {
+  const p = participantes.find(x => x.id === id);
+  if (!p) return;
+  participanteAtual = p;
+
+  document.getElementById('modalTitulo').textContent = p.nome || 'Participante';
+
+  // Info
+  const data = p.data_preenchimento
+    ? new Date(p.data_preenchimento).toLocaleDateString('pt-BR', {day:'2-digit',month:'long',year:'numeric'})
+    : 'Data não registrada';
+  document.getElementById('modalInfo').innerHTML = `
+    <div class="info-item"><div class="info-label">Nome</div><div class="info-val">${p.nome || ''}</div></div>
+    <div class="info-item"><div class="info-label">E-mail</div><div class="info-val">${p.email || ''}</div></div>
+    <div class="info-item"><div class="info-label">WhatsApp</div><div class="info-val">${p.whatsapp || ''}</div></div>
+    <div class="info-item"><div class="info-label">Preenchimento</div><div class="info-val">${data}</div></div>
+  `;
+
+  // Scores
+  const score = p.score_geral ?? 0;
+  const badgeClass = score >= 60 ? 'badge-red' : score >= 35 ? 'badge-amber' : 'badge-green';
+  const badgeLabel = score >= 60 ? 'Elevado' : score >= 35 ? 'Moderado' : 'Baixo';
+  document.getElementById('modalScores').innerHTML = `
+    <div class="score-item"><div class="score-item-label">Geral</div><div class="score-item-val"><span class="badge ${badgeClass}">${score}% · ${badgeLabel}</span></div></div>
+    <div class="score-item"><div class="score-item-label">Sono</div><div class="score-item-val">${p.score_sono ?? '—'}%</div></div>
+    <div class="score-item"><div class="score-item-label">Energia</div><div class="score-item-val">${p.score_energia ?? '—'}%</div></div>
+    <div class="score-item"><div class="score-item-label">Estresse</div><div class="score-item-val">${p.score_estresse ?? '—'}%</div></div>
+    <div class="score-item"><div class="score-item-label">Emocional</div><div class="score-item-val">${p.score_emocional ?? '—'}%</div></div>
+    <div class="score-item"><div class="score-item-label">Intestino</div><div class="score-item-val">${p.score_intestino ?? '—'}%</div></div>
+    <div class="score-item"><div class="score-item-label">Hábitos</div><div class="score-item-val">${p.score_habitos ?? '—'}%</div></div>
+  `;
+
+  // Respostas
+  let respostasHtml = '';
+  if (p.respostas) {
+    try {
+      const res = typeof p.respostas === 'string' ? JSON.parse(p.respostas) : p.respostas;
+      respostasHtml = Object.entries(res).map(([k, v]) =>
+        `<div class="resp-item"><span class="resp-chave">${k}:</span> ${v}</div>`
+      ).join('');
+    } catch(e) {
+      respostasHtml = `<div class="resp-item">${p.respostas}</div>`;
+    }
+  }
+  document.getElementById('respostasWrap').innerHTML = respostasHtml || '<div class="resp-item">Nenhuma resposta registrada.</div>';
+  document.getElementById('respostasWrap').style.display = 'none';
+
+  // Preencher devolutiva já salva (se houver)
+  document.getElementById('dev_interpretacao').value = p.dev_interpretacao || '';
+  document.getElementById('dev_emocional').value = p.dev_emocional || '';
+  document.getElementById('dev_intestino').value = p.dev_intestino || '';
+  document.getElementById('dev_protocolo').value = p.dev_protocolo || '';
+  document.getElementById('dev_mensagem').value = p.dev_mensagem || '';
+  document.getElementById('msgOk').style.display = 'none';
+  document.getElementById('msgErro').style.display = 'none';
+
+  document.getElementById('overlay').classList.add('vis');
+}
+
+function fecharModal() {
+  document.getElementById('overlay').classList.remove('vis');
+  participanteAtual = null;
+}
+
+function toggleRespostas() {
+  const wrap = document.getElementById('respostasWrap');
+  const btn = document.querySelector('.respostas-btn');
+  if (wrap.style.display === 'none') {
+    wrap.style.display = 'block';
+    btn.textContent = 'Ocultar respostas';
+  } else {
+    wrap.style.display = 'none';
+    btn.textContent = 'Ver respostas completas do formulário';
+  }
+}
+
+async function salvarDevolutiva() {
+  if (!participanteAtual) return;
+  const btn = document.querySelector('.modal-footer .btn-primary');
+  btn.disabled = true;
+  btn.textContent = 'Salvando...';
+
+  const dados = {
+    dev_interpretacao: document.getElementById('dev_interpretacao').value,
+    dev_emocional: document.getElementById('dev_emocional').value,
+    dev_intestino: document.getElementById('dev_intestino').value,
+    dev_protocolo: document.getElementById('dev_protocolo').value,
+    dev_mensagem: document.getElementById('dev_mensagem').value,
+    status: 'devolutiva_enviada',
+    data_devolutiva: new Date().toISOString()
+  };
+
+  try {
+    await supabaseFetch(`anamneses?id=eq.${participanteAtual.id}`, {
+      method: 'PATCH',
+      headers: { 'Prefer': 'return=minimal' },
+      body: JSON.stringify(dados)
+    });
+
+    // Atualizar localmente
+    const idx = participantes.findIndex(p => p.id === participanteAtual.id);
+    if (idx >= 0) participantes[idx] = { ...participantes[idx], ...dados };
+
+    document.getElementById('msgOk').style.display = 'block';
+    document.getElementById('msgErro').style.display = 'none';
+    renderLista();
+  } catch(e) {
+    console.error(e);
+    document.getElementById('msgErro').style.display = 'block';
+    document.getElementById('msgOk').style.display = 'none';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Salvar devolutiva';
+  }
+}
+
+// Fechar modal clicando fora
+document.getElementById('overlay').addEventListener('click', function(e) {
+  if (e.target === this) fecharModal();
+});
+
+document.getElementById('loginSenha').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') entrar();
+});
+</script>
+</body>
+</html>
