@@ -404,7 +404,10 @@ async function salvarDevolutiva() {
   try {
     await supabaseFetch(`anamneses?id=eq.${participanteAtual.id}`, {
       method: 'PATCH',
-      headers: { 'Prefer': 'return=minimal' },
+      headers: { 
+        'Prefer': 'return=minimal',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(dados)
     });
 
