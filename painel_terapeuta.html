@@ -66,12 +66,12 @@ body { font-family: var(--font-body); background: var(--marfim); color: var(--ca
 
 /* LISTA */
 .lista { display: flex; flex-direction: column; gap: 10px; }
-.card-participante { background: white; border: 0.5px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.25rem; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; cursor: pointer; transition: border-color 0.15s; }
+.card-participante { background: white; border: 0.5px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.25rem; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; cursor: pointer; transition: border-color 0.15s; overflow: hidden; }
 .card-participante:hover { border-color: var(--musgo); }
-.cp-nome { font-size: 15px; font-weight: 500; color: var(--carbono); margin-bottom: 3px; font-family: var(--font-heading); }
-.cp-info { font-size: 12px; color: var(--cinza); }
+.cp-nome { font-size: 15px; font-weight: 500; color: var(--carbono); margin-bottom: 3px; font-family: var(--font-heading); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 280px; }
+.cp-info { font-size: 12px; color: var(--cinza); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 320px; }
 .cp-right { display: flex; align-items: center; gap: 10px; }
-.cp-score { font-size: 18px; font-weight: 600; color: var(--carbono); }
+.cp-score { font-size: 16px; font-weight: 600; color: var(--carbono); white-space: nowrap; }
 .badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
 .badge-red { background: var(--vermelho-light); color: var(--vermelho); }
 .badge-amber { background: var(--amarelo-light); color: #7A5C00; }
@@ -94,7 +94,7 @@ body { font-family: var(--font-body); background: var(--marfim); color: var(--ca
 .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1.25rem; }
 .info-item { background: var(--marfim-escuro); border-radius: var(--radius-sm); padding: 10px 12px; }
 .info-label { font-size: 10px; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 3px; }
-.info-val { font-size: 14px; font-weight: 500; color: var(--carbono); }
+.info-val { font-size: 13px; font-weight: 500; color: var(--carbono); word-break: break-all; overflow-wrap: break-word; }
 
 .scores-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.25rem; }
 .score-item { background: var(--marfim); border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 8px 12px; text-align: center; flex: 1; min-width: 80px; }
@@ -199,6 +199,7 @@ body { font-family: var(--font-body); background: var(--marfim); color: var(--ca
         <div class="msg-erro" id="msgErro">Erro ao salvar. Tente novamente.</div>
       </div>
       <button class="btn-secondary" onclick="fecharModal()">Cancelar</button>
+      <button class="btn-bronze" onclick="gerarRelatorioPDF()" id="btnGerarPDF" style="display:none">Gerar relatório PDF</button>
       <button class="btn-primary" onclick="salvarDevolutiva()">Salvar devolutiva</button>
     </div>
   </div>
@@ -247,7 +248,10 @@ async function supabaseFetch(endpoint, options = {}) {
     }
   });
   if (!resp.ok) throw new Error(await resp.text());
-  return resp.json();
+  // 204 No Content — sem body (retorno do PATCH com Prefer: return=minimal)
+  if (resp.status === 204) return null;
+  const text = await resp.text();
+  return text ? JSON.parse(text) : null;
 }
 
 async function carregarParticipantes() {
@@ -364,6 +368,8 @@ function abrirModal(id) {
   document.getElementById('dev_mensagem').value = p.dev_mensagem || '';
   document.getElementById('msgOk').style.display = 'none';
   document.getElementById('msgErro').style.display = 'none';
+  // Mostrar botão PDF se já tem devolutiva salva
+  document.getElementById('btnGerarPDF').style.display = p.status === 'devolutiva_enviada' ? 'inline-block' : 'none';
 
   document.getElementById('overlay').classList.add('vis');
 }
@@ -417,6 +423,7 @@ async function salvarDevolutiva() {
 
     document.getElementById('msgOk').style.display = 'block';
     document.getElementById('msgErro').style.display = 'none';
+    document.getElementById('btnGerarPDF').style.display = 'inline-block';
     renderLista();
   } catch(e) {
     console.error(e);
@@ -432,6 +439,130 @@ async function salvarDevolutiva() {
 document.getElementById('overlay').addEventListener('click', function(e) {
   if (e.target === this) fecharModal();
 });
+
+
+function gerarRelatorioPDF() {
+  if (!participanteAtual) return;
+  const p = participanteAtual;
+
+  const nome = p.nome || 'Participante';
+  const primeiroNome = nome.split(' ')[0];
+  const data = p.data_devolutiva
+    ? new Date(p.data_devolutiva).toLocaleDateString('pt-BR', {day:'2-digit', month:'long', year:'numeric'})
+    : new Date().toLocaleDateString('pt-BR', {day:'2-digit', month:'long', year:'numeric'});
+
+  const score = p.score_geral ?? 0;
+  const nivel = score >= 60 ? 'Elevado' : score >= 35 ? 'Moderado' : 'Baixo';
+  const corNivel = score >= 60 ? '#7A2020' : score >= 35 ? '#7A5C00' : '#0F6E56';
+
+  const dominios = [
+    { nome: 'Sono', val: p.score_sono ?? 0 },
+    { nome: 'Energia', val: p.score_energia ?? 0 },
+    { nome: 'Estresse', val: p.score_estresse ?? 0 },
+    { nome: 'Emocional', val: p.score_emocional ?? 0 },
+    { nome: 'Intestino', val: p.score_intestino ?? 0 },
+    { nome: 'Hábitos', val: p.score_habitos ?? 0 },
+  ];
+
+  const scoresHtml = dominios.map(d => `
+    <div style="text-align:center; flex:1; min-width:80px; background:#F5F0E8; border-radius:8px; padding:10px 8px;">
+      <div style="font-size:10px; color:#7B8579; margin-bottom:4px; font-family:'DM Sans',sans-serif;">${d.nome}</div>
+      <div style="font-size:17px; font-weight:600; color:#1E2420; font-family:'DM Sans',sans-serif;">${d.val}%</div>
+    </div>`).join('');
+
+  const html = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: white; color: #1E2420; }
+  .capa { background: #243028; padding: 3rem 2.5rem; min-height: 220px; display: flex; flex-direction: column; justify-content: flex-end; }
+  .capa-tag { font-size: 10px; color: #C4A96A; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 10px; font-family: 'DM Sans', sans-serif; }
+  .capa-titulo { font-size: 28px; font-weight: 600; color: #F5F0E8; font-family: 'Cormorant Garamond', serif; margin-bottom: 6px; }
+  .capa-nome { font-size: 15px; color: #C8C4BC; font-family: 'DM Sans', sans-serif; }
+  .corpo { padding: 2rem 2.5rem; }
+  .sec-titulo { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #243028; margin: 2rem 0 0.75rem; border-bottom: 0.5px solid #D8D3C8; padding-bottom: 0.5rem; }
+  .sec-texto { font-size: 13px; color: #1E2420; line-height: 1.8; white-space: pre-line; }
+  .score-box { background: #243028; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 1.5rem; }
+  .score-num { font-size: 42px; font-weight: 700; color: #F5F0E8; font-family: 'DM Sans', sans-serif; }
+  .score-info { flex: 1; }
+  .score-nivel { font-size: 13px; font-weight: 600; color: ${corNivel}; background: white; display: inline-block; padding: 3px 12px; border-radius: 20px; margin-bottom: 4px; }
+  .score-desc { font-size: 12px; color: #C8C4BC; font-family: 'DM Sans', sans-serif; }
+  .scores-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .mensagem-box { background: #F5F0E8; border-left: 3px solid #7F6A46; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0; }
+  .mensagem-label { font-size: 10px; color: #7B8579; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; font-family: 'DM Sans', sans-serif; }
+  .mensagem-texto { font-size: 14px; color: #1E2420; line-height: 1.8; white-space: pre-line; font-family: 'Cormorant Garamond', serif; font-size: 16px; }
+  .rodape { margin-top: 3rem; padding-top: 1rem; border-top: 0.5px solid #D8D3C8; font-size: 11px; color: #7B8579; font-family: 'DM Sans', sans-serif; }
+  .aviso { font-size: 11px; color: #9A9EA1; line-height: 1.6; margin-top: 0.5rem; font-family: 'DM Sans', sans-serif; }
+  @media print { body { padding: 0; } }
+</style>
+</head>
+<body>
+  <div class="capa">
+    <div class="capa-tag">Mapeamento de Interferências Cognitivas · CCD™</div>
+    <div class="capa-titulo">Relatório de Disponibilidade Cognitiva™</div>
+    <div class="capa-nome">${nome} · ${data}</div>
+  </div>
+
+  <div class="corpo">
+    <div class="score-box">
+      <div class="score-num">${score}%</div>
+      <div class="score-info">
+        <div class="score-nivel">${nivel}</div>
+        <div class="score-desc">Nível de interferência cognitiva identificado</div>
+      </div>
+    </div>
+
+    <div class="scores-row">${scoresHtml}</div>
+
+    ${p.dev_mensagem ? `
+    <div class="mensagem-box">
+      <div class="mensagem-label">Palavras para você</div>
+      <div class="mensagem-texto">${p.dev_mensagem}</div>
+    </div>` : ''}
+
+    ${p.dev_interpretacao ? `
+    <div class="sec-titulo">Leitura do seu quadro</div>
+    <div class="sec-texto" style="margin-bottom:0.5rem; font-size:12px; color:#7B8579;">Como sua disponibilidade cognitiva se apresenta</div>
+    <div class="sec-texto">${p.dev_interpretacao}</div>` : ''}
+
+    ${p.dev_emocional ? `
+    <div class="sec-titulo">Carga emocional e padrões cognitivos</div>
+    <div class="sec-texto">${p.dev_emocional}</div>` : ''}
+
+    ${p.dev_intestino ? `
+    <div class="sec-titulo">Recuperação do eixo intestino-cérebro</div>
+    <div class="sec-texto">${p.dev_intestino}</div>` : ''}
+
+    ${p.dev_protocolo ? `
+    <div class="sec-titulo">Protocolo recomendado: primeiros passos</div>
+    <div class="sec-texto">${p.dev_protocolo}</div>` : ''}
+
+    <div class="rodape">
+      Wanda Stevanim · Naturopatia Funcional Integrativa · CCD™
+      <div class="aviso">Este relatório é um documento de apoio clínico integrativo personalizado. Não é diagnóstico médico formal e não substitui acompanhamento profissional de saúde.</div>
+    </div>
+  </div>
+
+  <script>window.onload = function(){ window.print(); };<\/script>
+</body>
+</html>`;
+
+  var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.target = '_blank';
+  a.rel = 'noopener noreferrer';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function(){
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, 5000);
+}
 
 document.getElementById('loginSenha').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') entrar();
