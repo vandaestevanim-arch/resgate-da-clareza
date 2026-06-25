@@ -204,7 +204,7 @@ input[type="text"] { min-height: auto; }
 .rel-cover-title { font-size: 26px; font-weight: 600; color: white; margin-bottom: 6px; font-family: var(--font-heading); }
 .rel-cover-sub { font-size: 13px; color: rgba(255,255,255,0.45); font-family: var(--font-body); }
 .rel-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1.5rem; }
-.rel-meta-item { background: white; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; }
+.rel-meta-item { background: white; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; page-break-inside: avoid; break-inside: avoid; }
 .rmi-label { font-size: 10px; color: var(--text-ter); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; font-family: var(--font-body); font-weight: 600; }
 .rmi-val { font-size: 13px; font-weight: 600; color: var(--carbono); font-family: var(--font-body); }
 .rel-sec-title { font-size: 10px; font-weight: 700; color: var(--dourado-escuro); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--dourado-light); font-family: var(--font-body); }
@@ -251,7 +251,27 @@ input[type="text"] { min-height: auto; }
   .result-wrap, .relatorio, .dev-final { display: block !important; }
   body { background: white; }
   .main { padding: 0; }
-  .result-hero, .rel-cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  /* Forçar cores de fundo na impressão */
+  .result-hero, .rel-cover, .rel-info-card, .df-score-item, .score-bar { 
+    -webkit-print-color-adjust: exact; 
+    print-color-adjust: exact; 
+    color-adjust: exact;
+  }
+  /* Controle de quebra de página */
+  .rel-cover { page-break-after: always; break-after: always; }
+  .rel-info-grid { page-break-inside: avoid; break-inside: avoid; }
+  .df-score-wrap { page-break-inside: avoid; break-inside: avoid; }
+  .df-score-item { page-break-inside: avoid; break-inside: avoid; }
+  .dev-final-card { page-break-inside: avoid; break-inside: avoid; }
+  .dfc-block { page-break-inside: avoid; break-inside: avoid; }
+  .result-radar-wrap { page-break-inside: avoid; break-inside: avoid; }
+  .result-score-list { page-break-inside: avoid; break-inside: avoid; }
+  /* Garantir que radar não seja cortado */
+  canvas { page-break-inside: avoid; break-inside: avoid; }
+  /* Evitar órfãos e viúvas */
+  p { orphans: 3; widows: 3; }
+  h2, h3, h4 { page-break-after: avoid; break-after: avoid; }
+  @page { margin: 15mm; }
 }
 /* LEAD CAPTURE */
 .lead-screen { }
@@ -987,7 +1007,7 @@ function iniciarFormulario() {
 
 function coletarRespostasTexto() {
   const form = document.getElementById('form');
-  let partes = [`PACIENTE: ${leadData.nome}`];
+  let partes = [`PARTICIPANTE: ${leadData.nome}`];
   form.querySelectorAll('.opt.sel .opt-text').forEach(op => partes.push('— ' + op.textContent.trim()));
   form.querySelectorAll('textarea').forEach(t => { if (t.value.trim()) partes.push(t.value.trim()); });
   return partes.join('\n');
@@ -1237,7 +1257,7 @@ function calcular() {
 
   document.getElementById('relMeta').innerHTML = `
     <div class="rel-meta-item" style="grid-column:1/-1;border-left:3px solid var(--dourado);">
-      <div class="rmi-label">Paciente</div>
+      <div class="rmi-label">Participante</div>
       <div class="rmi-val">${leadData.nome || '—'}</div>
       <div style="font-size:11px;color:var(--cinza);margin-top:3px;font-family:var(--font-body);">${leadData.email || ''} ${leadData.whatsapp ? '· ' + leadData.whatsapp : ''}</div>
     </div>
@@ -1444,7 +1464,14 @@ function imprimirSecao(secao) {
     + 'body { background: white; padding: 2rem; }'
     + '.btn-secondary, .btn-primary, .devolutiva-aviso, .dev-form, .dev-generate-btn, .submit-wrap, .footer-note { display: none !important; }'
     + '.result-wrap, .dev-final, .relatorio { display: block !important; }'
-    + 'canvas { display: none !important; }'
+    + 'canvas { display: block !important; }'
+    + '.rel-cover { page-break-after: always !important; break-after: always !important; }'
+    + '.rel-meta, .rel-meta-item { page-break-inside: avoid !important; break-inside: avoid !important; }'
+    + '.radar-wrap { page-break-inside: avoid !important; break-inside: avoid !important; }'
+    + '.dev-final-card { page-break-inside: avoid !important; break-inside: avoid !important; }'
+    + '.dfc-block { page-break-inside: avoid !important; break-inside: avoid !important; }'
+    + 'h2, h3, .rel-sec-title, .dfc-tag { page-break-after: avoid !important; break-after: avoid !important; }'
+    + 'p { orphans: 3; widows: 3; }'
     + '@page { margin: 15mm; }'
     + '@media print { body { padding: 0; } }'
     + '</style>'
