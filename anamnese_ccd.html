@@ -230,6 +230,21 @@ input[type="text"] { min-height: auto; }
 
 /* DEVOLUTIVA FINAL */
 .dev-final { display: none; }
+.busca-participante { background: var(--marfim-escuro); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+.busca-titulo { font-size: 13px; font-weight: 600; color: var(--carbono); margin-bottom: 10px; font-family: var(--font-body); }
+.busca-row { display: flex; gap: 8px; }
+.busca-input { flex: 1; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-family: var(--font-body); color: var(--carbono); background: white; }
+.busca-input:focus { outline: none; border-color: var(--musgo); }
+.busca-btn { padding: 10px 18px; background: var(--musgo); color: white; border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; font-family: var(--font-body); cursor: pointer; white-space: nowrap; }
+.busca-btn:hover { background: var(--musgo-medio); }
+.busca-resultado { margin-top: 10px; font-size: 12px; color: var(--cinza); font-family: var(--font-body); }
+.busca-lista { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; }
+.busca-item { background: white; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: border-color 0.15s; }
+.busca-item:hover { border-color: var(--musgo); }
+.busca-item-nome { font-size: 13px; font-weight: 500; color: var(--carbono); font-family: var(--font-body); }
+.busca-item-info { font-size: 11px; color: var(--cinza); margin-top: 2px; }
+.busca-item-score { font-size: 12px; font-weight: 600; color: var(--musgo); }
+.participante-carregada { background: var(--musgo-ok-light); border: 1px solid #1D9E75; border-radius: var(--radius-sm); padding: 10px 14px; margin-top: 8px; font-size: 13px; color: #085041; font-family: var(--font-body); display: none; }
 .dev-final.visible { display: block; }
 .dev-final-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem; }
 .dfc-header { background: var(--dourado-light); padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border); }
@@ -812,6 +827,19 @@ input[type="text"] { min-height: auto; }
       <div class="dev-form-title">Preencha após a sessão</div>
       <div class="dev-form-sub">Esses campos são visíveis apenas para você. O relatório final gerado será o documento entregue à participante.</div>
       <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
+
+        <!-- BUSCA DE PARTICIPANTE -->
+        <div class="busca-participante">
+          <div class="busca-titulo">Carregar participante do banco</div>
+          <div class="busca-row">
+            <input class="busca-input" id="buscaInput" type="text" placeholder="Nome ou e-mail da participante..." onkeydown="if(event.key==='Enter')buscarParticipante()">
+            <button class="busca-btn" onclick="buscarParticipante()">Buscar</button>
+          </div>
+          <div class="busca-resultado" id="buscaResultado"></div>
+          <div class="busca-lista" id="buscaLista"></div>
+          <div class="participante-carregada" id="participanteCarregada"></div>
+        </div>
+
         <div style="font-size:12px;color:var(--cinza);margin-bottom:10px;font-family:var(--font-body);line-height:1.6;">A IA lê todas as respostas da participante e gera um rascunho completo para você revisar e ajustar.</div>
         <div class="ai-loading" id="aiLoading">
           <div class="ai-spinner"></div>
@@ -987,6 +1015,117 @@ function coletarTodasRespostas() {
   return respostas;
 }
 // ============================================================
+
+// SUPABASE — busca de participantes
+const SB_URL = 'https://vnuuhdmbdqgypttywwmj.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZudXVoZG1iZHFneXB0dHl3d21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5MjY2NzAsImV4cCI6MjA5NzUwMjY3MH0.mOBdcIpoHNACQh-Ir3c09OEaSUaCuz1RYBC_0huDA0g';
+
+async function sbFetch(endpoint, options={}) {
+  const r = await fetch(`${SB_URL}/rest/v1/${endpoint}`, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SB_KEY,
+      'Authorization': `Bearer ${SB_KEY}`,
+      ...(options.headers||{})
+    }
+  });
+  if (!r.ok) throw new Error(await r.text());
+  if (r.status === 204) return null;
+  const t = await r.text();
+  return t ? JSON.parse(t) : null;
+}
+
+async function buscarParticipante() {
+  const termo = document.getElementById('buscaInput').value.trim();
+  if (!termo) return;
+  const res = document.getElementById('buscaResultado');
+  const lista = document.getElementById('buscaLista');
+  res.textContent = 'Buscando...';
+  lista.innerHTML = '';
+  try {
+    const dados = await sbFetch(`anamneses?or=(nome.ilike.*${encodeURIComponent(termo)}*,email.ilike.*${encodeURIComponent(termo)}*)&order=data_preenchimento.desc&limit=10`);
+    if (!dados || !dados.length) {
+      res.textContent = 'Nenhuma participante encontrada.';
+      return;
+    }
+    res.textContent = `${dados.length} participante(s) encontrada(s). Clique para carregar.`;
+    lista.innerHTML = dados.map(p => {
+      const score = p.score_geral ?? 0;
+      const nivel = score>=60?'Elevado':score>=35?'Moderado':'Baixo';
+      const data = p.data_preenchimento ? new Date(p.data_preenchimento).toLocaleDateString('pt-BR') : '';
+      const status = p.status === 'devolutiva_enviada' ? ' · devolutiva salva' : '';
+      return `<div class="busca-item" onclick="carregarParticipante(${p.id})">
+        <div>
+          <div class="busca-item-nome">${p.nome||'Sem nome'}</div>
+          <div class="busca-item-info">${p.email||''} · ${data}${status}</div>
+        </div>
+        <div class="busca-item-score">${score}% · ${nivel}</div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    res.textContent = 'Erro ao buscar. Verifique a conexão.';
+    console.error(e);
+  }
+}
+
+async function carregarParticipante(id) {
+  const res = document.getElementById('buscaResultado');
+  res.textContent = 'Carregando dados...';
+  try {
+    const dados = await sbFetch(`anamneses?id=eq.${id}&limit=1`);
+    if (!dados || !dados.length) { res.textContent = 'Erro ao carregar.'; return; }
+    const p = dados[0];
+
+    // Preencher campos da devolutiva com dados salvos
+    document.getElementById('dev_interpretacao').value = p.dev_interpretacao || '';
+    document.getElementById('dev_transger').value = p.dev_emocional || '';
+    document.getElementById('dev_intestino').value = p.dev_intestino || '';
+    document.getElementById('dev_protocolo').value = p.dev_protocolo || '';
+    document.getElementById('dev_mensagem').value = p.dev_mensagem || '';
+
+    // Preencher leadData com dados da participante para o relatório
+    leadData.nome = p.nome || '';
+    leadData.email = p.email || '';
+    leadData.whatsapp = p.whatsapp || '';
+    document.getElementById('lead_nome').value = p.nome || '';
+
+    // Simular scores para o relatório
+    window._scores_carregados = {
+      geral: p.score_geral||0,
+      sono: p.score_sono||0,
+      energia: p.score_energia||0,
+      estresse: p.score_estresse||0,
+      habitos: p.score_habitos||0,
+      emocional: p.score_emocional||0,
+      intestino: p.score_intestino||0,
+      historico: p.score_historico||0
+    };
+
+    // Carregar respostas para que a IA possa usar
+    if (p.respostas) {
+      try { window._respostas_carregadas = typeof p.respostas==='string' ? JSON.parse(p.respostas) : p.respostas; }
+      catch(e) { window._respostas_carregadas = {}; }
+    }
+
+    // Indicar sucesso
+    document.getElementById('buscaLista').innerHTML = '';
+    res.textContent = '';
+    const ok = document.getElementById('participanteCarregada');
+    ok.textContent = `✓ ${p.nome} carregada — scores e devolutiva prontos para editar e gerar relatório.`;
+    ok.style.display = 'block';
+
+    // Popular relatório com scores carregados
+    popularRelatorioComScores(window._scores_carregados);
+
+    // Rolar para área da terapeuta
+    setTimeout(() => document.getElementById('dev_interpretacao').scrollIntoView({behavior:'smooth', block:'start'}), 800);
+
+  } catch(e) {
+    res.textContent = 'Erro ao carregar participante.';
+    console.error(e);
+  }
+}
 
 // LEAD DATA
 let leadData = { nome: '', email: '', whatsapp: '' };
@@ -1347,6 +1486,120 @@ function drawRadar(canvasId, domains) {
     const r=size+20, x=cx+r*Math.cos(angles[i]), y=cy+r*Math.sin(angles[i]);
     ctx.fillText(label, x, y+4);
   });
+}
+
+function popularRelatorioComScores(sc) {
+  // Monta domains com scores carregados
+  const domains = [
+    { name: 'Sono e Recuperação', score: sc.sono },
+    { name: 'Energia e Mente', score: sc.energia },
+    { name: 'Estresse e Sistema Nervoso', score: sc.estresse },
+    { name: 'Alimentação e Hábitos', score: sc.habitos },
+    { name: 'Campo Emocional e Transgeracional', score: sc.emocional },
+    { name: 'Saúde Intestinal', score: sc.intestino },
+    { name: 'Histórico e Sinais', score: sc.historico }
+  ];
+
+  const geral = sc.geral;
+  const nome = leadData.nome ? leadData.nome.split(' ')[0] : 'participante';
+
+  // Mostrar resultado e botão terapeuta
+  document.getElementById('resultWrap').classList.add('visible');
+  document.getElementById('terapeutaAcesso').style.display = 'block';
+
+  // Resultado hero
+  document.getElementById('result-score').textContent = geral + '%';
+  document.getElementById('result-label').textContent = geral>=60?'Elevado':geral>=35?'Moderado':'Baixo';
+
+  // Radar principal
+  drawRadar('radar', domains);
+
+  // Cards de domínio
+  const interps = {
+    'Sono e Recuperação': {
+      a: 'Sono profundamente comprometido. O corpo não está se recuperando entre os ciclos de esforço.',
+      m: 'Qualidade do sono abaixo do necessário para recuperação cognitiva plena.',
+      b: 'Padrão de sono adequado. Manter as práticas de higiene do sono.'
+    },
+    'Energia e Mente': {
+      a: 'Depleção cognitiva significativa: névoa mental, falhas de memória e foco comprometido.',
+      m: 'Energia mental instável com períodos de clareza intercalados com fadiga.',
+      b: 'Boa disponibilidade de energia mental e clareza cognitiva.'
+    },
+    'Estresse e Sistema Nervoso': {
+      a: 'Sistema nervoso em modo de alerta crônico. Intervenção prioritária.',
+      m: 'Ativação moderada do sistema de estresse com impacto na cognição.',
+      b: 'Sistema nervoso razoavelmente regulado.'
+    },
+    'Alimentação e Hábitos': {
+      a: 'Hábitos desregulados contribuindo para inflamação silenciosa e depleção nutricional.',
+      m: 'Hábitos inconsistentes com espaço significativo para otimização.',
+      b: 'Hábitos de vida alinhados com a saúde cognitiva.'
+    },
+    'Campo Emocional e Transgeracional': {
+      a: 'Carga emocional significativa com padrões que se repetem e reduzem a disponibilidade cognitiva.',
+      m: 'Campo emocional com pontos de atenção que merecem investigação.',
+      b: 'Campo emocional relativamente equilibrado.'
+    },
+    'Saúde Intestinal': {
+      a: 'Recuperação do eixo intestino-cérebro comprometido. Impacto direto no humor, energia e cognição.',
+      m: 'Eixo intestino-cérebro com sinais de desequilíbrio que merecem atenção.',
+      b: 'Saúde intestinal preservada com boa comunicação intestino-cérebro.'
+    },
+    'Histórico e Sinais': {
+      a: 'Histórico relevante que precisa ser cuidadosamente considerado no protocolo.',
+      m: 'Sinais no histórico que merecem atenção no processo.',
+      b: 'Histórico sem sinais críticos de alerta.'
+    }
+  };
+
+  let cardsHtml = '';
+  domains.forEach(d => {
+    const bc = d.score>=60?'badge-red':d.score>=35?'badge-amber':'badge-green';
+    const bl = d.score>=60?'Atenção Elevada':d.score>=35?'Atenção Moderada':'Equilibrado';
+    const bc2 = d.score>=60?'#E53E3E':d.score>=35?'#D97706':'#0F6E56';
+    const txt = d.score>=60?interps[d.name].a:d.score>=35?interps[d.name].m:interps[d.name].b;
+    cardsHtml += `<div class="dc"><div class="dc-top"><div class="dc-name">${d.name}</div><span class="dc-badge ${bc}">${bl} · ${d.score}%</span></div><div class="dc-bar-bg"><div class="dc-bar-fill" style="width:${d.score}%;background:${bc2}"></div></div><div class="dc-interp">${txt}</div></div>`;
+  });
+  document.getElementById('domainCards').innerHTML = cardsHtml;
+
+  // Seção do relatório
+  const hoje = new Date();
+  const dataStr = hoje.toLocaleDateString('pt-BR', {day:'numeric',month:'long',year:'numeric'});
+  const reap = new Date(hoje); reap.setDate(hoje.getDate()+60);
+  const reapStr = reap.toLocaleDateString('pt-BR', {day:'numeric',month:'long',year:'numeric'});
+
+  document.getElementById('relMeta').innerHTML = `
+    <div class="rel-meta-item" style="grid-column:1/-1;border-left:3px solid var(--dourado);">
+      <div class="rmi-label">Participante</div>
+      <div class="rmi-val">${leadData.nome||''}</div>
+      <div style="font-size:11px;color:var(--cinza);margin-top:3px;font-family:var(--font-body);">${leadData.email||''} ${leadData.whatsapp?'· '+leadData.whatsapp:''}</div>
+    </div>
+    <div class="rel-meta-item"><div class="rmi-label">Índice Geral</div><div class="rmi-val" style="color:${geral>=60?'var(--vermelho)':geral>=35?'var(--dourado-escuro)':'var(--musgo)'};">${geral}% · ${geral>=60?'Elevado':geral>=35?'Moderado':'Baixo'}</div></div>
+    <div class="rel-meta-item"><div class="rmi-label">Domínio Crítico</div><div class="rmi-val">${[...domains].sort((a,b)=>b.score-a.score)[0].name}</div></div>
+    <div class="rel-meta-item"><div class="rmi-label">Emissão</div><div class="rmi-val">${dataStr}</div></div>
+    <div class="rel-meta-item"><div class="rmi-label">Reaplicação</div><div class="rmi-val">${reapStr}</div></div>
+  `;
+
+  // Radar do relatório
+  drawRadar('radar2', domains);
+
+  // Cards do relatório
+  let relCardsHtml = '';
+  domains.forEach(d => {
+    const bc = d.score>=60?'badge-red':d.score>=35?'badge-amber':'badge-green';
+    const bl = d.score>=60?'Atenção Elevada':d.score>=35?'Atenção Moderada':'Equilibrado';
+    const bc2 = d.score>=60?'#E53E3E':d.score>=35?'#D97706':'#0F6E56';
+    const txt = d.score>=60?interps[d.name].a:d.score>=35?interps[d.name].m:interps[d.name].b;
+    relCardsHtml += `<div style="background:white;border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:10px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-size:13px;font-weight:600;color:var(--carbono);font-family:var(--font-body);">${d.name}</span><span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;color:${bc2};background:${bc2}18;">${bl} · ${d.score}%</span></div><div style="font-size:12px;color:var(--cinza);line-height:1.6;font-family:var(--font-body);">${txt}</div></div>`;
+  });
+  document.getElementById('relDomains').innerHTML = relCardsHtml;
+
+  // Mostrar relatório
+  const rel = document.getElementById('relatorio');
+  rel.style.display = 'block';
+  rel.classList.add('visible');
+  setTimeout(() => rel.scrollIntoView({behavior:'smooth', block:'start'}), 400);
 }
 
 function gerarDevolutiva() {
