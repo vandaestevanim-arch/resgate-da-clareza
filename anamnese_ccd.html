@@ -1508,8 +1508,11 @@ function popularRelatorioComScores(sc) {
   document.getElementById('terapeutaAcesso').style.display = 'block';
 
   // Resultado hero
-  document.getElementById('result-score').textContent = geral + '%';
-  document.getElementById('result-label').textContent = geral>=60?'Elevado':geral>=35?'Moderado':'Baixo';
+  document.getElementById('scoreNum').textContent = geral;
+  document.getElementById('scoreBadge').textContent = geral>=60?'Elevado':geral>=35?'Moderado':'Baixo';
+  document.getElementById('scoreBadge').style.background = geral>=60?'var(--vermelho-light)':geral>=35?'var(--amarelo-light)':'var(--musgo-ok-light)';
+  document.getElementById('scoreBadge').style.color = geral>=60?'var(--vermelho)':geral>=35?'var(--amarelo)':'var(--verde-ok)';
+  document.getElementById('scoreDesc').textContent = geral>=60?'Nível elevado de interferências cognitivas ativas.':geral>=35?'Nível moderado de interferências cognitivas identificadas.':'Nível baixo de interferências cognitivas.';
 
   // Radar principal
   drawRadar('radar', domains);
