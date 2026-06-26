@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -119,6 +120,12 @@ body { font-family: var(--font-body); background: var(--marfim); color: var(--ca
 .btn-bronze { padding: 11px 22px; background: var(--bronze-light); color: var(--bronze-escuro); border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; font-family: var(--font-body); cursor: pointer; }
 .msg-ok { font-size: 13px; color: var(--verde-ok); margin-top: 8px; display: none; }
 .msg-erro { font-size: 13px; color: var(--vermelho); margin-top: 8px; display: none; }
+.btn-ia { width: 100%; padding: 13px; background: #1E2420; color: #F5F0E8; border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; font-family: var(--font-body); cursor: pointer; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-ia:hover { background: #243028; }
+.btn-ia:disabled { opacity: 0.6; cursor: not-allowed; }
+.ia-status { font-size: 12px; color: var(--cinza); margin-bottom: 1rem; display: none; font-style: italic; }
+.campos-devolutiva { display: none; }
+.campos-devolutiva.vis { display: block; }
 </style>
 </head>
 <body>
@@ -177,29 +184,35 @@ body { font-family: var(--font-body); background: var(--marfim); color: var(--ca
       <button class="respostas-btn" onclick="toggleRespostas()">Ver respostas completas do formulário</button>
       <div class="respostas-wrap" id="respostasWrap"></div>
 
-      <label class="form-label">Leitura do quadro · Como sua disponibilidade cognitiva se apresenta</label>
-      <textarea class="form-textarea" id="dev_interpretacao" rows="5" placeholder="Sua leitura clínica integrada do quadro..."></textarea>
+      <button class="btn-ia" id="btnGerarRascunho" onclick="gerarRascunhoIA()">
+        ✦ Gerar rascunho com IA
+      </button>
+      <div class="ia-status" id="iaStatus">Analisando respostas e gerando rascunho clínico...</div>
 
-      <label class="form-label">Carga emocional e padrões cognitivos</label>
-      <textarea class="form-textarea" id="dev_emocional" rows="4" placeholder="Observações sobre o campo emocional e padrões identificados..."></textarea>
+      <div class="campos-devolutiva" id="camposDevolutiva">
+        <label class="form-label">Leitura do quadro · Como sua disponibilidade cognitiva se apresenta</label>
+        <textarea class="form-textarea" id="dev_interpretacao" rows="5" placeholder="Sua leitura do quadro..."></textarea>
 
-      <label class="form-label">Recuperação do eixo intestino-cérebro: observações</label>
-      <textarea class="form-textarea" id="dev_intestino" rows="4" placeholder="Observações clínicas sobre o eixo intestino-cérebro..."></textarea>
+        <label class="form-label">Carga emocional e padrões cognitivos</label>
+        <textarea class="form-textarea" id="dev_emocional" rows="4" placeholder="Observações sobre o campo emocional e padrões identificados..."></textarea>
 
-      <label class="form-label">Protocolo recomendado: primeiros passos</label>
-      <textarea class="form-textarea" id="dev_protocolo" rows="5" placeholder="Passos iniciais do protocolo personalizado..."></textarea>
+        <label class="form-label">Recuperação do eixo intestino-cérebro: observações</label>
+        <textarea class="form-textarea" id="dev_intestino" rows="4" placeholder="Observações sobre o eixo intestino-cérebro..."></textarea>
 
-      <label class="form-label">Mensagem pessoal para a participante</label>
-      <textarea class="form-textarea" id="dev_mensagem" rows="4" placeholder="Escreva como se estivesse falando com ela. Com precisão, sem linguagem de laudo."></textarea>
+        <label class="form-label">Protocolo recomendado: primeiros passos</label>
+        <textarea class="form-textarea" id="dev_protocolo" rows="5" placeholder="Passos iniciais do protocolo personalizado..."></textarea>
+
+        <label class="form-label">Mensagem pessoal para a participante</label>
+        <textarea class="form-textarea" id="dev_mensagem" rows="4" placeholder="Escreva como se estivesse falando com ela. Com precisão, sem linguagem de laudo."></textarea>
+      </div>
 
     </div>
     <div class="modal-footer">
       <div style="flex:1">
-        <div class="msg-ok" id="msgOk">Devolutiva salva com sucesso.</div>
+        <div class="msg-ok" id="msgOk">Devolutiva salva. Para gerar o relatório, abra a anamnese, entre na área da terapeuta e busque esta participante pelo nome.</div>
         <div class="msg-erro" id="msgErro">Erro ao salvar. Tente novamente.</div>
       </div>
       <button class="btn-secondary" onclick="fecharModal()">Cancelar</button>
-      <button class="btn-bronze" onclick="gerarRelatorioPDF()" id="btnGerarPDF" style="display:none">Gerar relatório PDF</button>
       <button class="btn-primary" onclick="salvarDevolutiva()">Salvar devolutiva</button>
     </div>
   </div>
@@ -368,8 +381,16 @@ function abrirModal(id) {
   document.getElementById('dev_mensagem').value = p.dev_mensagem || '';
   document.getElementById('msgOk').style.display = 'none';
   document.getElementById('msgErro').style.display = 'none';
-  // Mostrar botão PDF se já tem devolutiva salva
-  document.getElementById('btnGerarPDF').style.display = p.status === 'devolutiva_enviada' ? 'inline-block' : 'none';
+  // Mostrar/ocultar campos e botão PDF conforme status
+  const temDevolutiva = p.status === 'devolutiva_enviada';
+
+  if (temDevolutiva) {
+    document.getElementById('camposDevolutiva').classList.add('vis');
+    document.getElementById('btnGerarRascunho').textContent = '✦ Regerar rascunho com IA';
+  } else {
+    document.getElementById('camposDevolutiva').classList.remove('vis');
+    document.getElementById('btnGerarRascunho').textContent = '✦ Gerar rascunho com IA';
+  }
 
   document.getElementById('overlay').classList.add('vis');
 }
@@ -423,7 +444,7 @@ async function salvarDevolutiva() {
 
     document.getElementById('msgOk').style.display = 'block';
     document.getElementById('msgErro').style.display = 'none';
-    document.getElementById('btnGerarPDF').style.display = 'inline-block';
+
     renderLista();
   } catch(e) {
     console.error(e);
@@ -441,128 +462,86 @@ document.getElementById('overlay').addEventListener('click', function(e) {
 });
 
 
-function gerarRelatorioPDF() {
+async function gerarRascunhoIA() {
   if (!participanteAtual) return;
   const p = participanteAtual;
 
-  const nome = p.nome || 'Participante';
-  const primeiroNome = nome.split(' ')[0];
-  const data = p.data_devolutiva
-    ? new Date(p.data_devolutiva).toLocaleDateString('pt-BR', {day:'2-digit', month:'long', year:'numeric'})
-    : new Date().toLocaleDateString('pt-BR', {day:'2-digit', month:'long', year:'numeric'});
+  const btn = document.getElementById('btnGerarRascunho');
+  const status = document.getElementById('iaStatus');
+  btn.disabled = true;
+  btn.textContent = 'Analisando...';
+  status.style.display = 'block';
 
-  const score = p.score_geral ?? 0;
-  const nivel = score >= 60 ? 'Elevado' : score >= 35 ? 'Moderado' : 'Baixo';
-  const corNivel = score >= 60 ? '#7A2020' : score >= 35 ? '#7A5C00' : '#0F6E56';
+  // Montar contexto completo para a IA
+  let respostasTexto = '';
+  if (p.respostas) {
+    try {
+      const res = typeof p.respostas === 'string' ? JSON.parse(p.respostas) : p.respostas;
+      respostasTexto = Object.entries(res).map(([k,v]) => `${k}: ${v}`).join('\n');
+    } catch(e) { respostasTexto = p.respostas; }
+  }
 
-  const dominios = [
-    { nome: 'Sono', val: p.score_sono ?? 0 },
-    { nome: 'Energia', val: p.score_energia ?? 0 },
-    { nome: 'Estresse', val: p.score_estresse ?? 0 },
-    { nome: 'Emocional', val: p.score_emocional ?? 0 },
-    { nome: 'Intestino', val: p.score_intestino ?? 0 },
-    { nome: 'Hábitos', val: p.score_habitos ?? 0 },
-  ];
+  const prompt = `Você é Wanda Stevanim, naturopata funcional integrativa, autora do Método Resgate da Clareza™ e da tese CCD™ — Clareza Cognitiva Disponível.
 
-  const scoresHtml = dominios.map(d => `
-    <div style="text-align:center; flex:1; min-width:80px; background:#F5F0E8; border-radius:8px; padding:10px 8px;">
-      <div style="font-size:10px; color:#7B8579; margin-bottom:4px; font-family:'DM Sans',sans-serif;">${d.nome}</div>
-      <div style="font-size:17px; font-weight:600; color:#1E2420; font-family:'DM Sans',sans-serif;">${d.val}%</div>
-    </div>`).join('');
+Você está gerando a devolutiva clínica de uma participante com base nas respostas do Mapeamento de Interferências Cognitivas.
 
-  const html = `<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'DM Sans', sans-serif; background: white; color: #1E2420; }
-  .capa { background: #243028; padding: 3rem 2.5rem; min-height: 220px; display: flex; flex-direction: column; justify-content: flex-end; }
-  .capa-tag { font-size: 10px; color: #C4A96A; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 10px; font-family: 'DM Sans', sans-serif; }
-  .capa-titulo { font-size: 28px; font-weight: 600; color: #F5F0E8; font-family: 'Cormorant Garamond', serif; margin-bottom: 6px; }
-  .capa-nome { font-size: 15px; color: #C8C4BC; font-family: 'DM Sans', sans-serif; }
-  .corpo { padding: 2rem 2.5rem; }
-  .sec-titulo { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #243028; margin: 2rem 0 0.75rem; border-bottom: 0.5px solid #D8D3C8; padding-bottom: 0.5rem; }
-  .sec-texto { font-size: 13px; color: #1E2420; line-height: 1.8; white-space: pre-line; }
-  .score-box { background: #243028; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 1.5rem; }
-  .score-num { font-size: 42px; font-weight: 700; color: #F5F0E8; font-family: 'DM Sans', sans-serif; }
-  .score-info { flex: 1; }
-  .score-nivel { font-size: 13px; font-weight: 600; color: ${corNivel}; background: white; display: inline-block; padding: 3px 12px; border-radius: 20px; margin-bottom: 4px; }
-  .score-desc { font-size: 12px; color: #C8C4BC; font-family: 'DM Sans', sans-serif; }
-  .scores-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; }
-  .mensagem-box { background: #F5F0E8; border-left: 3px solid #7F6A46; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0; }
-  .mensagem-label { font-size: 10px; color: #7B8579; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; font-family: 'DM Sans', sans-serif; }
-  .mensagem-texto { font-size: 14px; color: #1E2420; line-height: 1.8; white-space: pre-line; font-family: 'Cormorant Garamond', serif; font-size: 16px; }
-  .rodape { margin-top: 3rem; padding-top: 1rem; border-top: 0.5px solid #D8D3C8; font-size: 11px; color: #7B8579; font-family: 'DM Sans', sans-serif; }
-  .aviso { font-size: 11px; color: #9A9EA1; line-height: 1.6; margin-top: 0.5rem; font-family: 'DM Sans', sans-serif; }
-  @media print { body { padding: 0; } }
-</style>
-</head>
-<body>
-  <div class="capa">
-    <div class="capa-tag">Mapeamento de Interferências Cognitivas · CCD™</div>
-    <div class="capa-titulo">Relatório de Disponibilidade Cognitiva™</div>
-    <div class="capa-nome">${nome} · ${data}</div>
-  </div>
+IDENTIDADE DE VOZ: Tom de observadora clínica. Nunca motivacional. A marca observa, explica, interpreta. Nunca promete, convence ou usa linguagem de coach. Use vocabulário CCD: acesso, disponibilidade cognitiva, interferências, reserva cognitiva, desgaste invisível, sobrecarga biológica, sinais precoces, autonomia cognitiva. EVITE: transformação, cura, jornada, reconexão, desbloqueio, performance, produtividade, despertar, essência, propósito, sua melhor versão.
 
-  <div class="corpo">
-    <div class="score-box">
-      <div class="score-num">${score}%</div>
-      <div class="score-info">
-        <div class="score-nivel">${nivel}</div>
-        <div class="score-desc">Nível de interferência cognitiva identificado</div>
-      </div>
-    </div>
+DADOS DA PARTICIPANTE:
+Nome: ${p.nome}
+Score geral: ${p.score_geral}% (${p.score_geral >= 60 ? 'Elevado' : p.score_geral >= 35 ? 'Moderado' : 'Baixo'})
+Sono: ${p.score_sono}% | Energia: ${p.score_energia}% | Estresse: ${p.score_estresse}%
+Emocional: ${p.score_emocional}% | Intestino: ${p.score_intestino}% | Hábitos: ${p.score_habitos}%
 
-    <div class="scores-row">${scoresHtml}</div>
+RESPOSTAS DO FORMULÁRIO:
+${respostasTexto}
 
-    ${p.dev_mensagem ? `
-    <div class="mensagem-box">
-      <div class="mensagem-label">Palavras para você</div>
-      <div class="mensagem-texto">${p.dev_mensagem}</div>
-    </div>` : ''}
-
-    ${p.dev_interpretacao ? `
-    <div class="sec-titulo">Leitura do seu quadro</div>
-    <div class="sec-texto" style="margin-bottom:0.5rem; font-size:12px; color:#7B8579;">Como sua disponibilidade cognitiva se apresenta</div>
-    <div class="sec-texto">${p.dev_interpretacao}</div>` : ''}
-
-    ${p.dev_emocional ? `
-    <div class="sec-titulo">Carga emocional e padrões cognitivos</div>
-    <div class="sec-texto">${p.dev_emocional}</div>` : ''}
-
-    ${p.dev_intestino ? `
-    <div class="sec-titulo">Recuperação do eixo intestino-cérebro</div>
-    <div class="sec-texto">${p.dev_intestino}</div>` : ''}
-
-    ${p.dev_protocolo ? `
-    <div class="sec-titulo">Protocolo recomendado: primeiros passos</div>
-    <div class="sec-texto">${p.dev_protocolo}</div>` : ''}
-
-    <div class="rodape">
-      Wanda Stevanim · Naturopatia Funcional Integrativa · CCD™
-      <div class="aviso">Este relatório é um documento de apoio clínico integrativo personalizado. Não é diagnóstico médico formal e não substitui acompanhamento profissional de saúde.</div>
-    </div>
-  </div>
-
-  <script>window.onload = function(){ window.print(); };<\/script>
-</body>
-</html>`;
-
-  var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  a.href = url;
-  a.target = '_blank';
-  a.rel = 'noopener noreferrer';
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(function(){
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }, 5000);
+Gere a devolutiva em formato JSON com exatamente estas 5 chaves:
+{
+  "interpretacao": "Leitura do quadro — como a disponibilidade cognitiva se apresenta. 3 a 4 parágrafos. Tom clínico, observacional.",
+  "emocional": "Carga emocional e padrões cognitivos identificados. 2 a 3 parágrafos.",
+  "intestino": "Observações sobre o eixo intestino-cérebro e sua influência no quadro cognitivo. 1 a 2 parágrafos.",
+  "protocolo": "Primeiros passos do protocolo recomendado. Lista de 4 a 6 ações concretas e sequenciais.",
+  "mensagem": "Mensagem pessoal para a participante. 2 a 3 parágrafos. Escreva como se estivesse falando com ela — com precisão clínica, sem linguagem de laudo, sem promessas."
 }
+
+Responda APENAS com o JSON. Sem explicações, sem markdown, sem texto adicional.`;
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await resp.json();
+    const texto = data.content[0].text.trim();
+    const clean = texto.replace(/```json|```/g, '').trim();
+    const rascunho = JSON.parse(clean);
+
+    document.getElementById('dev_interpretacao').value = rascunho.interpretacao || '';
+    document.getElementById('dev_emocional').value = rascunho.emocional || '';
+    document.getElementById('dev_intestino').value = rascunho.intestino || '';
+    document.getElementById('dev_protocolo').value = rascunho.protocolo || '';
+    document.getElementById('dev_mensagem').value = rascunho.mensagem || '';
+
+    document.getElementById('camposDevolutiva').classList.add('vis');
+    status.style.display = 'none';
+    btn.disabled = false;
+    btn.textContent = '✦ Regerar rascunho com IA';
+
+  } catch(e) {
+    console.error('Erro IA:', e);
+    status.textContent = 'Erro ao gerar rascunho. Tente novamente.';
+    btn.disabled = false;
+    btn.textContent = '✦ Gerar rascunho com IA';
+  }
+}
+
 
 document.getElementById('loginSenha').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') entrar();
