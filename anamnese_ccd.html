@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -701,6 +702,36 @@ input[type="text"] { min-height: auto; }
   <div class="q">
     <div class="q-label">Você usa ou já usou medicamento psiquiátrico? Como foi/está sendo?</div>
     <textarea name="medicamento" style="min-height:60px" placeholder="Ex: antidepressivo por 2 anos, não sentia melhora real..."></textarea>
+  </div>
+  <div class="q">
+    <div class="q-label">Algum destes fatores faz parte da sua saúde atual? Selecione o que se aplica.</div>
+    <div class="opts" id="b8_fatores_clinicos">
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Menopausa ou perimenopausa</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Retirada de ovários</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Retirada de útero</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Diabetes ou resistência à insulina</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Hipotireoidismo</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Hipertensão</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Apneia do sono ou ronco frequente</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Perda auditiva</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Infecção periodontal ou problema de gengiva recorrente</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Nenhum dos acima</span></div>
+    </div>
+  </div>
+  <div class="q">
+    <div class="q-label">Na sua família (pais, avós, tios), há histórico de Alzheimer, outras demências, Parkinson ou AVC? Se sim, com que idade começou, quando souber.</div>
+    <textarea name="historico_familiar" style="min-height:70px" placeholder="Ex: mãe com Alzheimer diagnosticado aos 68 anos..."></textarea>
+  </div>
+  <div class="q">
+    <div class="q-label">Você teve ou tem exposição regular a algum destes fatores?</div>
+    <div class="opts" id="b8_exposicao">
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Metais pesados (trabalho, água, alimentos)</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Pesticidas ou agrotóxicos</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Solventes químicos</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Amálgamas dentárias (restaurações de mercúrio)</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Mofo ou umidade prolongada em casa ou trabalho</span></div>
+      <div class="opt" data-multi="true" onclick="toggleOpt(this)"><div class="opt-check"></div><span class="opt-text">Nenhum dos acima</span></div>
+    </div>
   </div>
 </div>
 <div class="divider"></div>
@@ -1417,7 +1448,7 @@ function calcular() {
   document.getElementById('relDomains').innerHTML = relCardsHtml;
   drawRadar('radar2', domains);
 
-  document.getElementById('relatorio').classList.add('visible-ready');
+  document.getElementById('relatorio').classList.add('visible');
 
   // restore sort
   domains.sort((a,b) => {
