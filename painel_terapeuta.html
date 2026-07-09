@@ -107,6 +107,56 @@ body { font-family: var(--font-body); background: var(--marfim); color: var(--ca
 .ia-status { font-size: 12px; color: var(--cinza); margin-bottom: 1rem; display: none; font-style: italic; }
 .campos-devolutiva { display: none; }
 .campos-devolutiva.vis { display: block; }
+
+/* --- Análise Laboratorial: abas do modal --- */
+.modal-tabs { display: flex; gap: 4px; margin-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+.modal-tab { font-size: 13px; font-weight: 500; color: var(--cinza); background: none; border: none; padding: 10px 4px; margin-right: 20px; cursor: pointer; font-family: var(--font-body); border-bottom: 2px solid transparent; }
+.modal-tab.ativo { color: var(--musgo); border-bottom-color: var(--bronze); }
+.tab-content { display: none; }
+.tab-content.vis { display: block; }
+
+/* --- Formulário de novo exame --- */
+.exame-form { background: var(--marfim); border-radius: var(--radius-sm); padding: 1rem; margin-bottom: 1.25rem; display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; align-items: end; }
+.exame-form label { font-size: 10px; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 4px; }
+.exame-form select, .exame-form input { width: 100%; padding: 9px 10px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-family: var(--font-body); background: white; }
+.exame-form select:focus, .exame-form input:focus { outline: none; border-color: var(--musgo); }
+.btn-add-exame { padding: 9px 16px; background: var(--musgo); color: var(--texto-claro); border: none; border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+.btn-add-exame:hover { background: #1a2420; }
+
+/* --- Lista de exames / histórico --- */
+.exames-categoria { margin-bottom: 1.25rem; }
+.exames-categoria-titulo { font-family: var(--font-heading); font-size: 15px; font-weight: 600; color: var(--bronze-escuro); margin-bottom: 8px; }
+.exame-row { display: grid; grid-template-columns: 1fr auto auto auto; align-items: center; gap: 10px; padding: 9px 12px; background: white; border: 0.5px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 6px; }
+.exame-nome { font-size: 13px; font-weight: 500; color: var(--carbono); }
+.exame-data { font-size: 11px; color: var(--cinza); }
+.exame-valor { font-size: 13px; font-weight: 600; color: var(--carbono); white-space: nowrap; }
+.exame-del { background: none; border: none; color: var(--cinza); cursor: pointer; font-size: 15px; padding: 2px 6px; }
+.exame-del:hover { color: var(--vermelho); }
+.badge-otima { background: var(--verde-ok-light); color: var(--verde-ok); }
+.badge-atencao { background: var(--amarelo-light); color: #7A5C00; }
+.badge-prioritaria { background: var(--vermelho-light); color: var(--vermelho); }
+.badge-sem-faixa { background: var(--cinza-light); color: var(--cinza); }
+.lab-empty { text-align: center; padding: 2rem 1rem; color: var(--cinza); font-size: 13px; }
+
+/* --- Overlay: Configurar Faixas Integrativas --- */
+.overlay-config { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 250; overflow-y: auto; padding: 2rem 1rem; }
+.overlay-config.vis { display: flex; align-items: flex-start; justify-content: center; }
+.modal-config { background: white; border-radius: var(--radius); width: 100%; max-width: 820px; }
+.config-categoria { margin-bottom: 1.5rem; }
+.config-categoria-titulo { font-family: var(--font-heading); font-size: 16px; font-weight: 600; color: var(--musgo); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.config-marcador { background: var(--marfim); border-radius: var(--radius-sm); padding: 1rem; margin-bottom: 10px; }
+.config-marcador-nome { font-size: 13px; font-weight: 600; color: var(--carbono); margin-bottom: 10px; }
+.config-faixas-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
+.config-faixa-grupo { background: white; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 8px 10px; }
+.config-faixa-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; font-weight: 600; }
+.config-faixa-grupo.otima .config-faixa-label { color: var(--verde-ok); }
+.config-faixa-grupo.atencao .config-faixa-label { color: #7A5C00; }
+.config-faixa-grupo.prioritaria .config-faixa-label { color: var(--vermelho); }
+.config-faixa-inputs { display: flex; gap: 6px; align-items: center; }
+.config-faixa-inputs input { width: 100%; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 12px; }
+.config-texto { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 12px; font-family: var(--font-body); resize: vertical; min-height: 50px; margin-top: 4px; }
+.btn-salvar-marcador { font-size: 11px; padding: 6px 14px; background: var(--musgo); color: var(--texto-claro); border: none; border-radius: 20px; cursor: pointer; margin-top: 6px; }
+.config-save-status { font-size: 11px; color: var(--verde-ok); margin-left: 10px; display: none; }
 </style>
 </head>
 <body>
@@ -127,6 +177,7 @@ body { font-family: var(--font-body); background: var(--marfim); color: var(--ca
       <div class="header-logo">Mapeamento de Interferências Cognitivas · CCD™</div>
       <div class="header-sub">Painel da Terapeuta</div>
     </div>
+    <button class="header-btn" onclick="abrirConfigFaixas()" style="margin-right:8px;">Configurar Faixas Integrativas</button>
     <button class="header-btn" onclick="sair()">Sair</button>
   </div>
   <div class="main">
@@ -150,6 +201,12 @@ body { font-family: var(--font-body); background: var(--marfim); color: var(--ca
       <button class="modal-close" onclick="fecharModal()">✕</button>
     </div>
     <div class="modal-body">
+      <div class="modal-tabs">
+        <button class="modal-tab ativo" id="tabBtnDevolutiva" onclick="mudarTab('devolutiva')">Devolutiva</button>
+        <button class="modal-tab" id="tabBtnLab" onclick="mudarTab('lab')">Análise Laboratorial</button>
+      </div>
+
+      <div class="tab-content vis" id="tabDevolutiva">
       <div class="info-grid" id="modalInfo"></div>
       <div class="scores-row" id="modalScores"></div>
       <button class="respostas-btn" onclick="toggleRespostas()">Ver respostas completas do formulário</button>
@@ -170,14 +227,56 @@ body { font-family: var(--font-body); background: var(--marfim); color: var(--ca
         <label class="form-label">Mensagem pessoal para a participante</label>
         <textarea class="form-textarea" id="dev_mensagem" rows="4" placeholder="Escreva como se estivesse falando com ela. Com precisão, sem linguagem de laudo."></textarea>
       </div>
+      </div>
+
+      <div class="tab-content" id="tabLab">
+        <div class="exame-form">
+          <div>
+            <label>Marcador</label>
+            <select id="novoExameMarcador"></select>
+          </div>
+          <div>
+            <label>Valor</label>
+            <input type="number" step="0.01" id="novoExameValor" placeholder="0,00">
+          </div>
+          <div>
+            <label>Data do exame</label>
+            <input type="date" id="novoExameData">
+          </div>
+          <button class="btn-add-exame" onclick="adicionarExame()">Adicionar</button>
+        </div>
+        <div id="listaExames"></div>
+      </div>
     </div>
     <div class="modal-footer">
       <div style="flex:1">
-        <div class="msg-ok" id="msgOk">Devolutiva salva. Para gerar o relatório, abra a anamnese, entre na área da terapeuta e busque esta participante pelo nome.</div>
+        <div class="msg-ok" id="msgOk">Devolutiva salva.</div>
         <div class="msg-erro" id="msgErro">Erro ao salvar. Tente novamente.</div>
       </div>
       <button class="btn-secondary" onclick="fecharModal()">Cancelar</button>
+      <button class="btn-bronze" onclick="imprimirRelatorio()">Imprimir relatório</button>
       <button class="btn-primary" onclick="salvarDevolutiva()">Salvar devolutiva</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay-config" id="overlayConfig">
+  <div class="modal-config">
+    <div class="modal-header">
+      <div class="modal-titulo">Configurar Faixas Integrativas</div>
+      <button class="modal-close" onclick="fecharConfigFaixas()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="config-marcador" style="background:white; border:1.5px dashed var(--border);">
+        <div class="config-marcador-nome">+ Novo marcador</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:8px;">
+          <input type="text" id="novoMarcadorCategoria" placeholder="Categoria (ex: Metabolismo)" class="config-texto" style="min-height:auto;">
+          <input type="text" id="novoMarcadorNome" placeholder="Nome do marcador" class="config-texto" style="min-height:auto;">
+          <input type="text" id="novoMarcadorUnidade" placeholder="Unidade (ex: mg/dL)" class="config-texto" style="min-height:auto;">
+          <button class="btn-salvar-marcador" onclick="criarMarcador()">Adicionar</button>
+        </div>
+      </div>
+      <div id="listaConfigMarcadores"></div>
     </div>
   </div>
 </div>
@@ -201,6 +300,7 @@ function entrar() {
     document.getElementById('loginWrap').style.display = 'none';
     document.getElementById('painelWrap').style.display = 'block';
     carregarParticipantes();
+    carregarCatalogoLab();
   } else {
     document.getElementById('loginErro').style.display = 'block';
   }
@@ -351,6 +451,7 @@ function abrirModal(id) {
   }
 
   document.getElementById('overlay').classList.add('vis');
+  mudarTab('devolutiva');
 }
 
 function fecharModal() {
@@ -526,6 +627,498 @@ function gerarRascunhoIA() {
 document.getElementById('loginSenha').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') entrar();
 });
+
+// ============================================================
+// IMPRESSÃO DO RELATÓRIO — direto do painel, sem depender de outro arquivo
+// ============================================================
+function imprimirRelatorio() {
+  if (!participanteAtual) return;
+  const p = participanteAtual;
+
+  const interpretacao = document.getElementById('dev_interpretacao').value.trim();
+  const emocional = document.getElementById('dev_emocional').value.trim();
+  const intestino = document.getElementById('dev_intestino').value.trim();
+  const protocolo = document.getElementById('dev_protocolo').value.trim();
+  const mensagem = document.getElementById('dev_mensagem').value.trim();
+
+  if (!interpretacao && !protocolo) {
+    alert('Preencha ao menos a leitura do quadro e o protocolo antes de imprimir. Use "Gerar rascunho com IA" ou escreva manualmente.');
+    return;
+  }
+
+  const data = p.data_preenchimento
+    ? new Date(p.data_preenchimento).toLocaleDateString('pt-BR', {day:'2-digit',month:'long',year:'numeric'})
+    : '';
+
+  const geral = p.score_geral ?? 0;
+  const dominiosImpressao = [
+    { nome: 'Sono e Recuperação', score: p.score_sono ?? 0 },
+    { nome: 'Energia e Mente', score: p.score_energia ?? 0 },
+    { nome: 'Estresse e Sistema Nervoso', score: p.score_estresse ?? 0 },
+    { nome: 'Campo Emocional', score: p.score_emocional ?? 0 },
+    { nome: 'Saúde Intestinal', score: p.score_intestino ?? 0 },
+    { nome: 'Alimentação e Hábitos', score: p.score_habitos ?? 0 }
+  ];
+
+  const paraHtml = (texto) => texto
+    .split('\n').filter(l => l.trim() !== '')
+    .map(l => `<p>${l}</p>`).join('');
+
+  const html = `<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8">
+<title>Relatório CCD™ · ${p.nome || ''}</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body { font-family:'DM Sans',sans-serif; color:#1E2420; background:#F5F0E8; padding:0; }
+  .page { max-width:760px; margin:0 auto; padding:48px 40px; }
+  .cabecalho { border-bottom:2px solid #7F6A46; padding-bottom:20px; margin-bottom:32px; }
+  .marca { font-family:'Cormorant Garamond',serif; font-size:15px; color:#7F6A46; letter-spacing:0.08em; text-transform:uppercase; }
+  h1 { font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:600; color:#243028; margin-top:6px; }
+  .meta { font-size:13px; color:#6B6F72; margin-top:6px; }
+  .scores { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:36px; }
+  .score-box { background:white; border:1px solid #D8D3C8; border-radius:10px; padding:14px 12px; text-align:center; }
+  .score-label { font-size:11px; color:#6B6F72; margin-bottom:4px; }
+  .score-val { font-size:20px; font-weight:600; color:#243028; }
+  .score-geral { grid-column:1/4; background:#243028; }
+  .score-geral .score-label, .score-geral .score-val { color:#F5F0E8; }
+  section { margin-bottom:28px; }
+  h2 { font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:600; color:#7F6A46; margin-bottom:10px; border-bottom:1px solid #D8D3C8; padding-bottom:6px; }
+  p { font-size:14px; line-height:1.75; margin-bottom:10px; color:#1E2420; }
+  .rodape { margin-top:48px; padding-top:20px; border-top:1px solid #D8D3C8; font-size:11px; color:#6B6F72; text-align:center; }
+  @media print {
+    body { background:white; }
+    .page { padding:20px 8px; }
+    @page { margin: 1.5cm; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="cabecalho">
+    <div class="marca">Wanda Stevanim · CCD™</div>
+    <h1>Relatório de Clareza Cognitiva Disponível</h1>
+    <div class="meta">${p.nome || ''} · ${data}</div>
+  </div>
+
+  <div class="scores">
+    <div class="score-box score-geral"><div class="score-label">Índice CCD Geral</div><div class="score-val">${geral}%</div></div>
+    ${dominiosImpressao.map(d => `<div class="score-box"><div class="score-label">${d.nome}</div><div class="score-val">${d.score}%</div></div>`).join('')}
+  </div>
+
+  ${interpretacao ? `<section><h2>Leitura do Quadro</h2>${paraHtml(interpretacao)}</section>` : ''}
+  ${emocional ? `<section><h2>Campo Emocional</h2>${paraHtml(emocional)}</section>` : ''}
+  ${intestino ? `<section><h2>Eixo Intestino-Cérebro</h2>${paraHtml(intestino)}</section>` : ''}
+  ${protocolo ? `<section><h2>Protocolo Recomendado</h2>${paraHtml(protocolo)}</section>` : ''}
+  ${mensagem ? `<section><h2>Mensagem</h2>${paraHtml(mensagem)}</section>` : ''}
+
+  <div class="rodape">Este relatório é uma ferramenta de investigação integrativa da CCD™ e não substitui diagnóstico ou avaliação médica.</div>
+</div>
+<script>window.onload = () => setTimeout(() => window.print(), 300);</script>
+</body></html>`;
+
+  const win = window.open('', '_blank');
+  win.document.write(html);
+  win.document.close();
+}
+
+// ============================================================
+// MÓDULO: ANÁLISE LABORATORIAL INTEGRATIVA
+// ============================================================
+let marcadoresLab = [];
+let faixasLab = [];
+let examesParticipante = [];
+
+let sintomasCatalogo = [];
+let protocolosCatalogo = [];
+let marcadorSintomasMap = {}; // marcador_id -> [sintoma_id, ...]
+let marcadorProtocolosMap = {}; // marcador_id -> [protocolo_id, ...]
+
+async function carregarCatalogoLab() {
+  marcadoresLab = await supabaseFetch('marcadores_lab?select=*&ativo=eq.true&order=categoria.asc,ordem.asc') || [];
+  faixasLab = await supabaseFetch('faixas_integrativas?select=*') || [];
+  sintomasCatalogo = await supabaseFetch('sintomas_catalogo?select=*&order=ordem.asc') || [];
+  protocolosCatalogo = await supabaseFetch('protocolos_catalogo?select=*&order=ordem.asc') || [];
+
+  const relSint = await supabaseFetch('marcador_sintomas?select=*') || [];
+  marcadorSintomasMap = {};
+  relSint.forEach(r => {
+    if (!marcadorSintomasMap[r.marcador_id]) marcadorSintomasMap[r.marcador_id] = [];
+    marcadorSintomasMap[r.marcador_id].push(r.sintoma_id);
+  });
+
+  const relProto = await supabaseFetch('marcador_protocolos?select=*') || [];
+  marcadorProtocolosMap = {};
+  relProto.forEach(r => {
+    if (!marcadorProtocolosMap[r.marcador_id]) marcadorProtocolosMap[r.marcador_id] = [];
+    marcadorProtocolosMap[r.marcador_id].push(r.protocolo_id);
+  });
+
+  popularSelectMarcadores();
+}
+
+function faixaDoMarcador(marcadorId) {
+  return faixasLab.find(f => f.marcador_id === marcadorId) || null;
+}
+
+function popularSelectMarcadores() {
+  const sel = document.getElementById('novoExameMarcador');
+  if (!sel) return;
+  const categorias = {};
+  marcadoresLab.forEach(m => {
+    if (!categorias[m.categoria]) categorias[m.categoria] = [];
+    categorias[m.categoria].push(m);
+  });
+  sel.innerHTML = Object.entries(categorias).map(([cat, ms]) =>
+    `<optgroup label="${cat}">${ms.map(m => `<option value="${m.id}">${m.nome}${m.unidade ? ' (' + m.unidade + ')' : ''}</option>`).join('')}</optgroup>`
+  ).join('');
+}
+
+function mudarTab(tab) {
+  document.getElementById('tabBtnDevolutiva').classList.toggle('ativo', tab === 'devolutiva');
+  document.getElementById('tabBtnLab').classList.toggle('ativo', tab === 'lab');
+  document.getElementById('tabDevolutiva').classList.toggle('vis', tab === 'devolutiva');
+  document.getElementById('tabLab').classList.toggle('vis', tab === 'lab');
+  if (tab === 'lab' && participanteAtual) carregarExamesParticipante();
+}
+
+function classificarValor(valor, faixa) {
+  if (!faixa) return 'sem_faixa';
+  const dentro = (v, min, max) => {
+    if (min === null && max === null) return false;
+    if (min !== null && v < min) return false;
+    if (max !== null && v > max) return false;
+    return true;
+  };
+  if (dentro(valor, faixa.otima_min, faixa.otima_max)) return 'otima';
+  if (dentro(valor, faixa.atencao_min, faixa.atencao_max)) return 'atencao';
+  if (dentro(valor, faixa.prioritaria_min, faixa.prioritaria_max)) return 'prioritaria';
+  return 'fora_faixa';
+}
+
+const CLASSIF_LABEL = { otima: 'Ótima', atencao: 'Atenção', prioritaria: 'Prioritária', fora_faixa: 'Fora das faixas', sem_faixa: 'Sem faixa cadastrada' };
+const CLASSIF_BADGE = { otima: 'badge-otima', atencao: 'badge-atencao', prioritaria: 'badge-prioritaria', fora_faixa: 'badge-sem-faixa', sem_faixa: 'badge-sem-faixa' };
+
+async function adicionarExame() {
+  const marcadorId = parseInt(document.getElementById('novoExameMarcador').value);
+  const valor = parseFloat(document.getElementById('novoExameValor').value);
+  const data = document.getElementById('novoExameData').value;
+
+  if (!marcadorId || isNaN(valor) || !data) {
+    alert('Preencha marcador, valor e data do exame.');
+    return;
+  }
+
+  const faixa = faixaDoMarcador(marcadorId);
+  const classificacao = classificarValor(valor, faixa);
+
+  try {
+    await supabaseFetch('exames_resultados', {
+      method: 'POST',
+      headers: { 'Prefer': 'return=minimal' },
+      body: JSON.stringify({
+        participante_id: participanteAtual.id,
+        marcador_id: marcadorId,
+        valor, data_exame: data, classificacao
+      })
+    });
+    document.getElementById('novoExameValor').value = '';
+    document.getElementById('novoExameData').value = '';
+    carregarExamesParticipante();
+  } catch(e) {
+    console.error(e);
+    alert('Erro ao salvar exame. Tente novamente.');
+  }
+}
+
+async function excluirExame(id) {
+  if (!confirm('Excluir este exame?')) return;
+  try {
+    await supabaseFetch(`exames_resultados?id=eq.${id}`, { method: 'DELETE', headers: { 'Prefer': 'return=minimal' } });
+    carregarExamesParticipante();
+  } catch(e) {
+    console.error(e);
+    alert('Erro ao excluir.');
+  }
+}
+
+async function carregarExamesParticipante() {
+  const lista = document.getElementById('listaExames');
+  lista.innerHTML = '<div class="lab-empty">Carregando...</div>';
+  try {
+    examesParticipante = await supabaseFetch(`exames_resultados?select=*&participante_id=eq.${participanteAtual.id}&order=data_exame.desc`) || [];
+    renderExames();
+  } catch(e) {
+    lista.innerHTML = '<div class="lab-empty">Erro ao carregar exames.</div>';
+  }
+}
+
+function renderExames() {
+  const lista = document.getElementById('listaExames');
+  if (!examesParticipante.length) {
+    lista.innerHTML = '<div class="lab-empty">Nenhum exame cadastrado ainda.</div>';
+    return;
+  }
+  const porCategoria = {};
+  examesParticipante.forEach(ex => {
+    const m = marcadoresLab.find(m => m.id === ex.marcador_id);
+    const cat = m ? m.categoria : 'Outros';
+    if (!porCategoria[cat]) porCategoria[cat] = [];
+    porCategoria[cat].push({ ...ex, marcador: m });
+  });
+
+  lista.innerHTML = Object.entries(porCategoria).map(([cat, exs]) => `
+    <div class="exames-categoria">
+      <div class="exames-categoria-titulo">${cat}</div>
+      ${exs.map(ex => `
+        <div class="exame-row">
+          <div>
+            <div class="exame-nome">${ex.marcador ? ex.marcador.nome : 'Marcador removido'}</div>
+            <div class="exame-data">${new Date(ex.data_exame + 'T00:00:00').toLocaleDateString('pt-BR')}</div>
+          </div>
+          <div class="exame-valor">${ex.valor}${ex.marcador && ex.marcador.unidade ? ' ' + ex.marcador.unidade : ''}</div>
+          <span class="badge ${CLASSIF_BADGE[ex.classificacao] || 'badge-sem-faixa'}">${CLASSIF_LABEL[ex.classificacao] || ex.classificacao}</span>
+          <button class="exame-del" onclick="excluirExame(${ex.id})">✕</button>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+// ---------- Configuração de faixas (admin) ----------
+function abrirConfigFaixas() {
+  document.getElementById('overlayConfig').classList.add('vis');
+  renderConfigFaixas();
+}
+function fecharConfigFaixas() {
+  document.getElementById('overlayConfig').classList.remove('vis');
+}
+
+function campo(val) { return val === null || val === undefined ? '' : val; }
+
+function renderConfigFaixas() {
+  const cont = document.getElementById('listaConfigMarcadores');
+  const porCategoria = {};
+  marcadoresLab.forEach(m => {
+    if (!porCategoria[m.categoria]) porCategoria[m.categoria] = [];
+    porCategoria[m.categoria].push(m);
+  });
+
+  cont.innerHTML = Object.entries(porCategoria).map(([cat, ms]) => `
+    <div class="config-categoria">
+      <div class="config-categoria-titulo">${cat}</div>
+      ${ms.map(m => {
+        const f = faixaDoMarcador(m.id) || {};
+        return `
+        <div class="config-marcador" id="marcador-${m.id}">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr 1fr; gap:8px; flex:1;">
+              <div><label class="config-faixa-label" style="color:var(--cinza)">Nome</label><input type="text" class="config-texto" style="min-height:auto" id="m_${m.id}_nome" value="${campo(m.nome)}"></div>
+              <div><label class="config-faixa-label" style="color:var(--cinza)">Categoria</label><input type="text" class="config-texto" style="min-height:auto" id="m_${m.id}_categoria" value="${campo(m.categoria)}"></div>
+              <div><label class="config-faixa-label" style="color:var(--cinza)">Unidade</label><input type="text" class="config-texto" style="min-height:auto" id="m_${m.id}_unidade" value="${campo(m.unidade)}"></div>
+              <div><label class="config-faixa-label" style="color:var(--cinza)">Referência laboratorial</label><input type="text" class="config-texto" style="min-height:auto" id="m_${m.id}_ref_lab" value="${campo(m.referencia_laboratorial)}" placeholder="ex: 4,5 a 11,0 mIU/L"></div>
+              <div><label class="config-faixa-label" style="color:var(--cinza)">Prioridade clínica</label>
+                <select id="m_${m.id}_prioridade" class="config-texto" style="min-height:auto">
+                  <option value="" ${!m.prioridade_clinica ? 'selected' : ''}>—</option>
+                  <option value="alta" ${m.prioridade_clinica === 'alta' ? 'selected' : ''}>Alta</option>
+                  <option value="media" ${m.prioridade_clinica === 'media' ? 'selected' : ''}>Média</option>
+                  <option value="baixa" ${m.prioridade_clinica === 'baixa' ? 'selected' : ''}>Baixa</option>
+                </select>
+              </div>
+            </div>
+            <button class="exame-del" onclick="excluirMarcador(${m.id})" style="margin-left:10px;">Excluir</button>
+          </div>
+          <button class="btn-salvar-marcador" onclick="salvarInfoBasica(${m.id})" style="margin-bottom:14px;">Salvar informações básicas</button>
+          <span class="config-save-status" id="status-info-${m.id}">Salvo ✓</span>
+
+          <div class="config-faixas-row">
+            ${['otima','atencao','prioritaria'].map(zona => `
+              <div class="config-faixa-grupo ${zona}">
+                <div class="config-faixa-label">${zona === 'otima' ? 'Ótima' : zona === 'atencao' ? 'Atenção' : 'Prioritária'}</div>
+                <div class="config-faixa-inputs">
+                  <input type="number" step="0.01" placeholder="mín" id="f_${m.id}_${zona}_min" value="${campo(f[zona+'_min'])}">
+                  <span style="font-size:11px;color:var(--cinza)">a</span>
+                  <input type="number" step="0.01" placeholder="máx" id="f_${m.id}_${zona}_max" value="${campo(f[zona+'_max'])}">
+                </div>
+                <textarea class="config-texto" id="f_${m.id}_${zona}_texto" placeholder="Interpretação...">${campo(f['texto_'+zona])}</textarea>
+                <textarea class="config-texto" id="f_${m.id}_${zona}_impacto" placeholder="Possível impacto cognitivo/metabólico...">${campo(f['impacto_'+zona])}</textarea>
+                <textarea class="config-texto" id="f_${m.id}_${zona}_perguntas" placeholder="Perguntas complementares...">${campo(f['perguntas_'+zona])}</textarea>
+                <textarea class="config-texto" id="f_${m.id}_${zona}_acoes" placeholder="Ações sugeridas...">${campo(f['acoes_'+zona])}</textarea>
+              </div>
+            `).join('')}
+          </div>
+          <button class="btn-salvar-marcador" onclick="salvarFaixa(${m.id})">Salvar faixas</button>
+          <span class="config-save-status" id="status-${m.id}">Salvo ✓</span>
+
+          <div style="margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div>
+              <div class="config-faixa-label" style="color:var(--cinza); margin-bottom:6px;">Relação com sintomas</div>
+              <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                ${sintomasCatalogo.map(s => `
+                  <label style="font-size:11px; background:white; border:1px solid var(--border); border-radius:14px; padding:4px 10px; cursor:pointer; display:flex; align-items:center; gap:5px;">
+                    <input type="checkbox" id="s_${m.id}_${s.id}" ${(marcadorSintomasMap[m.id]||[]).includes(s.id) ? 'checked' : ''} style="margin:0;"> ${s.nome}
+                  </label>
+                `).join('')}
+              </div>
+            </div>
+            <div>
+              <div class="config-faixa-label" style="color:var(--cinza); margin-bottom:6px;">Relação com protocolos</div>
+              <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                ${protocolosCatalogo.map(p => `
+                  <label style="font-size:11px; background:white; border:1px solid var(--border); border-radius:14px; padding:4px 10px; cursor:pointer; display:flex; align-items:center; gap:5px;">
+                    <input type="checkbox" id="p_${m.id}_${p.id}" ${(marcadorProtocolosMap[m.id]||[]).includes(p.id) ? 'checked' : ''} style="margin:0;"> ${p.nome}
+                  </label>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+          <button class="btn-salvar-marcador" onclick="salvarRelacoes(${m.id})" style="margin-top:10px;">Salvar sintomas e protocolos</button>
+          <span class="config-save-status" id="status-rel-${m.id}">Salvo ✓</span>
+        </div>`;
+      }).join('')}
+    </div>
+  `).join('');
+}
+
+async function criarMarcador() {
+  const categoria = document.getElementById('novoMarcadorCategoria').value.trim();
+  const nome = document.getElementById('novoMarcadorNome').value.trim();
+  const unidade = document.getElementById('novoMarcadorUnidade').value.trim();
+  if (!categoria || !nome) { alert('Preencha categoria e nome do marcador.'); return; }
+
+  try {
+    const novo = await supabaseFetch('marcadores_lab', {
+      method: 'POST',
+      headers: { 'Prefer': 'return=representation' },
+      body: JSON.stringify({ categoria, nome, unidade: unidade || null, ordem: 99 })
+    });
+    await supabaseFetch('faixas_integrativas', {
+      method: 'POST',
+      headers: { 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ marcador_id: novo[0].id })
+    });
+    document.getElementById('novoMarcadorCategoria').value = '';
+    document.getElementById('novoMarcadorNome').value = '';
+    document.getElementById('novoMarcadorUnidade').value = '';
+    await carregarCatalogoLab();
+    renderConfigFaixas();
+  } catch(e) {
+    console.error(e);
+    alert('Erro ao criar marcador.');
+  }
+}
+
+async function excluirMarcador(id) {
+  if (!confirm('Excluir este marcador? Isso também apaga as faixas e exames já registrados com ele.')) return;
+  try {
+    await supabaseFetch(`marcadores_lab?id=eq.${id}`, { method: 'DELETE', headers: { 'Prefer': 'return=minimal' } });
+    await carregarCatalogoLab();
+    renderConfigFaixas();
+  } catch(e) {
+    console.error(e);
+    alert('Erro ao excluir marcador.');
+  }
+}
+
+async function salvarFaixa(marcadorId) {
+  const g = (campo) => {
+    const el = document.getElementById(`f_${marcadorId}_${campo}`);
+    return el ? el.value : '';
+  };
+  const num = (v) => v === '' ? null : parseFloat(v);
+
+  const dados = {
+    otima_min: num(g('otima_min')), otima_max: num(g('otima_max')),
+    atencao_min: num(g('atencao_min')), atencao_max: num(g('atencao_max')),
+    prioritaria_min: num(g('prioritaria_min')), prioritaria_max: num(g('prioritaria_max')),
+    texto_otima: g('otima_texto'), texto_atencao: g('atencao_texto'), texto_prioritaria: g('prioritaria_texto'),
+    impacto_otima: g('otima_impacto'), impacto_atencao: g('atencao_impacto'), impacto_prioritaria: g('prioritaria_impacto'),
+    perguntas_otima: g('otima_perguntas'), perguntas_atencao: g('atencao_perguntas'), perguntas_prioritaria: g('prioritaria_perguntas'),
+    acoes_otima: g('otima_acoes'), acoes_atencao: g('atencao_acoes'), acoes_prioritaria: g('prioritaria_acoes'),
+    updated_at: new Date().toISOString()
+  };
+
+  try {
+    await supabaseFetch(`faixas_integrativas?marcador_id=eq.${marcadorId}`, {
+      method: 'PATCH',
+      headers: { 'Prefer': 'return=minimal' },
+      body: JSON.stringify(dados)
+    });
+    await carregarCatalogoLab();
+    const status = document.getElementById(`status-${marcadorId}`);
+    if (status) {
+      status.style.display = 'inline';
+      setTimeout(() => status.style.display = 'none', 2000);
+    }
+  } catch(e) {
+    console.error(e);
+    alert('Erro ao salvar faixas.');
+  }
+}
+
+async function salvarInfoBasica(marcadorId) {
+  const nome = document.getElementById(`m_${marcadorId}_nome`).value.trim();
+  const categoria = document.getElementById(`m_${marcadorId}_categoria`).value.trim();
+  const unidade = document.getElementById(`m_${marcadorId}_unidade`).value.trim();
+  const referencia_laboratorial = document.getElementById(`m_${marcadorId}_ref_lab`).value.trim();
+  const prioridade_clinica = document.getElementById(`m_${marcadorId}_prioridade`).value || null;
+
+  if (!nome || !categoria) { alert('Nome e categoria não podem ficar vazios.'); return; }
+
+  try {
+    await supabaseFetch(`marcadores_lab?id=eq.${marcadorId}`, {
+      method: 'PATCH',
+      headers: { 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ nome, categoria, unidade: unidade || null, referencia_laboratorial: referencia_laboratorial || null, prioridade_clinica })
+    });
+    await carregarCatalogoLab();
+    renderConfigFaixas();
+    const status = document.getElementById(`status-info-${marcadorId}`);
+    if (status) { status.style.display = 'inline'; setTimeout(() => status.style.display = 'none', 2000); }
+  } catch(e) {
+    console.error(e);
+    alert('Erro ao salvar informações básicas.');
+  }
+}
+
+async function salvarRelacoes(marcadorId) {
+  try {
+    const sintomasSelecionados = sintomasCatalogo.filter(s => {
+      const el = document.getElementById(`s_${marcadorId}_${s.id}`);
+      return el && el.checked;
+    }).map(s => s.id);
+
+    const protocolosSelecionados = protocolosCatalogo.filter(p => {
+      const el = document.getElementById(`p_${marcadorId}_${p.id}`);
+      return el && el.checked;
+    }).map(p => p.id);
+
+    await supabaseFetch(`marcador_sintomas?marcador_id=eq.${marcadorId}`, { method: 'DELETE', headers: { 'Prefer': 'return=minimal' } });
+    if (sintomasSelecionados.length) {
+      await supabaseFetch('marcador_sintomas', {
+        method: 'POST',
+        headers: { 'Prefer': 'return=minimal' },
+        body: JSON.stringify(sintomasSelecionados.map(sid => ({ marcador_id: marcadorId, sintoma_id: sid })))
+      });
+    }
+
+    await supabaseFetch(`marcador_protocolos?marcador_id=eq.${marcadorId}`, { method: 'DELETE', headers: { 'Prefer': 'return=minimal' } });
+    if (protocolosSelecionados.length) {
+      await supabaseFetch('marcador_protocolos', {
+        method: 'POST',
+        headers: { 'Prefer': 'return=minimal' },
+        body: JSON.stringify(protocolosSelecionados.map(pid => ({ marcador_id: marcadorId, protocolo_id: pid })))
+      });
+    }
+
+    await carregarCatalogoLab();
+    const status = document.getElementById(`status-rel-${marcadorId}`);
+    if (status) { status.style.display = 'inline'; setTimeout(() => status.style.display = 'none', 2000); }
+  } catch(e) {
+    console.error(e);
+    alert('Erro ao salvar sintomas e protocolos.');
+  }
+}
 </script>
 </body>
 </html>
