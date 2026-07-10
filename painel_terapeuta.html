@@ -631,7 +631,7 @@ document.getElementById('loginSenha').addEventListener('keydown', function(e) {
 // ============================================================
 // IMPRESSÃO DO RELATÓRIO — direto do painel, sem depender de outro arquivo
 // ============================================================
-function imprimirRelatorio() {
+async function imprimirRelatorio() {
   if (!participanteAtual) return;
   const p = participanteAtual;
 
@@ -644,6 +644,19 @@ function imprimirRelatorio() {
   if (!interpretacao && !protocolo) {
     alert('Preencha ao menos a leitura do quadro e o protocolo antes de imprimir. Use "Gerar rascunho com IA" ou escreva manualmente.');
     return;
+  }
+
+  let examesImpressao = [];
+  try {
+    const exs = await supabaseFetch(`exames_resultados?select=*&participante_id=eq.${p.id}&order=data_exame.desc`) || [];
+    examesImpressao = exs.map(ex => {
+      const m = marcadoresLab.find(mm => mm.id === ex.marcador_id);
+      const f = faixaDoMarcador(ex.marcador_id);
+      const textoZona = f ? (f['texto_' + ex.classificacao] || '') : '';
+      return { ...ex, marcador: m, texto: textoZona };
+    });
+  } catch(e) {
+    console.error('Erro ao buscar exames para impressão:', e);
   }
 
   const data = p.data_preenchimento
@@ -686,6 +699,15 @@ function imprimirRelatorio() {
   h2 { font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:600; color:#7F6A46; margin-bottom:10px; border-bottom:1px solid #D8D3C8; padding-bottom:6px; }
   p { font-size:14px; line-height:1.75; margin-bottom:10px; color:#1E2420; }
   .rodape { margin-top:48px; padding-top:20px; border-top:1px solid #D8D3C8; font-size:11px; color:#6B6F72; text-align:center; }
+  .exame-print-row { display:grid; grid-template-columns:1fr auto auto; gap:10px; align-items:center; padding:10px 12px; background:white; border:1px solid #D8D3C8; border-radius:8px; margin-bottom:8px; }
+  .exame-print-nome { font-size:13px; font-weight:600; color:#1E2420; }
+  .exame-print-texto { font-size:12px; color:#6B6F72; margin-top:2px; }
+  .exame-print-valor { font-size:13px; font-weight:600; white-space:nowrap; }
+  .exame-print-badge { font-size:11px; padding:3px 10px; border-radius:20px; font-weight:500; white-space:nowrap; }
+  .badge-print-otima { background:#E1F5EE; color:#0F6E56; }
+  .badge-print-atencao { background:#FBF3DC; color:#7A5C00; }
+  .badge-print-prioritaria { background:#F7EEEE; color:#7A2020; }
+  .badge-print-outro { background:#E8E9EA; color:#6B6F72; }
   @media print {
     body { background:white; }
     .page { padding:20px 8px; }
@@ -710,6 +732,21 @@ function imprimirRelatorio() {
   ${emocional ? `<section><h2>Campo Emocional</h2>${paraHtml(emocional)}</section>` : ''}
   ${intestino ? `<section><h2>Eixo Intestino-Cérebro</h2>${paraHtml(intestino)}</section>` : ''}
   ${protocolo ? `<section><h2>Protocolo Recomendado</h2>${paraHtml(protocolo)}</section>` : ''}
+  ${examesImpressao.length ? `<section><h2>Resultados Laboratoriais</h2>
+    ${examesImpressao.map(ex => {
+      const badgeClass = ex.classificacao === 'otima' ? 'badge-print-otima' : ex.classificacao === 'atencao' ? 'badge-print-atencao' : ex.classificacao === 'prioritaria' ? 'badge-print-prioritaria' : 'badge-print-outro';
+      const label = ex.classificacao === 'otima' ? 'Ótima' : ex.classificacao === 'atencao' ? 'Atenção' : ex.classificacao === 'prioritaria' ? 'Prioritária' : 'Fora das faixas';
+      const dataEx = new Date(ex.data_exame + 'T00:00:00').toLocaleDateString('pt-BR');
+      return `<div class="exame-print-row">
+        <div>
+          <div class="exame-print-nome">${ex.marcador ? ex.marcador.nome : 'Marcador'} <span style="font-weight:400;color:#6B6F72;">· ${dataEx}</span></div>
+          ${ex.texto ? `<div class="exame-print-texto">${ex.texto}</div>` : ''}
+        </div>
+        <div class="exame-print-valor">${ex.valor}${ex.marcador && ex.marcador.unidade ? ' ' + ex.marcador.unidade : ''}</div>
+        <span class="exame-print-badge ${badgeClass}">${label}</span>
+      </div>`;
+    }).join('')}
+  </section>` : ''}
   ${mensagem ? `<section><h2>Mensagem</h2>${paraHtml(mensagem)}</section>` : ''}
 
   <div class="rodape">Este relatório é uma ferramenta de investigação integrativa da CCD™ e não substitui diagnóstico ou avaliação médica.</div>
